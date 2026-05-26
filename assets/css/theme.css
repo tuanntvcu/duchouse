@@ -1,0 +1,71 @@
+/*
+ * Minimal WordPress-specific CSS. The preserved HTML clone should supply the
+ * visual system; this file only keeps WordPress output stable.
+ */
+
+:root {
+	--dimhouse-font-main: 'Montserrat', sans-serif;
+	--dimhouse-color-main: #ffba00;
+	--dimhouse-color-dark: #2d2729;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	font-family: var(--dimhouse-font-main);
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+.site-header,
+.site-footer,
+.site-content {
+	width: 100%;
+}
+
+.site-content.container,
+.site-header .header-inner,
+.site-footer .container {
+	max-width: 1400px;
+}
+
+.home-page #fullpage {
+	position: relative;
+}
+
+.section {
+	position: relative;
+}
+
+.section .container {
+	width: min(100%, 1400px);
+}
+
+.site-logo,
+.footer-logo {
+	display: block;
+	height: auto;
+}
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+}
+
+.estimate-item-content {
+	display: none;
+}
+
+.estimate-item-content.show {
+	display: block;
+}
+
+.faq-item + .faq-item {
+	margin-top: 1rem;
+}

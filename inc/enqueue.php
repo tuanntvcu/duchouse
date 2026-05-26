@@ -1,0 +1,57 @@
+<?php
+
+if (!defined('ABSPATH')) {
+	exit;
+}
+
+function dimhouse_enqueue_assets() {
+	$theme_version = wp_get_theme()->get('Version');
+
+	wp_enqueue_style('dimhouse-fonts', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap', array(), null);
+	wp_enqueue_style('dimhouse-material-icons', 'https://fonts.googleapis.com/icon?family=Material+Icons', array(), null);
+	wp_enqueue_style('dimhouse-style', get_stylesheet_uri(), array(), $theme_version);
+	wp_enqueue_style('dimhouse-clone', dimhouse_asset_uri('clone.css'), array('dimhouse-style'), $theme_version);
+
+	wp_enqueue_script('dimhouse-gtag', 'https://www.googletagmanager.com/gtag/js?id=G-WJ9YSMGMRS', array(), null, array('strategy' => 'async', 'in_footer' => false));
+	wp_add_inline_script(
+		'dimhouse-gtag',
+		'window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag("js", new Date()); gtag("config", "G-WJ9YSMGMRS");'
+	);
+	wp_enqueue_script('dimhouse-adsbygoogle', 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4953948093449867', array(), null, array('strategy' => 'async', 'in_footer' => false));
+	wp_script_add_data('dimhouse-adsbygoogle', 'crossorigin', 'anonymous');
+
+	wp_enqueue_script('jquery');
+	wp_enqueue_script('dimhouse-legacy-bundle', dimhouse_asset_uri('resources/minify/minify.jquery.min.js'), array('jquery'), $theme_version, true);
+	wp_enqueue_script('dimhouse-ordering', dimhouse_asset_uri('modules/product/assets/default/js/ordering.js'), array('jquery'), $theme_version, true);
+	wp_enqueue_script('dimhouse-user', dimhouse_asset_uri('modules/user/assets/default/js/user.js'), array('jquery'), $theme_version, true);
+	wp_enqueue_script('dimhouse-timepicker', dimhouse_asset_uri('resources/js/jquery_ui/jquery-ui-timepicker-addon.min.js'), array('jquery'), $theme_version, true);
+	wp_enqueue_script('dimhouse-lottie-player', 'https://unpkg.com/@lottiefiles/lottie-player@2.0.12/dist/lottie-player.js', array(), '2.0.12', true);
+	wp_enqueue_script('dimhouse-main', dimhouse_asset_uri('assets/js/main.js'), array('jquery', 'dimhouse-legacy-bundle', 'dimhouse-ordering', 'dimhouse-user', 'dimhouse-timepicker'), $theme_version, true);
+
+	wp_add_inline_script(
+		'dimhouse-legacy-bundle',
+		'var ROOT = ' . wp_json_encode(home_url('/')) . ';' .
+		'var DIR_IMAGE = ' . wp_json_encode(dimhouse_asset_uri('resources/images/')) . ';' .
+		'var deviceType = "phone"; var lang = "vi"; var lang_js = []; var lang_js_mod = []; lang_js_mod.home = [];' .
+		'lang_js.aleft_title = "ThÃ´ng bÃ¡o"; lang_js.send = "Gá»­i thÃ´ng tin"; lang_js_mod.home.confirm = "Báº¡n báº¥m gá»­i lÃ  Ä‘á»“ng Ã½ gá»­i thÃ´ng tin cÃ¡ nhÃ¢n Ä‘áº¿n chÃºng tÃ´i cho viá»‡c tÆ° váº¥n cÃ´ng trÃ¬nh! TA-Home sáº½ pháº£n há»“i sá»›m nháº¥t."; lang_js_mod.home.book_success = "Äáº·t lá»‹ch thÃ nh cÃ´ng!";',
+		'before'
+	);
+
+	$clone_footer_scripts = dimhouse_index_footer_inline_scripts();
+	if ($clone_footer_scripts) {
+		wp_add_inline_script('dimhouse-main', $clone_footer_scripts, 'before');
+	}
+
+	wp_localize_script('dimhouse-main', 'dimhouseTheme', array(
+		'homeUrl' => home_url('/'),
+		'ajaxUrl' => admin_url('admin-ajax.php'),
+		'assetBase' => trailingslashit(get_stylesheet_directory_uri()),
+		'lang' => 'vi',
+	));
+}
+add_action('wp_enqueue_scripts', 'dimhouse_enqueue_assets');
+
+function dimhouse_enqueue_admin_assets() {
+	wp_enqueue_style('dimhouse-admin', dimhouse_asset_uri('assets/css/theme.css'), array(), wp_get_theme()->get('Version'));
+}
+add_action('admin_enqueue_scripts', 'dimhouse_enqueue_admin_assets');
