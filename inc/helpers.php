@@ -317,6 +317,150 @@ function dimhouse_clone_img_url($image) {
 	return $url ? $url : '';
 }
 
+function dimhouse_acf_post_value($field_name, $post_id) {
+	if (function_exists('get_field')) {
+		$value = get_field($field_name, $post_id);
+		if ($value !== null && $value !== false && $value !== '') {
+			return $value;
+		}
+	}
+
+	return function_exists('get_post_meta') ? get_post_meta($post_id, $field_name, true) : '';
+}
+
+function dimhouse_term_id_from_acf($term) {
+	if (is_numeric($term)) {
+		return (int) $term;
+	}
+
+	if (is_object($term) && !empty($term->term_id)) {
+		return (int) $term->term_id;
+	}
+
+	if (is_array($term)) {
+		if (!empty($term['term_id'])) {
+			return (int) $term['term_id'];
+		}
+
+		if (!empty($term['term_id'][0])) {
+			return (int) $term['term_id'][0];
+		}
+	}
+
+	return 0;
+}
+
+function dimhouse_villa_post_image_url($post_id) {
+	$image = dimhouse_acf_post_value('villa_card_image', $post_id);
+	$image_url = $image ? dimhouse_image_url($image, 'large') : '';
+	if ($image_url) {
+		return $image_url;
+	}
+
+	if (function_exists('get_the_post_thumbnail_url')) {
+		$image_url = get_the_post_thumbnail_url($post_id, 'large');
+		if ($image_url) {
+			return $image_url;
+		}
+	}
+
+	return dimhouse_asset_uri('thumbs/nophoto/[580x400-cr]nophoto.jpg__cv.webp');
+}
+
+function dimhouse_render_villa_post_card($post_id) {
+	if (!function_exists('get_permalink') || !function_exists('get_the_title')) {
+		return '';
+	}
+
+	$title = get_the_title($post_id);
+	$link = get_permalink($post_id);
+	$image = dimhouse_villa_post_image_url($post_id);
+	$details = array(
+		array('label' => 'Chủ đầu tư', 'value' => dimhouse_acf_post_value('villa_project_client', $post_id)),
+		array('label' => 'Địa chỉ', 'value' => dimhouse_acf_post_value('villa_project_location', $post_id)),
+		array('label' => 'Diện tích', 'value' => dimhouse_acf_post_value('villa_project_area', $post_id)),
+		array('label' => 'Số tầng', 'value' => dimhouse_acf_post_value('villa_project_floors', $post_id)),
+	);
+	$detail_html = '';
+	foreach ($details as $detail) {
+		if (empty($detail['value'])) {
+			continue;
+		}
+
+		$detail_html .= '<div class="villa-card-detail"><span>' . esc_html($detail['label']) . ':</span><strong>' . esc_html($detail['value']) . '</strong></div>';
+	}
+
+	return '<article class="villa-card">
+		<a class="villa-card-media" href="' . esc_url($link) . '"><img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '"></a>
+		<div class="villa-card-body">
+			<h3><a href="' . esc_url($link) . '">' . esc_html($title) . '</a></h3>
+			' . ($detail_html ? '<div class="villa-card-details">' . $detail_html . '</div>' : '') . '
+		</div>
+	</article>';
+}
+
+function dimhouse_render_villa_designs_section($section) {
+	if (empty($section) || empty($section['tabs']) || !is_array($section['tabs']) || !class_exists('WP_Query')) {
+		return '';
+	}
+
+	$title = !empty($section['title']) ? $section['title'] : '1000+ THIẾT KẾ BIỆT THỰ ĐẲNG CẤP';
+	$default_count = !empty($section['posts_per_tab']) ? absint($section['posts_per_tab']) : 8;
+	$default_count = $default_count > 0 ? $default_count : 8;
+	$tabs = array();
+	$panels = array();
+
+	foreach ($section['tabs'] as $index => $tab) {
+		if (!is_array($tab)) {
+			continue;
+		}
+
+		$term_id = dimhouse_term_id_from_acf(!empty($tab['category']) ? $tab['category'] : 0);
+		$label = !empty($tab['label']) ? $tab['label'] : '';
+		if (!$term_id || !$label) {
+			continue;
+		}
+
+		$count = !empty($tab['posts_per_tab']) ? absint($tab['posts_per_tab']) : $default_count;
+		$count = $count > 0 ? $count : $default_count;
+		$panel_id = 'villa-designs-tab-' . sanitize_title($label) . '-' . $index;
+		$is_active = empty($tabs);
+		$query = new WP_Query(array(
+			'post_type' => 'post',
+			'post_status' => 'publish',
+			'posts_per_page' => $count,
+			'category__in' => array($term_id),
+			'ignore_sticky_posts' => true,
+		));
+
+		$cards = array();
+		if ($query->have_posts()) {
+			while ($query->have_posts()) {
+				$query->the_post();
+				$cards[] = dimhouse_render_villa_post_card(get_the_ID());
+			}
+			wp_reset_postdata();
+		}
+
+		$tabs[] = '<li class="nav-item"><a class="nav-link' . ($is_active ? ' active' : '') . '" href="#' . esc_attr($panel_id) . '" data-toggle="tab">' . esc_html($label) . '</a></li>';
+		$panels[] = '<div class="tab-pane villa-designs-panel' . ($is_active ? ' active show' : '') . '" id="' . esc_attr($panel_id) . '">' .
+			(!empty($cards) ? '<div class="villa-designs-grid">' . implode("\n", $cards) . '</div>' : '<div class="villa-designs-empty">Chưa có bài viết trong danh mục này.</div>') .
+			'</div>';
+	}
+
+	if (empty($tabs)) {
+		return '';
+	}
+
+	return '<section class="section villa-designs-section">
+		<div class="container">
+			<h2>' . esc_html($title) . '</h2>
+			<ul class="nav nav-pills villa-designs-tabs">' . implode("\n", $tabs) . '</ul>
+			<div class="tab-content villa-designs-content">' . implode("\n", $panels) . '</div>
+		</div>
+	</section>';
+}
+
 function dimhouse_index_between($start_marker, $end_marker) {
 	$index_path = get_theme_file_path('/index.html');
 	if (!file_exists($index_path)) {
@@ -849,6 +993,18 @@ function dimhouse_apply_clone_acf_overrides($html) {
 				}
 			);
 		}
+	}
+
+	$villa_designs = dimhouse_home_acf_layout('villa_designs');
+	$villa_designs_html = dimhouse_render_villa_designs_section($villa_designs);
+	if ($villa_designs_html) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(\s*<!-- start section 4 -->)#',
+			function ($matches) use ($villa_designs_html) {
+				return "\n" . $villa_designs_html . "\n" . $matches[1];
+			}
+		);
 	}
 
 	$about = dimhouse_home_acf_layout('about');

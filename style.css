@@ -94,3 +94,159 @@ Text Domain: dimhouse
 .faq-answer {
 	margin-top: 12px;
 }
+
+.villa-designs-section {
+	background: #0b2431;
+	color: #fff;
+	padding: 64px 0;
+}
+
+.villa-designs-section h2 {
+	color: #f4c65d;
+	font-size: 28px;
+	font-weight: 700;
+	letter-spacing: 0;
+	line-height: 1.3;
+	margin: 0 0 30px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.villa-designs-section .villa-designs-tabs {
+	display: grid;
+	gap: 12px;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	list-style: none;
+	margin: 0 0 24px;
+	padding: 0;
+}
+
+.villa-designs-section .villa-designs-tabs .nav-item {
+	margin: 0;
+}
+
+.villa-designs-section .villa-designs-tabs .nav-link {
+	align-items: center;
+	border: 1px solid #d9aa45;
+	color: #fff;
+	display: flex;
+	font-size: 14px;
+	font-weight: 700;
+	justify-content: center;
+	min-height: 42px;
+	padding: 10px 14px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.villa-designs-section .villa-designs-tabs .nav-link:hover,
+.villa-designs-section .villa-designs-tabs .nav-link.active {
+	background: #d9aa45;
+	color: #09202c;
+}
+
+.villa-designs-grid {
+	display: grid;
+	gap: 18px;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.villa-card {
+	background: rgba(4, 20, 29, 0.72);
+	border: 1px solid rgba(217, 170, 69, 0.75);
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+.villa-card-media {
+	display: block;
+	overflow: hidden;
+}
+
+.villa-card-media img {
+	aspect-ratio: 4 / 3;
+	display: block;
+	height: auto;
+	object-fit: cover;
+	width: 100%;
+}
+
+.villa-card-body {
+	padding: 14px;
+}
+
+.villa-card h3 {
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1.45;
+	margin: 0 0 14px;
+}
+
+.villa-card h3 a {
+	color: #fff;
+}
+
+.villa-card h3 a:hover {
+	color: #f4c65d;
+}
+
+.villa-card-details {
+	display: grid;
+	gap: 5px;
+}
+
+.villa-card-detail {
+	display: grid;
+	font-size: 13px;
+	gap: 8px;
+	grid-template-columns: 92px minmax(0, 1fr);
+	line-height: 1.35;
+}
+
+.villa-card-detail span {
+	color: #f4c65d;
+}
+
+.villa-card-detail strong {
+	color: #fff;
+	font-weight: 600;
+}
+
+.villa-designs-empty {
+	border: 1px solid rgba(217, 170, 69, 0.45);
+	border-radius: 6px;
+	color: #fff;
+	padding: 28px;
+	text-align: center;
+}
+
+@media (max-width: 1100px) {
+	.villa-designs-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 768px) {
+	.villa-designs-section {
+		padding: 44px 0;
+	}
+
+	.villa-designs-section h2 {
+		font-size: 22px;
+	}
+
+	.villa-designs-section .villa-designs-tabs {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.villa-designs-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 520px) {
+	.villa-designs-section .villa-designs-tabs,
+	.villa-designs-grid {
+		grid-template-columns: 1fr;
+	}
+}

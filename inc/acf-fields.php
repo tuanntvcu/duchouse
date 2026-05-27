@@ -175,6 +175,61 @@ function dimhouse_register_acf_fields() {
 							),
 						),
 					),
+					'layout_villa_designs' => array(
+						'key' => 'layout_dimhouse_villa_designs',
+						'name' => 'villa_designs',
+						'label' => 'Villa Designs Section',
+						'sub_fields' => array(
+							array(
+								'key' => 'field_dimhouse_villa_designs_title',
+								'label' => 'Title',
+								'name' => 'title',
+								'type' => 'text',
+								'default_value' => '1000+ THIẾT KẾ BIỆT THỰ ĐẲNG CẤP',
+							),
+							array(
+								'key' => 'field_dimhouse_villa_designs_posts_per_tab',
+								'label' => 'Default Posts Per Tab',
+								'name' => 'posts_per_tab',
+								'type' => 'number',
+								'default_value' => 8,
+								'min' => 1,
+								'max' => 24,
+							),
+							array(
+								'key' => 'field_dimhouse_villa_designs_tabs',
+								'label' => 'Tabs',
+								'name' => 'tabs',
+								'type' => 'repeater',
+								'layout' => 'row',
+								'button_label' => 'Add Tab',
+								'sub_fields' => array(
+									array('key' => 'field_dimhouse_villa_designs_tab_label', 'label' => 'Label', 'name' => 'label', 'type' => 'text'),
+									array(
+										'key' => 'field_dimhouse_villa_designs_tab_category',
+										'label' => 'Post Category',
+										'name' => 'category',
+										'type' => 'taxonomy',
+										'taxonomy' => 'category',
+										'field_type' => 'select',
+										'allow_null' => 0,
+										'add_term' => 1,
+										'save_terms' => 0,
+										'load_terms' => 0,
+										'return_format' => 'id',
+									),
+									array(
+										'key' => 'field_dimhouse_villa_designs_tab_posts_per_tab',
+										'label' => 'Posts Per Tab',
+										'name' => 'posts_per_tab',
+										'type' => 'number',
+										'min' => 1,
+										'max' => 24,
+									),
+								),
+							),
+						),
+					),
 					'layout_estimate' => array(
 						'key' => 'layout_dimhouse_estimate',
 						'name' => 'estimate',
@@ -300,6 +355,23 @@ function dimhouse_register_acf_fields() {
 		'location' => array(
 			array(
 				array('param' => 'page_type', 'operator' => '==', 'value' => 'front_page'),
+			),
+		),
+	));
+
+	acf_add_local_field_group(array(
+		'key' => 'group_dimhouse_villa_post_details',
+		'title' => 'Villa Post Details',
+		'fields' => array(
+			array('key' => 'field_dimhouse_villa_card_image', 'label' => 'Card Image Override', 'name' => 'villa_card_image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium'),
+			array('key' => 'field_dimhouse_villa_project_client', 'label' => 'Client / Chủ đầu tư', 'name' => 'villa_project_client', 'type' => 'text'),
+			array('key' => 'field_dimhouse_villa_project_location', 'label' => 'Location / Địa chỉ', 'name' => 'villa_project_location', 'type' => 'text'),
+			array('key' => 'field_dimhouse_villa_project_area', 'label' => 'Area / Diện tích', 'name' => 'villa_project_area', 'type' => 'text'),
+			array('key' => 'field_dimhouse_villa_project_floors', 'label' => 'Floors / Số tầng', 'name' => 'villa_project_floors', 'type' => 'text'),
+		),
+		'location' => array(
+			array(
+				array('param' => 'post_type', 'operator' => '==', 'value' => 'post'),
 			),
 		),
 	));
