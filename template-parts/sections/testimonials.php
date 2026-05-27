@@ -53,7 +53,7 @@ $items = (is_array($items) && !empty($items)) ? $items : $defaults['items'];
 					</div>
 					<div>
 						<div><img src="<?php echo esc_url(dimhouse_asset_uri('uploads/about/2022_04/lh-fb.png')); ?>" alt="" width="80" height="80"></div>
-						<div class="info"><div class="name">Fanpage Facebook:</div><div>facebook.com/TAHome Design</div></div>
+						<div class="info"><div class="name">Fanpage Facebook:</div><div>facebook.com/Dimhouse Design</div></div>
 					</div>
 					<div>
 						<div><img src="<?php echo esc_url(dimhouse_asset_uri('uploads/about/2022_04/lh-mail.png')); ?>" alt="" width="80" height="80"></div>

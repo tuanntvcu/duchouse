@@ -33,7 +33,7 @@ function dimhouse_enqueue_assets() {
 		'var ROOT = ' . wp_json_encode(home_url('/')) . ';' .
 		'var DIR_IMAGE = ' . wp_json_encode(dimhouse_asset_uri('resources/images/')) . ';' .
 		'var deviceType = "phone"; var lang = "vi"; var lang_js = []; var lang_js_mod = []; lang_js_mod.home = [];' .
-		'lang_js.aleft_title = "ThÃ´ng bÃ¡o"; lang_js.send = "Gá»­i thÃ´ng tin"; lang_js_mod.home.confirm = "Báº¡n báº¥m gá»­i lÃ  Ä‘á»“ng Ã½ gá»­i thÃ´ng tin cÃ¡ nhÃ¢n Ä‘áº¿n chÃºng tÃ´i cho viá»‡c tÆ° váº¥n cÃ´ng trÃ¬nh! TA-Home sáº½ pháº£n há»“i sá»›m nháº¥t."; lang_js_mod.home.book_success = "Äáº·t lá»‹ch thÃ nh cÃ´ng!";',
+		'lang_js.aleft_title = "ThÃ´ng bÃ¡o"; lang_js.send = "Gá»­i thÃ´ng tin"; lang_js_mod.home.confirm = "Báº¡n báº¥m gá»­i lÃ  Ä‘á»“ng Ã½ gá»­i thÃ´ng tin cÃ¡ nhÃ¢n Ä‘áº¿n chÃºng tÃ´i cho viá»‡c tÆ° váº¥n cÃ´ng trÃ¬nh! Dimhouse sáº½ pháº£n há»“i sá»›m nháº¥t."; lang_js_mod.home.book_success = "Äáº·t lá»‹ch thÃ nh cÃ´ng!";',
 		'before'
 	);
 

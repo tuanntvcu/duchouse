@@ -171,7 +171,7 @@ function dimhouse_default_social_links() {
 	return array(
 		array(
 			'label' => 'Instagram',
-			'url' => 'https://instagram.com/tahome_design?igshid=YmMyMTA2M2Y=',
+			'url' => 'https://instagram.com/dimhouse_design?igshid=YmMyMTA2M2Y=',
 			'image' => dimhouse_asset_uri('uploads/config/2024_04/instagram.png'),
 		),
 		array(
@@ -181,7 +181,7 @@ function dimhouse_default_social_links() {
 		),
 		array(
 			'label' => 'Tiktok',
-			'url' => 'https://www.tiktok.com/@tahomedesign?is_from_webapp=1&sender_device=pc',
+			'url' => 'https://www.tiktok.com/@dimhousedesign?is_from_webapp=1&sender_device=pc',
 			'image' => dimhouse_asset_uri('uploads/config/2024_04/tiktok.png'),
 		),
 		array(
@@ -727,7 +727,7 @@ function dimhouse_apply_clone_acf_overrides($html) {
 		}
 
 		if (!empty($hero['eyebrow']) || !empty($hero['title']) || !empty($hero['text']) || !empty($hero['buttons'])) {
-			$title = !empty($hero['title']) ? $hero['title'] : 'T A - H O M E';
+			$title = !empty($hero['title']) ? $hero['title'] : 'D I M H O U S E';
 			$text = !empty($hero['text']) ? $hero['text'] : '<p><strong>Thiáº¿t Káº¿ Kiáº¿n TrÃºc - Thi CÃ´ng XÃ¢y Dá»±ng</strong></p>';
 			$inner = '';
 			if (!empty($hero['eyebrow'])) {
@@ -1342,8 +1342,8 @@ function dimhouse_index_fallback_body() {
 function dimhouse_home_defaults() {
 	return array(
 		'hero' => array(
-			'eyebrow' => 'TAHOME',
-			'title' => 'T A - H O M E',
+			'eyebrow' => 'DIMHOUSE',
+			'title' => 'D I M H O U S E',
 			'text' => '<p><strong>Thiết Kế Kiến Trúc - Thi Công Xây Dựng</strong></p>',
 			'video' => dimhouse_asset_uri('uploads/banner/video_baner/video_trang_chu_2023.mp4'),
 			'image' => '',
@@ -1439,12 +1439,12 @@ function dimhouse_home_defaults() {
 			),
 		),
 		'about' => array(
-			'title' => 'TA - HOME Design',
-			'text' => '<p>TA-Home không ngừng theo đuổi hướng thiết kế đổi mới và cách tân trong thi công nhằm đem lại không gian sinh hoạt thông thoáng, hiện đại, đáp ứng tốt nhất nhu cầu sử dụng của khách hàng, đảm bảo sự tối ưu về mặt kỹ thuật, ngân sách và thân thiện với môi trường. TA-Home lấy nguyện vọng của khách hàng làm đích đến bên cạnh việc bổ sung, tiếp sức bằng các giải pháp kỹ thuật, mỹ thuật và văn hóa sinh hoạt mở trong thời đại mới.</p><p>Công việc chính của TA-Home là biến ước mơ về không gian sinh hoạt của bạn trở thành hiện thực.</p>',
+			'title' => 'Dimhouse Design',
+			'text' => '<p>Dimhouse không ngừng theo đuổi hướng thiết kế đổi mới và cách tân trong thi công nhằm đem lại không gian sinh hoạt thông thoáng, hiện đại, đáp ứng tốt nhất nhu cầu sử dụng của khách hàng, đảm bảo sự tối ưu về mặt kỹ thuật, ngân sách và thân thiện với môi trường. Dimhouse lấy nguyện vọng của khách hàng làm đích đến bên cạnh việc bổ sung, tiếp sức bằng các giải pháp kỹ thuật, mỹ thuật và văn hóa sinh hoạt mở trong thời đại mới.</p><p>Công việc chính của Dimhouse là biến ước mơ về không gian sinh hoạt của bạn trở thành hiện thực.</p>',
 			'image' => dimhouse_asset_uri('thumbs/banner/baner/[113x113-cr]a1_1646668764.jpg'),
 		),
 		'channel' => array(
-			'title' => 'TAHOME - ChANNEL',
+			'title' => 'DIMHOUSE - ChANNEL',
 			'items' => array(
 				array(
 					'title' => 'Quy Trình Thiết Kế',
@@ -1452,9 +1452,9 @@ function dimhouse_home_defaults() {
 					'image' => dimhouse_asset_uri('thumbs/product/2022_09/tumbnail_chanel/[580x400-cr]ytube_quitrinh_thietke.00_00_18_05.still001.jpg__cv.webp'),
 				),
 				array(
-					'title' => 'Giới Thiệu Web TA - HOME',
+					'title' => 'Giới Thiệu Web Dimhouse',
 					'url' => 'https://www.youtube.com/watch?v=7OjQo9EBqyk',
-					'image' => dimhouse_asset_uri('thumbs/product/2022_09/tumbnail_chanel/[580x400-cr]gioi_thieu_web_tahome1.jpg__cv.webp'),
+					'image' => dimhouse_asset_uri('thumbs/product/2022_09/tumbnail_chanel/[580x400-cr]gioi_thieu_web_dimhouse1.jpg__cv.webp'),
 				),
 				array(
 					'title' => 'Tính Chi Phí Xây Dựng Tự Động',
@@ -1481,7 +1481,7 @@ function dimhouse_home_defaults() {
 					'name' => 'MỸ HƯƠNG',
 					'role' => '( Chị )',
 					'avatar' => dimhouse_asset_uri('thumbs/advisory/feedback/[90x90-cr]z3705231038744_50c027375536f468beaf304cd16eeef4.jpg__cv.webp'),
-					'text' => 'Tôi cảm thấy rất hài lòng, không gian theo đúng ý mình, kể cả màu sắc nữa, rất hài hòa. Cách phục vụ của các bạn cũng rất tốt. Cám ơn TA - Home đã đem đến cho tôi một không gian sống vô cùng ưng ý.',
+					'text' => 'Tôi cảm thấy rất hài lòng, không gian theo đúng ý mình, kể cả màu sắc nữa, rất hài hòa. Cách phục vụ của các bạn cũng rất tốt. Cám ơn Dimhouse đã đem đến cho tôi một không gian sống vô cùng ưng ý.',
 				),
 			),
 		),
@@ -1514,7 +1514,7 @@ function dimhouse_home_defaults() {
 				),
 				array(
 					'label' => 'Fanpage Facebook:',
-					'value' => 'facebook.com/TAHome Design',
+					'value' => 'facebook.com/Dimhouse Design',
 					'url' => 'https://www.facebook.com/profile.php?id=100065424102650',
 				),
 				array(
@@ -1540,7 +1540,7 @@ function dimhouse_home_defaults() {
 				),
 				array(
 					'title' => 'Thông tin liên hệ',
-					'content' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.7037275541857!2d106.7471018153159!3d10.68008916388372!2m3!1f0!2f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31753b730c677b63%3A0xfa33e39535626666!2zS2h1IETDom4gQ8awIEFuaCBUdeG6pW4gR3JlZW4gUml2ZXJzaWRl!5e0!3m2!1sen!2sus!4v1649149804440!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="footer_title social_title">Kết nối với chúng tôi</div><div class="box_social"><div class="row mx-0"><a href="https://instagram.com/tahome_design?igshid=YmMyMTA2M2Y=" target="_blank"><img src="uploads/config/2024_04/instagram.png" alt="Instagram"></a><a href="https://www.facebook.com/profile.php?id=100065424102650" target="_blank"><img src="uploads/config/2024_04/fb.png" alt="Facebook"></a><a href="https://www.tiktok.com/@tahomedesign?is_from_webapp=1&sender_device=pc" target="_blank"><img src="uploads/config/2024_04/tiktok.png" alt="Tiktok"></a><a href="https://www.youtube.com/channel/UCXPlJElksDJq8aa8POcxoMA" target="_blank"><img src="uploads/config/2024_04/youtube.png" alt="Youtube"></a></div></div><div class="email"><i class="fas fa-envelope"></i> Email: info@RdMJAeP6qJeR.vn</div>',
+					'content' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.7037275541857!2d106.7471018153159!3d10.68008916388372!2m3!1f0!2f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31753b730c677b63%3A0xfa33e39535626666!2zS2h1IETDom4gQ8awIEFuaCBUdeG6pW4gR3JlZW4gUml2ZXJzaWRl!5e0!3m2!1sen!2sus!4v1649149804440!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="footer_title social_title">Kết nối với chúng tôi</div><div class="box_social"><div class="row mx-0"><a href="https://instagram.com/dimhouse_design?igshid=YmMyMTA2M2Y=" target="_blank"><img src="uploads/config/2024_04/instagram.png" alt="Instagram"></a><a href="https://www.facebook.com/profile.php?id=100065424102650" target="_blank"><img src="uploads/config/2024_04/fb.png" alt="Facebook"></a><a href="https://www.tiktok.com/@dimhousedesign?is_from_webapp=1&sender_device=pc" target="_blank"><img src="uploads/config/2024_04/tiktok.png" alt="Tiktok"></a><a href="https://www.youtube.com/channel/UCXPlJElksDJq8aa8POcxoMA" target="_blank"><img src="uploads/config/2024_04/youtube.png" alt="Youtube"></a></div></div><div class="email"><i class="fas fa-envelope"></i> Email: info@RdMJAeP6qJeR.vn</div>',
 				),
 			),
 		),

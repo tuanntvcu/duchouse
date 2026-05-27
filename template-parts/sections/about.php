@@ -24,7 +24,7 @@ $image = $image ? $image : $defaults['image'];
 					<div class="item">
 						<div class="imgae"><img src="<?php echo esc_url(dimhouse_image_url($image)); ?>" alt="Nguyễn Trung"></div>
 						<div class="title"><span>Nguyễn Trung</span><div><p>CEO & Founder</p></div></div>
-						<a class="item btn" href="<?php echo esc_url(home_url('/ta-home-portfolio')); ?>"><u>Xem hồ sơ năng lực</u></a>
+						<a class="item btn" href="<?php echo esc_url(home_url('/Dimhouse-portfolio')); ?>"><u>Xem hồ sơ năng lực</u></a>
 					</div>
 				</div>
 			</div>

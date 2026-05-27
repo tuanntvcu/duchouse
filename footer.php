@@ -34,7 +34,7 @@ $phone_href = dimhouse_option('header_phone_link', 'tel:0964158163');
 </div>
 <div class="hotline sticky facebook">
 	<div class="ring">
-		<a href="https://www.facebook.com/TA-Home-Design-108306808017773" target="_blank" rel="noopener noreferrer">
+		<a href="https://www.facebook.com/Dimhouse-Design-108306808017773" target="_blank" rel="noopener noreferrer">
 			<div class="phone">
 				<div class="phone-circle"></div>
 				<div class="phone-circle-fill"></div>
