@@ -568,16 +568,82 @@ function dimhouse_apply_clone_acf_overrides($html) {
 					}
 				);
 			}
+		} elseif (!empty($hero['image'])) {
+			$image_url = dimhouse_clone_img_url($hero['image']);
+			if ($image_url) {
+				$image_alt = !empty($hero['title']) ? $hero['title'] : get_bloginfo('name');
+				$html = dimhouse_replace_first_match(
+					$html,
+					'#(<div class="section section-0"[\s\S]*?<div class="item">)\s*<video[\s\S]*?</video>#',
+					function ($matches) use ($image_url, $image_alt) {
+						return $matches[1] . '<img class="hero-image" src="' . esc_url($image_url) . '" alt="' . esc_attr($image_alt) . '">';
+					}
+				);
+			}
 		}
 
-		if (!empty($hero['title']) || !empty($hero['text'])) {
+		if (!empty($hero['eyebrow']) || !empty($hero['title']) || !empty($hero['text']) || !empty($hero['buttons'])) {
 			$title = !empty($hero['title']) ? $hero['title'] : 'T A - H O M E';
 			$text = !empty($hero['text']) ? $hero['text'] : '<p><strong>Thiáº¿t Káº¿ Kiáº¿n TrÃºc - Thi CÃ´ng XÃ¢y Dá»±ng</strong></p>';
+			$inner = '';
+			if (!empty($hero['eyebrow'])) {
+				$inner .= '<div class="eyebrow">' . esc_html($hero['eyebrow']) . '</div>';
+			}
+			$inner .= '<h2>' . esc_html($title) . '</h2>' . wp_kses_post($text);
+			if (!empty($hero['buttons']) && is_array($hero['buttons'])) {
+				$buttons = array();
+				foreach ($hero['buttons'] as $button) {
+					if (!is_array($button)) {
+						continue;
+					}
+
+					$button_html = dimhouse_render_button(array(
+						'url' => !empty($button['url']) ? $button['url'] : '',
+						'title' => !empty($button['label']) ? $button['label'] : '',
+						'style' => !empty($button['style']) ? $button['style'] : '',
+					));
+					if ($button_html) {
+						$buttons[] = $button_html;
+					}
+				}
+				if (!empty($buttons)) {
+					$inner .= '<div class="buttons">' . implode('', $buttons) . '</div>';
+				}
+			}
 			$html = dimhouse_replace_first_match(
 				$html,
 				'#(<div class="section section-0"[\s\S]*?<div class="inner">\s*)<h2>[\s\S]*?</h2>\s*<p>[\s\S]*?</p>#',
-				function ($matches) use ($title, $text) {
-					return $matches[1] . '<h2>' . esc_html($title) . '</h2>' . wp_kses_post($text);
+				function ($matches) use ($inner) {
+					return $matches[1] . $inner;
+				}
+			);
+		}
+	}
+
+	if (!empty($hero) && !empty($hero['banners']) && is_array($hero['banners'])) {
+		$banners = array();
+		foreach ($hero['banners'] as $banner) {
+			if (!is_array($banner)) {
+				continue;
+			}
+
+			$image = !empty($banner['image']) ? dimhouse_clone_img_url($banner['image']) : '';
+			if (!$image) {
+				continue;
+			}
+
+			$url = !empty($banner['url']) ? $banner['url'] : '#';
+			$alt = !empty($banner['alt']) ? $banner['alt'] : 'Banner';
+			$target = !empty($banner['url']) ? ' target="_blank" rel="noopener noreferrer"' : '';
+			$banners[] = '<div class="banner_item"><a href="' . esc_url($url) . '"' . $target . '><img src="' . esc_url($image) . '" alt="' . esc_attr($alt) . '"></a></div>';
+		}
+
+		if (!empty($banners)) {
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(</div>\s*<lottie-player\s+src="[^"]*resources/images/mouse\.json")#',
+				function ($matches) use ($banners) {
+					return '</div><div class="hero-banners container">' . implode("\n", $banners) . '</div>' . $matches[1];
 				}
 			);
 		}
@@ -594,6 +660,69 @@ function dimhouse_apply_clone_acf_overrides($html) {
 		);
 	}
 
+	if (!empty($estimate['intro'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="construction section section-3">[\s\S]*?<h3 class="title">[\s\S]*?</h3>)#',
+			function ($matches) use ($estimate) {
+				return $matches[1] . '<div class="estimate-intro">' . wp_kses_post($estimate['intro']) . '</div>';
+			}
+		);
+	}
+	if (!empty($estimate['tabs']) && is_array($estimate['tabs'])) {
+		$nav_items = array();
+		$tab_panes = array();
+		$banners = array();
+		foreach ($estimate['tabs'] as $index => $tab) {
+			if (!is_array($tab)) {
+				continue;
+			}
+
+			$key = !empty($tab['key']) ? sanitize_title($tab['key']) : 'tab' . ($index + 1);
+			$label = !empty($tab['label']) ? $tab['label'] : '';
+			$price = !empty($tab['price_label']) ? $tab['price_label'] : '';
+			$content = !empty($tab['content']) ? $tab['content'] : '';
+			$active_class = $index === 0 ? ' active' : '';
+			$show_class = $index === 0 ? ' show' : '';
+			$nav_items[] = '<li class="nav-item"><a href="#' . esc_attr($key) . '" data-toggle="tab" class="nav-link' . esc_attr($active_class) . '">' . esc_html($label) . '<div class="price">' . esc_html($price) . '</div></a></li>';
+			$tab_panes[] = '<div class="tab-pane' . esc_attr($active_class) . '" id="' . esc_attr($key) . '"><div class="row"><div class="col-sm-12"><div class="box_content"><div class="estimate-item-content' . esc_attr($show_class) . '">' . wp_kses_post($content) . '</div></div></div></div></div>';
+
+			$banner_image = !empty($tab['banner']) ? dimhouse_clone_img_url($tab['banner']) : '';
+			if ($banner_image) {
+				$banner_url = !empty($tab['url']) ? $tab['url'] : '#';
+				$banners[] = '<div class="banner ' . esc_attr($key) . ($index === 0 ? ' show' : '') . '"><div class="banner_item" style=""><a href="' . esc_url($banner_url) . '" target="_blank"><img class="lazyload" src="' . esc_url(dimhouse_asset_uri('resources/images/spin.svg')) . '" data-src="' . esc_url($banner_image) . '" alt="' . esc_attr($label ? $label : 'Banner') . '"></a></div></div>';
+			}
+		}
+
+		if (!empty($nav_items)) {
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(<div class="construction section section-3">[\s\S]*?<ul class="nav nav-pills">)[\s\S]*?(</ul>)#',
+				function ($matches) use ($nav_items) {
+					return $matches[1] . "\n" . implode("\n", $nav_items) . "\n" . $matches[2];
+				}
+			);
+		}
+		if (!empty($tab_panes)) {
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(<div class="construction section section-3">[\s\S]*?<div class="tab-content" style="display: none">)[\s\S]*?(</div>\s*<form action="" method="post" id="construction">)#',
+				function ($matches) use ($tab_panes) {
+					return $matches[1] . "\n" . implode("\n", $tab_panes) . "\n" . $matches[2];
+				}
+			);
+		}
+		if (!empty($banners)) {
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(<div class="for_result" style="display: none">[\s\S]*?<div class="button_book">[\s\S]*?</div>)\s*(?:<div class="banner[\s\S]*?</div>\s*</div>\s*)+(</div>\s*</div>\s*<div class="form">)#',
+				function ($matches) use ($banners) {
+					return $matches[1] . "\n" . implode("\n", $banners) . "\n" . $matches[2];
+				}
+			);
+		}
+	}
+
 	$process = dimhouse_home_acf_layout('process');
 	if (!empty($process['title'])) {
 		$html = dimhouse_replace_first_match(
@@ -604,20 +733,98 @@ function dimhouse_apply_clone_acf_overrides($html) {
 			}
 		);
 	}
+	if (!empty($process['text'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="section_home_about">[\s\S]*?<div class="about_title">[\s\S]*?</div>)#',
+			function ($matches) use ($process) {
+				return $matches[1] . '<div class="about_text">' . wp_kses_post($process['text']) . '</div>';
+			}
+		);
+	}
 	if (!empty($process['banner'])) {
 		$banner_url = dimhouse_clone_img_url($process['banner']);
 		if ($banner_url) {
 			$html = dimhouse_replace_first_match(
 				$html,
-				'#(<div class="section_home_about"[\s\S]*?<div class="banner_item"[\s\S]*?<img\s+src=")[^"]*(")#',
+				'#(<div class="section_home_about"[\s\S]*?<div class="banner_item"[\s\S]*?<img\s+class="lazyload"\s+src=")[^"]*("\s+data-src=")[^"]*(")#',
 				function ($matches) use ($banner_url) {
-					return $matches[1] . esc_url($banner_url) . $matches[2];
+					return $matches[1] . esc_url($banner_url) . $matches[2] . esc_url($banner_url) . $matches[3];
+				}
+			);
+		}
+	}
+	if (!empty($process['cta_url'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="section_home_about"[\s\S]*?<div class="banner_item"[\s\S]*?<a\s+href=")[^"]*(")#',
+			function ($matches) use ($process) {
+				return $matches[1] . esc_url($process['cta_url']) . $matches[2];
+			}
+		);
+	}
+	if (!empty($process['cta_label'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="section_home_about">[\s\S]*?<button type="submit">)[\s\S]*?(</button>)#',
+			function ($matches) use ($process) {
+				return $matches[1] . esc_html($process['cta_label']) . $matches[2];
+			}
+		);
+	}
+	if (!empty($process['steps']) && is_array($process['steps'])) {
+		$items = array();
+		foreach ($process['steps'] as $step) {
+			if (!is_array($step)) {
+				continue;
+			}
+
+			$step_title = !empty($step['title']) ? $step['title'] : '';
+			$step_text = !empty($step['text']) ? $step['text'] : '';
+			$step_image = !empty($step['image']) ? dimhouse_clone_img_url($step['image']) : '';
+			if (!$step_title && !$step_text && !$step_image) {
+				continue;
+			}
+
+			$items[] = '<div class="item">
+				<div class="img"><div class="inner">' . ($step_image ? '<img src="' . esc_url($step_image) . '" alt="' . esc_attr($step_title) . '">' : '') . '</div></div>
+				<div class="content">
+					' . ($step_title ? '<h2 class="title_about">' . esc_html($step_title) . '</h2>' : '') . '
+					' . ($step_text ? '<div class="short"><p>' . esc_html($step_text) . '</p></div>' : '') . '
+				</div>
+			</div>';
+		}
+
+		if (!empty($items)) {
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(<div class="col-xl-3 pr-0">[\s\S]*?<div class="banner"[\s\S]*?</div>\s*</div>\s*</div>)\s*(?:<div class="item">[\s\S]*?</div>\s*</div>\s*</div>\s*</div>\s*)+(\s*<div class="col-xl-9">)#',
+				function ($matches) use ($items) {
+					return $matches[1] . "\n" . implode("\n", $items) . $matches[2];
 				}
 			);
 		}
 	}
 
 	$menu_grid = dimhouse_home_acf_layout('menu_grid');
+	if (!empty($menu_grid['title']) || !empty($menu_grid['text'])) {
+		$menu_intro = '<div class="menu_grid_intro">';
+		if (!empty($menu_grid['title'])) {
+			$menu_intro .= '<h3>' . esc_html($menu_grid['title']) . '</h3>';
+		}
+		if (!empty($menu_grid['text'])) {
+			$menu_intro .= '<div class="content">' . wp_kses_post($menu_grid['text']) . '</div>';
+		}
+		$menu_intro .= '</div>';
+
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div id="slide_menu">\s*<div class="container">)#',
+			function ($matches) use ($menu_intro) {
+				return $matches[1] . $menu_intro;
+			}
+		);
+	}
 	if (!empty($menu_grid['cards']) && is_array($menu_grid['cards'])) {
 		$items = array();
 		$count = count($menu_grid['cards']);
@@ -663,16 +870,62 @@ function dimhouse_apply_clone_acf_overrides($html) {
 			}
 		);
 	}
+	if (!empty($about['image'])) {
+		$image_url = dimhouse_clone_img_url($about['image']);
+		if ($image_url) {
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(<div class="box_personnel">[\s\S]*?<div class="imgae">\s*<img\s+src=")[^"]*(")#',
+				function ($matches) use ($image_url) {
+					return $matches[1] . esc_url($image_url) . $matches[2];
+				}
+			);
+		}
+	}
 
 	$channel = dimhouse_home_acf_layout('channel');
 	if (!empty($channel['title'])) {
 		$html = dimhouse_replace_first_match(
 			$html,
-			'#(<div class="section section-5"[\s\S]*?<h4>)[\s\S]*?(</h4>)#',
+			'#(<div class="section section-5"[\s\S]*?<div class="focus_product">[\s\S]*?<div class="focus_title">)[\s\S]*?(</div>)#',
 			function ($matches) use ($channel) {
 				return $matches[1] . esc_html($channel['title']) . $matches[2];
 			}
 		);
+	}
+	if (!empty($channel['items']) && is_array($channel['items'])) {
+		$items = array();
+		foreach ($channel['items'] as $item) {
+			if (!is_array($item)) {
+				continue;
+			}
+
+			$title = !empty($item['title']) ? $item['title'] : '';
+			$url = !empty($item['url']) ? $item['url'] : '#';
+			$image = !empty($item['image']) ? dimhouse_clone_img_url($item['image']) : '';
+			if (!$title && !$image) {
+				continue;
+			}
+
+			$items[] = '<div class="col_item ">
+				<div class="item">
+					<a href="' . esc_url($url) . '" title="' . esc_attr($title) . '" data-fancybox="">
+						' . ($image ? '<img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '">' : '') . '
+					</a>
+					<span><i class="fa fa-play"></i></span>
+				</div>
+			</div>';
+		}
+
+		if (!empty($items)) {
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(<div class="section section-5"[\s\S]*?<div class="focus_product">[\s\S]*?<div class="row_item">)[\s\S]*?(</div>\s*</div>\s*<div class="page">)#',
+				function ($matches) use ($items) {
+					return $matches[1] . "\n" . implode("\n", $items) . "\n" . $matches[2];
+				}
+			);
+		}
 	}
 
 	$testimonials = dimhouse_home_acf_layout('testimonials');
@@ -684,6 +937,171 @@ function dimhouse_apply_clone_acf_overrides($html) {
 				return $matches[1] . esc_html($testimonials['title']) . $matches[2];
 			}
 		);
+	}
+	if (!empty($testimonials['text'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="box_comment">[\s\S]*?<div class="box_mid-title">[\s\S]*?</div>\s*</div>)#',
+			function ($matches) use ($testimonials) {
+				return $matches[1] . '<div class="box_mid-text">' . wp_kses_post($testimonials['text']) . '</div>';
+			}
+		);
+	}
+	if (!empty($testimonials['items']) && is_array($testimonials['items'])) {
+		$items = array();
+		foreach ($testimonials['items'] as $item) {
+			if (!is_array($item)) {
+				continue;
+			}
+
+			$name = !empty($item['name']) ? $item['name'] : '';
+			$role = !empty($item['role']) ? $item['role'] : '';
+			$text = !empty($item['text']) ? $item['text'] : '';
+			$avatar = !empty($item['avatar']) ? dimhouse_clone_img_url($item['avatar']) : '';
+			$rating = !empty($item['rating']) ? min(10, max(1, (int) $item['rating'] * 2)) : 10;
+			$testimonial_title = trim($role . ' ' . $name);
+			if (!$testimonial_title && !$text && !$avatar) {
+				continue;
+			}
+
+			$items[] = '<div class="col_comment">
+				<div class="comment">
+					<div class="info_item">
+						<figure><a title="' . esc_attr($testimonial_title) . '">' . ($avatar ? '<img src="' . esc_url($avatar) . '" alt="">' : '') . '</a></figure>
+						<div class="info_title">
+							<div class="title">' . ($role ? esc_html($role) . ' ' : '') . '<span>' . esc_html($name) . '</span></div>
+							<div class="rate">Đánh giá : <span title="' . esc_attr($rating . '/10') . '">' . esc_html($rating . '/10') . '</span></div>
+						</div>
+					</div>
+					<div class="short"><p>' . esc_html($text) . '</p></div>
+				</div>
+			</div>';
+		}
+
+		if (!empty($items)) {
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(<div class="box_comment">[\s\S]*?<div class="list_item_project">)[\s\S]*?(</div>\s*</div>\s*</div>\s*</div>\s*<div class="contact">)#',
+				function ($matches) use ($items) {
+					return $matches[1] . "\n" . implode("\n", $items) . "\n" . $matches[2];
+				}
+			);
+		}
+	}
+
+	$faq = dimhouse_home_acf_layout('faq');
+	if (!empty($faq) && (!empty($faq['title']) || !empty($faq['items']))) {
+		$faq_items = array();
+		if (!empty($faq['items']) && is_array($faq['items'])) {
+			foreach ($faq['items'] as $item) {
+				if (!is_array($item)) {
+					continue;
+				}
+
+				$question = !empty($item['question']) ? $item['question'] : '';
+				$answer = !empty($item['answer']) ? $item['answer'] : '';
+				if (!$question && !$answer) {
+					continue;
+				}
+
+				$faq_items[] = '<details class="faq-item"><summary>' . esc_html($question) . '</summary><div class="faq-answer">' . wp_kses_post($answer) . '</div></details>';
+			}
+		}
+
+		if (!empty($faq['title']) || !empty($faq_items)) {
+			$faq_html = '<section class="section section-faq"><div class="container">';
+			if (!empty($faq['title'])) {
+				$faq_html .= '<h2>' . esc_html($faq['title']) . '</h2>';
+			}
+			if (!empty($faq_items)) {
+				$faq_html .= '<div class="faq-list">' . implode("\n", $faq_items) . '</div>';
+			}
+			$faq_html .= '</div></section>';
+
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(\s*<!-- start section 7 -->)#',
+				function ($matches) use ($faq_html) {
+					return "\n" . $faq_html . "\n" . $matches[1];
+				}
+			);
+		}
+	}
+
+	$contact = dimhouse_home_acf_layout('contact');
+	if (!empty($contact)) {
+		if (!empty($contact['title'])) {
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(<div class="contact">[\s\S]*?<div class="title_contact">[\s\S]*?<h3>)[\s\S]*?(</h3>)#',
+				function ($matches) use ($contact) {
+					return $matches[1] . esc_html($contact['title']) . $matches[2];
+				}
+			);
+		}
+
+		if (!empty($contact['text']) || !empty($contact['shortcode'])) {
+			$contact_extra = '';
+			if (!empty($contact['text'])) {
+				$contact_extra .= '<div class="contact-text">' . wp_kses_post($contact['text']) . '</div>';
+			}
+			if (!empty($contact['shortcode'])) {
+				$contact_extra .= '<div class="contact-form">' . do_shortcode($contact['shortcode']) . '</div>';
+			}
+
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(<div class="contact">[\s\S]*?<div class="title_contact">[\s\S]*?</div>\s*)(<div class="wrap">)#',
+				function ($matches) use ($contact_extra) {
+					return $matches[1] . $contact_extra . $matches[2];
+				}
+			);
+		}
+
+		if (!empty($contact['items']) && is_array($contact['items'])) {
+			$contact_icons = array(
+				dimhouse_asset_uri('uploads/about/2022_04/lh-hotline.png'),
+				dimhouse_asset_uri('uploads/about/2022_04/lh-fb.png'),
+				dimhouse_asset_uri('uploads/about/2022_04/lh-mail.png'),
+				dimhouse_asset_uri('uploads/about/2022_04/lh-dc.png'),
+			);
+			$items = array();
+			foreach ($contact['items'] as $index => $item) {
+				if (!is_array($item)) {
+					continue;
+				}
+
+				$label = !empty($item['label']) ? $item['label'] : '';
+				$value = !empty($item['value']) ? $item['value'] : '';
+				$url = !empty($item['url']) ? $item['url'] : '';
+				if (!$label && !$value) {
+					continue;
+				}
+
+				$icon = !empty($contact_icons[$index]) ? $contact_icons[$index] : end($contact_icons);
+				$value_html = $url
+					? '<a href="' . esc_url($url) . '">' . esc_html($value) . '</a>'
+					: esc_html($value);
+
+				$items[] = '<div>
+					<div><img src="' . esc_url($icon) . '" alt="" width="80" height="80"></div>
+					<div class="info">
+						' . ($label ? '<div class="name">' . esc_html($label) . '</div>' : '') . '
+						' . ($value !== '' ? '<div>' . $value_html . '</div>' : '') . '
+					</div>
+				</div>';
+			}
+
+			if (!empty($items)) {
+				$html = dimhouse_replace_first_match(
+					$html,
+					'#(<div class="contact">[\s\S]*?<div class="wrap">\s*<div>)[\s\S]*?(</div>\s*</div>\s*</div>\s*</div>\s*</div>\s*</div>\s*(?:<section class="section section-faq">|<!-- start section 7 -->))#',
+					function ($matches) use ($items) {
+						return $matches[1] . "\n" . implode("\n", $items) . "\n" . $matches[2];
+					}
+				);
+			}
+		}
 	}
 
 	$popup_image = dimhouse_option('popup_image');

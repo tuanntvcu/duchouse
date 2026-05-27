@@ -6,3 +6,91 @@ Description: Production-ready WordPress theme converted from the Dimhouse HTML c
 Version: 1.0.0
 Text Domain: dimhouse
 */
+
+.section-0 .eyebrow,
+.section-0 .buttons,
+.hero-banners,
+.estimate-intro,
+.section_home_about .about_text,
+.menu_grid_intro,
+.box_comment .box_mid-text,
+.contact .contact-text,
+.contact .contact-form,
+.section-faq {
+	box-sizing: border-box;
+}
+
+.section-0 .eyebrow {
+	color: #fff;
+	font-size: 14px;
+	font-weight: 600;
+	margin-bottom: 8px;
+	text-transform: uppercase;
+}
+
+.section-0 .buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 18px;
+}
+
+.hero-banners {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	margin-bottom: 18px;
+	margin-top: 18px;
+}
+
+.hero-banners .banner_item {
+	flex: 1 1 240px;
+}
+
+.hero-banners img {
+	display: block;
+	height: auto;
+	max-width: 100%;
+}
+
+.estimate-intro,
+.section_home_about .about_text,
+.menu_grid_intro,
+.box_comment .box_mid-text,
+.contact .contact-text,
+.contact .contact-form {
+	margin: 0 auto 24px;
+	max-width: 920px;
+}
+
+.section-faq {
+	background: #fff;
+	padding: 60px 0;
+}
+
+.section-faq h2 {
+	font-size: 30px;
+	font-weight: 700;
+	margin: 0 0 24px;
+	text-align: center;
+}
+
+.faq-list {
+	margin: 0 auto;
+	max-width: 900px;
+}
+
+.faq-item {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+	padding: 16px 0;
+}
+
+.faq-item summary {
+	cursor: pointer;
+	font-weight: 600;
+	list-style-position: inside;
+}
+
+.faq-answer {
+	margin-top: 12px;
+}
