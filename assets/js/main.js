@@ -11,6 +11,31 @@
 		}
 	}
 
+	function initLegacyAjaxBridge() {
+		if (!$.ajaxPrefilter || !window.dimhouseTheme || !window.dimhouseTheme.ajaxUrl) {
+			return;
+		}
+
+		$.ajaxPrefilter(function (options) {
+			if (!options.url || options.url.indexOf('ajax.php') === -1) {
+				return;
+			}
+
+			options.url = window.dimhouseTheme.ajaxUrl;
+
+			if (typeof options.data === 'string') {
+				if (options.data.indexOf('action=') === -1) {
+					options.data += (options.data ? '&' : '') + 'action=dimhouse_legacy_ajax';
+				}
+				return;
+			}
+
+			options.data = $.extend({}, options.data, {
+				action: 'dimhouse_legacy_ajax'
+			});
+		});
+	}
+
 	function initTabs() {
 		$(document).on('click', '[data-toggle="tab"]', function (event) {
 			event.preventDefault();
@@ -294,6 +319,8 @@
 			});
 		}
 	}
+
+	initLegacyAjaxBridge();
 
 	$(function () {
 		initClonePlugins();

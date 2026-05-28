@@ -376,6 +376,71 @@ function dimhouse_register_acf_fields() {
 		),
 	));
 
+	acf_add_local_field_group(array(
+		'key' => 'group_dimhouse_construction_estimate_settings',
+		'title' => 'Cấu hình khai toán chi phí',
+		'fields' => array(
+			array('key' => 'field_dimhouse_estimate_design_tab', 'label' => 'Đơn giá thiết kế', 'name' => '', 'type' => 'tab', 'placement' => 'top'),
+			array('key' => 'field_dimhouse_estimate_design_landscape_rate', 'label' => 'Cảnh quan (VNĐ/m2)', 'name' => 'estimate_design_landscape_rate', 'type' => 'number', 'default_value' => 100000, 'min' => 0, 'step' => 1000),
+			array('key' => 'field_dimhouse_estimate_design_interior_rate', 'label' => 'Thiết kế nội thất (VNĐ/m2)', 'name' => 'estimate_design_interior_rate', 'type' => 'number', 'default_value' => 150000, 'min' => 0, 'step' => 1000),
+			array('key' => 'field_dimhouse_estimate_design_architecture_rate', 'label' => 'Thiết kế kiến trúc (VNĐ/m2)', 'name' => 'estimate_design_architecture_rate', 'type' => 'number', 'default_value' => 150000, 'min' => 0, 'step' => 1000),
+			array('key' => 'field_dimhouse_estimate_design_architecture_interior_rate', 'label' => 'Kiến trúc - nội thất (VNĐ/m2)', 'name' => 'estimate_design_architecture_interior_rate', 'type' => 'number', 'default_value' => 250000, 'min' => 0, 'step' => 1000),
+
+			array('key' => 'field_dimhouse_estimate_completion_tab', 'label' => 'Đơn giá hoàn thiện', 'name' => '', 'type' => 'tab', 'placement' => 'top'),
+			array('key' => 'field_dimhouse_estimate_completion_high_rate', 'label' => 'Gói cao cấp (VNĐ/m2)', 'name' => 'estimate_completion_high_rate', 'type' => 'number', 'default_value' => 3000000, 'min' => 0, 'step' => 10000),
+			array('key' => 'field_dimhouse_estimate_completion_good_rate', 'label' => 'Gói khá (VNĐ/m2)', 'name' => 'estimate_completion_good_rate', 'type' => 'number', 'default_value' => 2600000, 'min' => 0, 'step' => 10000),
+			array('key' => 'field_dimhouse_estimate_completion_standard_rate', 'label' => 'Gói trung bình (VNĐ/m2)', 'name' => 'estimate_completion_standard_rate', 'type' => 'number', 'default_value' => 2300000, 'min' => 0, 'step' => 10000),
+
+			array('key' => 'field_dimhouse_estimate_crude_tab', 'label' => 'Đơn giá phần thô', 'name' => '', 'type' => 'tab', 'placement' => 'top'),
+			array('key' => 'field_dimhouse_estimate_crude_tiny_max_area', 'label' => 'Ngưỡng diện tích nhỏ', 'name' => 'estimate_crude_tiny_max_area', 'type' => 'number', 'default_value' => 150, 'min' => 0, 'step' => 1),
+			array('key' => 'field_dimhouse_estimate_crude_tiny_unit', 'label' => 'Đơn giá khi nhỏ hơn ngưỡng (VNĐ/m2)', 'name' => 'estimate_crude_tiny_unit', 'type' => 'number', 'default_value' => 4200000, 'min' => 0, 'step' => 10000),
+			array('key' => 'field_dimhouse_estimate_crude_small_unit', 'label' => 'Đơn giá tại đúng ngưỡng (VNĐ/m2)', 'name' => 'estimate_crude_small_unit', 'type' => 'number', 'default_value' => 4000000, 'min' => 0, 'step' => 10000),
+			array('key' => 'field_dimhouse_estimate_crude_medium_unit', 'label' => 'Đơn giá từ ngưỡng đến trước khoảng đặc biệt (VNĐ/m2)', 'name' => 'estimate_crude_medium_unit', 'type' => 'number', 'default_value' => 3950000, 'min' => 0, 'step' => 10000),
+			array('key' => 'field_dimhouse_estimate_crude_large_unit', 'label' => 'Đơn giá từ sau khoảng đặc biệt (VNĐ/m2)', 'name' => 'estimate_crude_large_unit', 'type' => 'number', 'default_value' => 3800000, 'min' => 0, 'step' => 10000),
+			array('key' => 'field_dimhouse_estimate_crude_special_min_area', 'label' => 'Bắt đầu khoảng đặc biệt', 'name' => 'estimate_crude_special_min_area', 'type' => 'number', 'default_value' => 300, 'min' => 0, 'step' => 1),
+			array('key' => 'field_dimhouse_estimate_crude_special_max_area', 'label' => 'Kết thúc khoảng đặc biệt', 'name' => 'estimate_crude_special_max_area', 'type' => 'number', 'default_value' => 350, 'min' => 0, 'step' => 1),
+			array('key' => 'field_dimhouse_estimate_crude_special_unit', 'label' => 'Đơn giá khoảng đặc biệt (VNĐ/m2)', 'name' => 'estimate_crude_special_unit', 'type' => 'number', 'default_value' => 39800000, 'min' => 0, 'step' => 10000),
+
+			array('key' => 'field_dimhouse_estimate_foundation_tab', 'label' => 'Hệ số móng và hầm', 'name' => '', 'type' => 'tab', 'placement' => 'top'),
+			array('key' => 'field_dimhouse_estimate_foundation_pile_design_coeff', 'label' => 'Móng cọc - hệ số thiết kế/hoàn thiện', 'name' => 'estimate_foundation_pile_design_coeff', 'type' => 'number', 'default_value' => 0, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_foundation_pile_raw_coeff', 'label' => 'Móng cọc - hệ số phần thô', 'name' => 'estimate_foundation_pile_raw_coeff', 'type' => 'number', 'default_value' => 0.5, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_foundation_strip_design_coeff', 'label' => 'Móng băng - hệ số thiết kế/hoàn thiện', 'name' => 'estimate_foundation_strip_design_coeff', 'type' => 'number', 'default_value' => 0.2, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_foundation_strip_raw_coeff', 'label' => 'Móng băng - hệ số phần thô', 'name' => 'estimate_foundation_strip_raw_coeff', 'type' => 'number', 'default_value' => 0.7, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_basement_depth_min', 'label' => 'Chiều sâu hầm tối thiểu để tính', 'name' => 'estimate_basement_depth_min', 'type' => 'number', 'default_value' => 1, 'min' => 0, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_basement_coeff_shallow', 'label' => 'Hầm từ 1.0m đến dưới 1.3m', 'name' => 'estimate_basement_coeff_shallow', 'type' => 'number', 'default_value' => 1.5, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_basement_coeff_medium', 'label' => 'Hầm từ 1.3m đến dưới 1.7m', 'name' => 'estimate_basement_coeff_medium', 'type' => 'number', 'default_value' => 1.7, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_basement_coeff_deep', 'label' => 'Hầm từ 1.7m đến dưới 2.2m', 'name' => 'estimate_basement_coeff_deep', 'type' => 'number', 'default_value' => 2, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_basement_coeff_extra_deep', 'label' => 'Hầm từ 2.2m trở lên', 'name' => 'estimate_basement_coeff_extra_deep', 'type' => 'number', 'default_value' => 2.5, 'step' => 0.1),
+
+			array('key' => 'field_dimhouse_estimate_area_tab', 'label' => 'Hệ số diện tích khác', 'name' => '', 'type' => 'tab', 'placement' => 'top'),
+			array('key' => 'field_dimhouse_estimate_mezzanine_floor_coeff', 'label' => 'Tầng lửng có sàn', 'name' => 'estimate_mezzanine_floor_coeff', 'type' => 'number', 'default_value' => 1, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_mezzanine_nofloor_coeff', 'label' => 'Tầng lửng không sàn', 'name' => 'estimate_mezzanine_nofloor_coeff', 'type' => 'number', 'default_value' => 0.5, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_terrace_roof_coeff', 'label' => 'Sân thượng có mái', 'name' => 'estimate_terrace_roof_coeff', 'type' => 'number', 'default_value' => 1, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_terrace_noroof_coeff', 'label' => 'Sân thượng không mái', 'name' => 'estimate_terrace_noroof_coeff', 'type' => 'number', 'default_value' => 0.7, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_yard_coeff', 'label' => 'Phần sân', 'name' => 'estimate_yard_coeff', 'type' => 'number', 'default_value' => 0.5, 'step' => 0.1),
+
+			array('key' => 'field_dimhouse_estimate_roof_tab', 'label' => 'Hệ số mái', 'name' => '', 'type' => 'tab', 'placement' => 'top'),
+			array('key' => 'field_dimhouse_estimate_roof_1_design_coeff', 'label' => 'Mái BTCT - hệ số thiết kế', 'name' => 'estimate_roof_1_design_coeff', 'type' => 'number', 'default_value' => 0, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_roof_1_completion_coeff', 'label' => 'Mái BTCT - hệ số hoàn thiện/phần thô', 'name' => 'estimate_roof_1_completion_coeff', 'type' => 'number', 'default_value' => 0.5, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_roof_2_design_coeff', 'label' => 'Mái tôn - hệ số thiết kế', 'name' => 'estimate_roof_2_design_coeff', 'type' => 'number', 'default_value' => -0.2, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_roof_2_completion_coeff', 'label' => 'Mái tôn - hệ số hoàn thiện/phần thô', 'name' => 'estimate_roof_2_completion_coeff', 'type' => 'number', 'default_value' => 0.3, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_roof_3_design_coeff', 'label' => 'Mái ngói kèo sắt - hệ số thiết kế', 'name' => 'estimate_roof_3_design_coeff', 'type' => 'number', 'default_value' => 0.2, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_roof_3_completion_coeff', 'label' => 'Mái ngói kèo sắt - hệ số hoàn thiện/phần thô', 'name' => 'estimate_roof_3_completion_coeff', 'type' => 'number', 'default_value' => 0.7, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_roof_4_design_coeff', 'label' => 'Mái ngói BTCT - hệ số thiết kế', 'name' => 'estimate_roof_4_design_coeff', 'type' => 'number', 'default_value' => 0.5, 'step' => 0.1),
+			array('key' => 'field_dimhouse_estimate_roof_4_completion_coeff', 'label' => 'Mái ngói BTCT - hệ số hoàn thiện/phần thô', 'name' => 'estimate_roof_4_completion_coeff', 'type' => 'number', 'default_value' => 1, 'step' => 0.1),
+		),
+		'location' => array(
+			array(
+				array(
+					'param' => 'options_page',
+					'operator' => '==',
+					'value' => 'dimhouse-theme-options',
+				),
+			),
+		),
+		'menu_order' => 20,
+	));
+
 	if (function_exists('acf_add_options_page')) {
 		acf_add_options_page(array(
 			'page_title' => 'Dimhouse Theme Options',
