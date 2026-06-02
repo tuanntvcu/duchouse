@@ -71,6 +71,10 @@
 
 	function initQuantityControls() {
 		$(document).on('click', '.btn_plus, .btn_minus', function () {
+			if ($(this).closest('.choose_floor').length) {
+				return;
+			}
+
 			var $group = $(this).closest('.btn_grps');
 			var $input = $group.find('.quantity_text');
 			var value = parseInt($input.val(), 10) || 0;

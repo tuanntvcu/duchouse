@@ -20,33 +20,21 @@ $items = (is_array($items) && !empty($items)) ? $items : $defaults['items'];
 		<?php if ($text) : ?><div class="contact-text"><?php echo dimhouse_kses_content($text); ?></div><?php endif; ?>
 		<div class="contact-grid row">
 			<div class="col-lg-6">
-				<?php if (have_rows('items')) : ?>
-					<ul class="contact-items">
-						<?php while (have_rows('items')) : the_row(); ?>
-							<li>
-								<strong><?php echo esc_html(get_sub_field('label')); ?></strong>
-								<?php if (get_sub_field('url')) : ?>
-									<a href="<?php echo esc_url(get_sub_field('url')); ?>"><?php echo esc_html(get_sub_field('value')); ?></a>
-								<?php else : ?>
-									<span><?php echo esc_html(get_sub_field('value')); ?></span>
-								<?php endif; ?>
-							</li>
-						<?php endwhile; ?>
-					</ul>
-					<?php else : ?>
-						<ul class="contact-items">
-							<?php foreach ($items as $item) : ?>
-								<li>
-									<strong><?php echo esc_html(!empty($item['label']) ? $item['label'] : ''); ?></strong>
-									<?php if (!empty($item['url'])) : ?>
-										<a href="<?php echo esc_url($item['url']); ?>"><?php echo esc_html(!empty($item['value']) ? $item['value'] : ''); ?></a>
-									<?php else : ?>
-										<span><?php echo esc_html(!empty($item['value']) ? $item['value'] : ''); ?></span>
-									<?php endif; ?>
-								</li>
-							<?php endforeach; ?>
-						</ul>
-				<?php endif; ?>
+				<ul class="contact-items">
+					<?php foreach ($items as $item) : ?>
+						<li>
+							<?php if (!empty($item['icon'])) : ?>
+								<?php echo dimhouse_image_html($item['icon'], 'thumbnail', array('alt' => !empty($item['label']) ? $item['label'] : '')); ?>
+							<?php endif; ?>
+							<strong><?php echo esc_html(!empty($item['label']) ? $item['label'] : ''); ?></strong>
+							<?php if (!empty($item['url'])) : ?>
+								<a href="<?php echo esc_url($item['url']); ?>"><?php echo esc_html(!empty($item['value']) ? $item['value'] : ''); ?></a>
+							<?php else : ?>
+								<span><?php echo esc_html(!empty($item['value']) ? $item['value'] : ''); ?></span>
+							<?php endif; ?>
+						</li>
+					<?php endforeach; ?>
+				</ul>
 			</div>
 			<div class="col-lg-6">
 				<?php echo $shortcode ? do_shortcode($shortcode) : ''; ?>

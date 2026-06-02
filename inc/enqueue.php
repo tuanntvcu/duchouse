@@ -6,6 +6,8 @@ if (!defined('ABSPATH')) {
 
 function dimhouse_enqueue_assets() {
 	$theme_version = wp_get_theme()->get('Version');
+	$main_script_path = get_theme_file_path('/assets/js/main.js');
+	$main_script_version = file_exists($main_script_path) ? filemtime($main_script_path) : $theme_version;
 
 	wp_enqueue_style('dimhouse-fonts', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap', array(), null);
 	wp_enqueue_style('dimhouse-material-icons', 'https://fonts.googleapis.com/icon?family=Material+Icons', array(), null);
@@ -26,14 +28,18 @@ function dimhouse_enqueue_assets() {
 	wp_enqueue_script('dimhouse-user', dimhouse_asset_uri('modules/user/assets/default/js/user.js'), array('jquery'), $theme_version, true);
 	wp_enqueue_script('dimhouse-timepicker', dimhouse_asset_uri('resources/js/jquery_ui/jquery-ui-timepicker-addon.min.js'), array('jquery'), $theme_version, true);
 	wp_enqueue_script('dimhouse-lottie-player', 'https://unpkg.com/@lottiefiles/lottie-player@2.0.12/dist/lottie-player.js', array(), '2.0.12', true);
-	wp_enqueue_script('dimhouse-main', dimhouse_asset_uri('assets/js/main.js'), array('jquery', 'dimhouse-legacy-bundle', 'dimhouse-ordering', 'dimhouse-user', 'dimhouse-timepicker'), $theme_version, true);
+	wp_enqueue_script('dimhouse-main', dimhouse_asset_uri('assets/js/main.js'), array('jquery', 'dimhouse-legacy-bundle', 'dimhouse-ordering', 'dimhouse-user', 'dimhouse-timepicker'), $main_script_version, true);
 
+	$alert_title = dimhouse_option('alert_title', 'Thông báo');
+	$send_label = dimhouse_option('send_label', 'Gửi thông tin');
+	$form_confirm_message = dimhouse_option('form_confirm_message', 'Bạn bấm gửi là đồng ý gửi thông tin cá nhân đến chúng tôi cho việc tư vấn công trình! Dimhouse sẽ phản hồi sớm nhất.');
+	$form_success_message = dimhouse_option('form_success_message', 'Đặt lịch thành công!');
 	wp_add_inline_script(
 		'dimhouse-legacy-bundle',
 		'var ROOT = ' . wp_json_encode(home_url('/')) . ';' .
 		'var DIR_IMAGE = ' . wp_json_encode(dimhouse_asset_uri('resources/images/')) . ';' .
 		'var deviceType = "phone"; var lang = "vi"; var lang_js = []; var lang_js_mod = []; lang_js_mod.home = [];' .
-		'lang_js.aleft_title = "ThÃ´ng bÃ¡o"; lang_js.send = "Gá»­i thÃ´ng tin"; lang_js_mod.home.confirm = "Báº¡n báº¥m gá»­i lÃ  Ä‘á»“ng Ã½ gá»­i thÃ´ng tin cÃ¡ nhÃ¢n Ä‘áº¿n chÃºng tÃ´i cho viá»‡c tÆ° váº¥n cÃ´ng trÃ¬nh! Dimhouse sáº½ pháº£n há»“i sá»›m nháº¥t."; lang_js_mod.home.book_success = "Äáº·t lá»‹ch thÃ nh cÃ´ng!";',
+		'lang_js.aleft_title = ' . wp_json_encode($alert_title) . '; lang_js.send = ' . wp_json_encode($send_label) . '; lang_js_mod.home.confirm = ' . wp_json_encode($form_confirm_message) . '; lang_js_mod.home.book_success = ' . wp_json_encode($form_success_message) . ';',
 		'before'
 	);
 

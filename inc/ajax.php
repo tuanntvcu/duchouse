@@ -14,7 +14,7 @@ function dimhouse_legacy_ajax() {
 	if ($module !== 'global') {
 		dimhouse_legacy_json(array(
 			'ok' => 0,
-			'mess' => 'Request khong hop le.',
+			'mess' => dimhouse_estimate_label('form_required_message', 'Request khong hop le.'),
 		));
 	}
 
@@ -32,7 +32,7 @@ function dimhouse_legacy_ajax() {
 
 	dimhouse_legacy_json(array(
 		'ok' => 0,
-		'mess' => 'Chuc nang chua duoc ho tro.',
+		'mess' => dimhouse_estimate_label('form_required_message', 'Chuc nang chua duoc ho tro.'),
 	));
 }
 
@@ -102,6 +102,10 @@ function dimhouse_estimate_setting($field_name, $default) {
 	return is_numeric($value) ? (float) $value : $default;
 }
 
+function dimhouse_estimate_label($field_name, $default) {
+	return function_exists('dimhouse_option') ? dimhouse_option($field_name, $default) : $default;
+}
+
 function dimhouse_estimate_config() {
 	return array(
 		'design_landscape_rate' => dimhouse_estimate_setting('estimate_design_landscape_rate', 100000),
@@ -147,11 +151,11 @@ function dimhouse_estimate_config() {
 function dimhouse_ajax_construction() {
 	$values = dimhouse_legacy_post_data();
 
-	foreach (array('full_name', 'phone', 'province', 'district', 'ward', 'type', 'foundation', 'foundation_area', 'ground_floor', 'num_bedroom', 'num_wc') as $required) {
+	foreach (array('full_name', 'phone', 'type', 'foundation', 'foundation_area', 'ground_floor', 'num_bedroom', 'num_wc') as $required) {
 		if (empty($values[$required])) {
 			return array(
 				'ok' => 0,
-				'mess' => 'Vui long nhap day du thong tin bat buoc.',
+				'mess' => dimhouse_estimate_label('form_required_message', 'Vui long nhap day du thong tin bat buoc.'),
 			);
 		}
 	}
@@ -316,8 +320,20 @@ function dimhouse_render_completion_options($area, $config) {
 
 function dimhouse_render_radio_price_list($options, $area) {
 	$html = '';
+	$label_fields = array(
+		'design_type-content-9' => array('estimate_design_landscape_label', 'Cảnh quan'),
+		'design_type-content-5' => array('estimate_design_interior_label', 'Thiết kế nội thất'),
+		'design_type-content-3' => array('estimate_design_architecture_label', 'Thiết kế kiến trúc'),
+		'design_type-content-1' => array('estimate_design_architecture_interior_label', 'Kiến trúc - nội thất'),
+		'completion-content-5' => array('estimate_completion_high_label', 'Gói cao cấp'),
+		'completion-content-3' => array('estimate_completion_good_label', 'Gói khá'),
+		'completion-content-1' => array('estimate_completion_standard_label', 'Gói trung bình'),
+	);
 
 	foreach ($options as $option) {
+		if (!empty($option['item']) && isset($label_fields[$option['item']])) {
+			$option['label'] = dimhouse_estimate_label($label_fields[$option['item']][0], $label_fields[$option['item']][1]);
+		}
 		$total = $area * $option['rate'];
 		$html .= '<li>';
 		$html .= '<label class="radio_css"><input name="' . esc_attr($option['name']) . '" type="radio" value="' . esc_attr(dimhouse_format_vnd($total)) . '"' . (!empty($option['checked']) ? ' checked="checked"' : '') . ' data-item="' . esc_attr($option['item']) . '">' . esc_html($option['label']) . '</label>';
@@ -345,26 +361,65 @@ function dimhouse_ajax_load_pic_review() {
 	if ($floor < 0 || $floor > 5) {
 		return array(
 			'ok' => 0,
-			'mess' => 'So lau khong hop le.',
+			'mess' => dimhouse_estimate_label('invalid_floor_message', 'So lau khong hop le.'),
 		);
 	}
 
 	if ($mezzanine < 0 || $mezzanine > 1) {
 		return array(
 			'ok' => 0,
-			'mess' => 'So lung khong hop le.',
+			'mess' => dimhouse_estimate_label('invalid_mezzanine_message', 'So lung khong hop le.'),
 			'mezzanine' => 0,
 		);
 	}
 
-	$path = 'uploads/estimate/tang_lung/khong_lung/' . $floor . '_lau_n.jpg';
-	if (!file_exists(get_theme_file_path('/' . $path))) {
-		$path = 'uploads/estimate/tang_lung/khong_lung/0_lau_n.jpg';
+	if ($mezzanine === 1 && $floor === 0) {
+		return array(
+			'ok' => 0,
+			'html' => '',
+			'mess' => dimhouse_estimate_label('invalid_mezzanine_zero_floor_message', 'So lung khong vuot qua 0.'),
+			'mezzanine' => 0,
+		);
 	}
+
+	$preview_paths = array(
+		0 => array(
+			0 => 'uploads/estimate/tang_lung/khong_lung/0_lau_n.jpg',
+			1 => 'uploads/estimate/tang_lung/khong_lung/1_lau_n.jpg',
+			2 => 'uploads/estimate/tang_lung/khong_lung/2_lau_n.jpg',
+			3 => 'uploads/estimate/tang_lung/khong_lung/3_lau_n.jpg',
+			4 => 'uploads/estimate/tang_lung/khong_lung/4-lau_n.jpg',
+			5 => 'uploads/estimate/tang_lung/khong_lung/5-lau_n.jpg',
+		),
+		1 => array(
+			1 => 'uploads/estimate/tang_lung/co_lung/1lau.jpg',
+			2 => 'uploads/estimate/tang_lung/co_lung/2lau.jpg',
+			3 => 'uploads/estimate/tang_lung/co_lung/3lau.jpg',
+			4 => 'uploads/estimate/tang_lung/co_lung/4lau.jpg',
+			5 => 'uploads/estimate/tang_lung/co_lung/5lau.jpg',
+		),
+	);
+
+	$path = isset($preview_paths[$mezzanine][$floor])
+		? $preview_paths[$mezzanine][$floor]
+		: 'uploads/estimate/tang_lung/khong_lung/0_lau_n.jpg';
+
+	if (!file_exists(get_theme_file_path('/' . $path))) {
+		return array(
+			'ok' => 0,
+			'html' => '',
+			'mess' => dimhouse_estimate_label('missing_preview_image_message', 'Khong tim thay anh xem truoc.'),
+			'mezzanine' => 0,
+		);
+	}
+
+	$alt = sprintf('Anh %d lau%s', $floor, $mezzanine === 1 ? ' co lung' : ' khong lung');
 
 	return array(
 		'ok' => 1,
-		'html' => '<img src="' . esc_url(dimhouse_asset_uri($path)) . '" alt="Ảnh ' . esc_attr((string) $floor) . ' lầu">',
+		'html' => '<img src="' . esc_url(dimhouse_asset_uri($path)) . '" alt="' . esc_attr($alt) . '">',
+		'mess' => '',
+		'mezzanine' => -1,
 	);
 }
 
@@ -374,12 +429,12 @@ function dimhouse_ajax_form_book() {
 	if (empty($values['full_name']) || empty($values['phone'])) {
 		return array(
 			'ok' => 0,
-			'mess' => 'Vui long nhap ho ten va so dien thoai.',
+			'mess' => dimhouse_estimate_label('form_required_message', 'Vui long nhap ho ten va so dien thoai.'),
 		);
 	}
 
 	return array(
 		'ok' => 1,
-		'mess' => 'Dat lich thanh cong!',
+		'mess' => dimhouse_estimate_label('form_success_message', 'Dat lich thanh cong!'),
 	);
 }

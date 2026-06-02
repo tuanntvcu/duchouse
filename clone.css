@@ -32728,8 +32728,8 @@
         }
 
         :root {
-            --color_main: #FFBA00;
-            --color_main2: #2D2729;
+            --color_main: #dda77b;
+            --color_main2: #303f54;
             --convert_color_main: invert(65%) sepia(55%) saturate(763%) hue-rotate(359deg) brightness(106%) contrast(104%);
             --convert_color_main2: invert(14%) sepia(11%) saturate(444%) hue-rotate(289deg) brightness(95%) contrast(93%);
             --pc: 1301px;
@@ -34977,7 +34977,7 @@
             position: absolute;
             top: -10px;
             left: -10px;
-            background: #2D2729;
+            background: #303f54;
             height: calc(100% + 20px);
             width: calc(100% + 20px);
             border-radius: 50%
@@ -35730,7 +35730,7 @@
             margin-top: 10px;
             border-radius: 5px;
             background: #CCC;
-            color: #2D2729
+            color: #303f54
         }
 
         .construction .wrap_top .form .wrap_content .tab-content .estimate-item-content {

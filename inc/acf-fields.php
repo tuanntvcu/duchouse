@@ -35,13 +35,57 @@ function dimhouse_register_acf_fields() {
 					array('key' => 'field_dimhouse_header_social_image', 'label' => 'Image', 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail'),
 				),
 			),
+			array(
+				'key' => 'field_dimhouse_floating_contact_links',
+				'label' => 'Floating Contact Links',
+				'name' => 'floating_contact_links',
+				'type' => 'repeater',
+				'layout' => 'row',
+				'button_label' => 'Add Floating Link',
+				'sub_fields' => array(
+					array('key' => 'field_dimhouse_floating_contact_label', 'label' => 'Label', 'name' => 'label', 'type' => 'text'),
+					array('key' => 'field_dimhouse_floating_contact_url', 'label' => 'URL', 'name' => 'url', 'type' => 'text'),
+					array('key' => 'field_dimhouse_floating_contact_image', 'label' => 'Icon Image', 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail'),
+					array('key' => 'field_dimhouse_floating_contact_class', 'label' => 'CSS Class', 'name' => 'class', 'type' => 'text'),
+				),
+			),
+			array(
+				'key' => 'field_dimhouse_side_menu_items',
+				'label' => 'Side Menu Items',
+				'name' => 'side_menu_items',
+				'type' => 'repeater',
+				'layout' => 'row',
+				'button_label' => 'Add Side Menu Item',
+				'sub_fields' => array(
+					array('key' => 'field_dimhouse_side_menu_label', 'label' => 'Label', 'name' => 'label', 'type' => 'text'),
+					array('key' => 'field_dimhouse_side_menu_url', 'label' => 'URL', 'name' => 'url', 'type' => 'url'),
+				),
+			),
+			array(
+				'key' => 'field_dimhouse_mobile_menu_items',
+				'label' => 'Mobile Bottom Menu Items',
+				'name' => 'mobile_menu_items',
+				'type' => 'repeater',
+				'layout' => 'row',
+				'button_label' => 'Add Mobile Menu Item',
+				'sub_fields' => array(
+					array('key' => 'field_dimhouse_mobile_menu_label', 'label' => 'Label', 'name' => 'label', 'type' => 'text'),
+					array('key' => 'field_dimhouse_mobile_menu_url', 'label' => 'URL', 'name' => 'url', 'type' => 'url'),
+					array('key' => 'field_dimhouse_mobile_menu_icon', 'label' => 'Icon', 'name' => 'icon', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail'),
+				),
+			),
 			array('key' => 'field_dimhouse_footer_title', 'label' => 'Footer Title', 'name' => 'footer_title', 'type' => 'text'),
+			array('key' => 'field_dimhouse_footer_brand_title', 'label' => 'Footer Partners Title', 'name' => 'footer_brand_title', 'type' => 'text'),
+			array('key' => 'field_dimhouse_footer_contact_title', 'label' => 'Footer Contact Title', 'name' => 'footer_contact_title', 'type' => 'text'),
+			array('key' => 'field_dimhouse_footer_social_title', 'label' => 'Footer Social Title', 'name' => 'footer_social_title', 'type' => 'text'),
 			array('key' => 'field_dimhouse_footer_text', 'label' => 'Footer Text', 'name' => 'footer_text', 'type' => 'wysiwyg', 'tabs' => 'all', 'toolbar' => 'basic'),
 			array('key' => 'field_dimhouse_footer_fanpage_iframe', 'label' => 'Footer Fanpage Iframe', 'name' => 'footer_fanpage_iframe', 'type' => 'textarea', 'new_lines' => ''),
 			array('key' => 'field_dimhouse_footer_map_iframe', 'label' => 'Footer Map Iframe', 'name' => 'footer_map_iframe', 'type' => 'textarea', 'new_lines' => ''),
 			array('key' => 'field_dimhouse_footer_email', 'label' => 'Footer Email', 'name' => 'footer_email', 'type' => 'email'),
+			array('key' => 'field_dimhouse_footer_copyright', 'label' => 'Footer Copyright', 'name' => 'footer_copyright', 'type' => 'wysiwyg', 'tabs' => 'all', 'toolbar' => 'basic'),
 			array('key' => 'field_dimhouse_popup_image', 'label' => 'Popup Image', 'name' => 'popup_image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium'),
 			array('key' => 'field_dimhouse_popup_url', 'label' => 'Popup URL', 'name' => 'popup_url', 'type' => 'url'),
+			array('key' => 'field_dimhouse_popup_alt', 'label' => 'Popup Alt Text', 'name' => 'popup_alt', 'type' => 'text'),
 			array(
 				'key' => 'field_dimhouse_footer_partners',
 				'label' => 'Footer Partners',
@@ -70,6 +114,13 @@ function dimhouse_register_acf_fields() {
 			array('key' => 'field_dimhouse_seo_title', 'label' => 'SEO Title', 'name' => 'seo_title', 'type' => 'text'),
 			array('key' => 'field_dimhouse_seo_description', 'label' => 'SEO Description', 'name' => 'seo_description', 'type' => 'textarea'),
 			array('key' => 'field_dimhouse_og_image', 'label' => 'OG Image', 'name' => 'og_image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium'),
+			array('key' => 'field_dimhouse_alert_title', 'label' => 'Alert Title', 'name' => 'alert_title', 'type' => 'text'),
+			array('key' => 'field_dimhouse_send_label', 'label' => 'Send Label', 'name' => 'send_label', 'type' => 'text'),
+			array('key' => 'field_dimhouse_form_confirm_message', 'label' => 'Form Confirm Message', 'name' => 'form_confirm_message', 'type' => 'textarea'),
+			array('key' => 'field_dimhouse_form_success_message', 'label' => 'Form Success Message', 'name' => 'form_success_message', 'type' => 'text'),
+			array('key' => 'field_dimhouse_form_required_message', 'label' => 'Form Required Message', 'name' => 'form_required_message', 'type' => 'text'),
+			array('key' => 'field_dimhouse_invalid_floor_message', 'label' => 'Invalid Floor Message', 'name' => 'invalid_floor_message', 'type' => 'text'),
+			array('key' => 'field_dimhouse_invalid_mezzanine_message', 'label' => 'Invalid Mezzanine Message', 'name' => 'invalid_mezzanine_message', 'type' => 'text'),
 		),
 		'location' => array(
 			array(
@@ -139,6 +190,7 @@ function dimhouse_register_acf_fields() {
 							array('key' => 'field_dimhouse_process_banner', 'label' => 'Banner', 'name' => 'banner', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium'),
 							array('key' => 'field_dimhouse_process_cta_label', 'label' => 'CTA Label', 'name' => 'cta_label', 'type' => 'text'),
 							array('key' => 'field_dimhouse_process_cta_url', 'label' => 'CTA URL', 'name' => 'cta_url', 'type' => 'url'),
+							array('key' => 'field_dimhouse_process_booking_form_html', 'label' => 'Booking Form HTML', 'name' => 'booking_form_html', 'type' => 'textarea', 'new_lines' => ''),
 							array(
 								'key' => 'field_dimhouse_process_steps',
 								'label' => 'Steps',
@@ -237,6 +289,15 @@ function dimhouse_register_acf_fields() {
 						'sub_fields' => array(
 							array('key' => 'field_dimhouse_estimate_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
 							array('key' => 'field_dimhouse_estimate_intro', 'label' => 'Intro', 'name' => 'intro', 'type' => 'wysiwyg', 'tabs' => 'all', 'toolbar' => 'basic'),
+							array('key' => 'field_dimhouse_estimate_floor_label', 'label' => 'Floor Control Label', 'name' => 'floor_label', 'type' => 'text'),
+							array('key' => 'field_dimhouse_estimate_mezzanine_label', 'label' => 'Mezzanine Control Label', 'name' => 'mezzanine_label', 'type' => 'text'),
+							array('key' => 'field_dimhouse_estimate_preview_image', 'label' => 'Default Preview Image', 'name' => 'preview_image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium'),
+							array('key' => 'field_dimhouse_estimate_form_banner_image', 'label' => 'Form Banner Image', 'name' => 'form_banner_image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium'),
+							array('key' => 'field_dimhouse_estimate_form_banner_url', 'label' => 'Form Banner URL', 'name' => 'form_banner_url', 'type' => 'url'),
+							array('key' => 'field_dimhouse_estimate_form_banner_alt', 'label' => 'Form Banner Alt', 'name' => 'form_banner_alt', 'type' => 'text'),
+							array('key' => 'field_dimhouse_estimate_book_button_label', 'label' => 'Book Button Label', 'name' => 'book_button_label', 'type' => 'text'),
+							array('key' => 'field_dimhouse_estimate_construction_form_html', 'label' => 'Construction Form HTML', 'name' => 'construction_form_html', 'type' => 'textarea', 'new_lines' => ''),
+							array('key' => 'field_dimhouse_estimate_booking_form_html', 'label' => 'Booking Form HTML', 'name' => 'booking_form_html', 'type' => 'textarea', 'new_lines' => ''),
 							array(
 								'key' => 'field_dimhouse_estimate_tabs',
 								'label' => 'Estimate Tabs',
@@ -262,6 +323,10 @@ function dimhouse_register_acf_fields() {
 							array('key' => 'field_dimhouse_about_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
 							array('key' => 'field_dimhouse_about_text', 'label' => 'Text', 'name' => 'text', 'type' => 'wysiwyg', 'tabs' => 'all', 'toolbar' => 'basic'),
 							array('key' => 'field_dimhouse_about_image', 'label' => 'Image', 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'large'),
+							array('key' => 'field_dimhouse_about_person_name', 'label' => 'Person Name', 'name' => 'person_name', 'type' => 'text'),
+							array('key' => 'field_dimhouse_about_person_role', 'label' => 'Person Role', 'name' => 'person_role', 'type' => 'text'),
+							array('key' => 'field_dimhouse_about_cta_label', 'label' => 'CTA Label', 'name' => 'cta_label', 'type' => 'text'),
+							array('key' => 'field_dimhouse_about_cta_url', 'label' => 'CTA URL', 'name' => 'cta_url', 'type' => 'url'),
 						),
 					),
 					'layout_channel' => array(
@@ -270,6 +335,7 @@ function dimhouse_register_acf_fields() {
 						'label' => 'Channel Section',
 						'sub_fields' => array(
 							array('key' => 'field_dimhouse_channel_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
+							array('key' => 'field_dimhouse_channel_articles_title', 'label' => 'Articles Title', 'name' => 'articles_title', 'type' => 'text'),
 							array(
 								'key' => 'field_dimhouse_channel_items',
 								'label' => 'Videos',
@@ -281,6 +347,20 @@ function dimhouse_register_acf_fields() {
 									array('key' => 'field_dimhouse_channel_item_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
 									array('key' => 'field_dimhouse_channel_item_url', 'label' => 'URL', 'name' => 'url', 'type' => 'url'),
 									array('key' => 'field_dimhouse_channel_item_image', 'label' => 'Image', 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium'),
+								),
+							),
+							array(
+								'key' => 'field_dimhouse_channel_articles',
+								'label' => 'Articles',
+								'name' => 'articles',
+								'type' => 'repeater',
+								'layout' => 'row',
+								'button_label' => 'Add Article',
+								'sub_fields' => array(
+									array('key' => 'field_dimhouse_channel_article_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
+									array('key' => 'field_dimhouse_channel_article_subtitle', 'label' => 'Subtitle', 'name' => 'subtitle', 'type' => 'text'),
+									array('key' => 'field_dimhouse_channel_article_url', 'label' => 'URL', 'name' => 'url', 'type' => 'url'),
+									array('key' => 'field_dimhouse_channel_article_image', 'label' => 'Image', 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium'),
 								),
 							),
 						),
@@ -342,6 +422,7 @@ function dimhouse_register_acf_fields() {
 								'type' => 'repeater',
 								'button_label' => 'Add Item',
 								'sub_fields' => array(
+									array('key' => 'field_dimhouse_contact_item_icon', 'label' => 'Icon', 'name' => 'icon', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail'),
 									array('key' => 'field_dimhouse_contact_item_label', 'label' => 'Label', 'name' => 'label', 'type' => 'text'),
 									array('key' => 'field_dimhouse_contact_item_value', 'label' => 'Value', 'name' => 'value', 'type' => 'text'),
 									array('key' => 'field_dimhouse_contact_item_url', 'label' => 'URL', 'name' => 'url', 'type' => 'url'),
@@ -439,6 +520,32 @@ function dimhouse_register_acf_fields() {
 			),
 		),
 		'menu_order' => 20,
+	));
+
+	acf_add_local_field_group(array(
+		'key' => 'group_dimhouse_estimate_content_labels',
+		'title' => 'Dimhouse Estimate Content Labels',
+		'fields' => array(
+			array('key' => 'field_dimhouse_estimate_design_landscape_label', 'label' => 'Landscape Label', 'name' => 'estimate_design_landscape_label', 'type' => 'text'),
+			array('key' => 'field_dimhouse_estimate_design_interior_label', 'label' => 'Interior Design Label', 'name' => 'estimate_design_interior_label', 'type' => 'text'),
+			array('key' => 'field_dimhouse_estimate_design_architecture_label', 'label' => 'Architecture Design Label', 'name' => 'estimate_design_architecture_label', 'type' => 'text'),
+			array('key' => 'field_dimhouse_estimate_design_architecture_interior_label', 'label' => 'Architecture Interior Label', 'name' => 'estimate_design_architecture_interior_label', 'type' => 'text'),
+			array('key' => 'field_dimhouse_estimate_completion_high_label', 'label' => 'High Completion Label', 'name' => 'estimate_completion_high_label', 'type' => 'text'),
+			array('key' => 'field_dimhouse_estimate_completion_good_label', 'label' => 'Good Completion Label', 'name' => 'estimate_completion_good_label', 'type' => 'text'),
+			array('key' => 'field_dimhouse_estimate_completion_standard_label', 'label' => 'Standard Completion Label', 'name' => 'estimate_completion_standard_label', 'type' => 'text'),
+			array('key' => 'field_dimhouse_estimate_unit_label', 'label' => 'Unit Label', 'name' => 'estimate_unit_label', 'type' => 'text'),
+			array('key' => 'field_dimhouse_estimate_rating_label', 'label' => 'Rating Label', 'name' => 'estimate_rating_label', 'type' => 'text'),
+		),
+		'location' => array(
+			array(
+				array(
+					'param' => 'options_page',
+					'operator' => '==',
+					'value' => 'dimhouse-theme-options',
+				),
+			),
+		),
+		'menu_order' => 21,
 	));
 
 	if (function_exists('acf_add_options_page')) {

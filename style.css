@@ -136,6 +136,7 @@ Text Domain: dimhouse
 	min-height: 42px;
 	padding: 10px 14px;
 	text-align: center;
+	text-decoration: none;
 	text-transform: uppercase;
 }
 
@@ -184,6 +185,7 @@ Text Domain: dimhouse
 
 .villa-card h3 a {
 	color: #fff;
+	text-decoration: none;
 }
 
 .villa-card h3 a:hover {
@@ -228,25 +230,92 @@ Text Domain: dimhouse
 
 @media (max-width: 768px) {
 	.villa-designs-section {
-		padding: 44px 0;
+		background:
+			linear-gradient(rgba(4, 17, 25, 0.9), rgba(4, 17, 25, 0.92)),
+			radial-gradient(circle at 18px 18px, rgba(244, 198, 93, 0.08) 1px, transparent 1.5px),
+			#071a26;
+		background-size: auto, 36px 36px, auto;
+		padding: 24px 0 18px;
+	}
+
+	.villa-designs-section .container {
+		max-width: none;
+		padding-left: 7px;
+		padding-right: 7px;
+		width: 100%;
 	}
 
 	.villa-designs-section h2 {
-		font-size: 22px;
+		font-size: 15px;
+		line-height: 1.25;
+		margin-bottom: 9px;
+	}
+
+	.villa-designs-section h2::after {
+		background: url(images/line.png) center center / 112px auto no-repeat;
+		content: "";
+		display: block;
+		height: 18px;
+		margin: 5px auto 10px;
+		width: 132px;
 	}
 
 	.villa-designs-section .villa-designs-tabs {
+		gap: 8px 14px;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
+		margin: 0 13px 20px;
+	}
+
+	.villa-designs-section .villa-designs-tabs .nav-link {
+		font-size: 10px;
+		line-height: 1.2;
+		min-height: 25px;
+		padding: 4px 6px;
+	}
+
+	.villa-designs-section .villa-designs-tabs .nav-link.active {
+		background: transparent;
+		color: #fff;
 	}
 
 	.villa-designs-grid {
+		gap: 9px 7px;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
-}
 
-@media (max-width: 520px) {
-	.villa-designs-section .villa-designs-tabs,
-	.villa-designs-grid {
-		grid-template-columns: 1fr;
+	.villa-card {
+		border-color: rgba(217, 170, 69, 0.85);
+		border-radius: 4px;
+	}
+
+	.villa-card-media img {
+		aspect-ratio: 29 / 20;
+	}
+
+	.villa-card-body {
+		padding: 7px 6px 8px;
+	}
+
+	.villa-card h3 {
+		font-size: 10px;
+		line-height: 1.35;
+		margin-bottom: 9px;
+		overflow-wrap: anywhere;
+	}
+
+	.villa-card-details {
+		gap: 3px;
+	}
+
+	.villa-card-detail {
+		font-size: 9px;
+		gap: 5px;
+		grid-template-columns: 48px minmax(0, 1fr);
+		line-height: 1.25;
+	}
+
+	.villa-card-detail span,
+	.villa-card-detail strong {
+		overflow-wrap: anywhere;
 	}
 }

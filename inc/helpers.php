@@ -192,6 +192,117 @@ function dimhouse_default_social_links() {
 	);
 }
 
+function dimhouse_option_repeater($field_name, $default = array()) {
+	$value = dimhouse_option($field_name, array());
+	return is_array($value) && !empty($value) ? $value : $default;
+}
+
+function dimhouse_default_footer_partners() {
+	return array(
+		array('image' => dimhouse_asset_uri('uploads/banner/baner/khuyen-mai-juno.png'), 'url' => '#', 'alt' => 'BRAND'),
+		array('image' => dimhouse_asset_uri('uploads/banner/baner/logo-ngang.png'), 'url' => '', 'alt' => 'BRAND'),
+		array('image' => dimhouse_asset_uri('uploads/banner/baner/logokatinat.jpg'), 'url' => '', 'alt' => 'BRAND'),
+		array('image' => dimhouse_asset_uri('uploads/banner/baner/295762826_454329143369678_112143727416609569_n.jpg'), 'url' => '', 'alt' => 'BRAND'),
+		array('image' => dimhouse_asset_uri('uploads/banner/baner/455778-kia-devoile-un-nouveau-logo-et-un-nouveau-slogan.jpg'), 'url' => '', 'alt' => 'BRAND'),
+	);
+}
+
+function dimhouse_default_mobile_menu_items() {
+	return array(
+		array('label' => 'Kiến Trúc', 'icon' => dimhouse_asset_uri('uploads/layout/2024_04/kientruc.png'), 'url' => home_url('/thiet-ke-kien-truc')),
+		array('label' => 'Nội Thất', 'icon' => dimhouse_asset_uri('uploads/layout/2024_04/noithat.png'), 'url' => home_url('/du-an-noi-that-2')),
+		array('label' => 'Thi Công', 'icon' => dimhouse_asset_uri('uploads/layout/2024_04/congtrinh.png'), 'url' => home_url('/du-an-thi-cong-1')),
+		array('label' => 'Bộ Sưu Tập', 'icon' => dimhouse_asset_uri('uploads/layout/2024_04/bosuutap.png'), 'url' => home_url('/bo-suu-tap')),
+	);
+}
+
+function dimhouse_default_side_menu_items() {
+	return array_map(
+		function ($item) {
+			return array(
+				'label' => !empty($item['label']) ? $item['label'] : '',
+				'url' => !empty($item['url']) ? $item['url'] : '',
+			);
+		},
+		dimhouse_default_mobile_menu_items()
+	);
+}
+
+function dimhouse_side_menu_items() {
+	$items = dimhouse_option_repeater('side_menu_items');
+	if (!empty($items)) {
+		return $items;
+	}
+
+	$menu_grid = dimhouse_home_acf_layout('menu_grid');
+	if (!empty($menu_grid['cards']) && is_array($menu_grid['cards'])) {
+		$items = array();
+		foreach ($menu_grid['cards'] as $card) {
+			if (empty($card['title']) && empty($card['url'])) {
+				continue;
+			}
+			$items[] = array(
+				'label' => !empty($card['title']) ? $card['title'] : '',
+				'url' => !empty($card['url']) ? $card['url'] : '',
+			);
+		}
+		if (!empty($items)) {
+			return $items;
+		}
+	}
+
+	return dimhouse_default_side_menu_items();
+}
+
+function dimhouse_mobile_menu_items() {
+	$items = dimhouse_option_repeater('mobile_menu_items');
+	if (!empty($items)) {
+		return $items;
+	}
+
+	return dimhouse_default_mobile_menu_items();
+}
+
+function dimhouse_default_floating_contact_links() {
+	$phone = dimhouse_option('header_phone', '0964158163');
+	$phone_href = dimhouse_option('header_phone_link', 'tel:0964158163');
+	$phone_digits = preg_replace('/\D+/', '', $phone);
+
+	return array(
+		array(
+			'label' => 'Phone',
+			'url' => $phone_href,
+			'image' => dimhouse_asset_uri('resources/images/whatsapp1.png'),
+			'class' => '',
+		),
+		array(
+			'label' => 'Zalo',
+			'url' => $phone_digits ? 'https://zalo.me/' . $phone_digits : '',
+			'image' => dimhouse_asset_uri('resources/images/izalo1.png'),
+			'class' => 'zalo',
+		),
+		array(
+			'label' => 'Facebook',
+			'url' => 'https://www.facebook.com/Dimhouse-Design-108306808017773',
+			'image' => dimhouse_asset_uri('resources/images/ifacebook1.png'),
+			'class' => 'facebook',
+		),
+	);
+}
+
+function dimhouse_floating_contact_links() {
+	return dimhouse_option_repeater('floating_contact_links', dimhouse_default_floating_contact_links());
+}
+
+function dimhouse_default_channel_articles() {
+	return array(
+		array('title' => 'Tiêu Chuẩn Thi Công Xây Dựng Dimhouse 2025', 'subtitle' => 'DIMHOUSE - Thiết Kế & Thi Công Công Trình', 'url' => home_url('/tieu-chuan-thi-cong-xay-dung-Dimhouse'), 'image' => dimhouse_asset_uri('thumbs/page/1_tu_van_chia_se/5_tieu_chuanthicong/[580x400-cr]anh_dai_dien___tieuchuanthicong.png__cv.webp')),
+		array('title' => 'Hồ Sơ Năng Lực Dimhouse (Portfolio)', 'subtitle' => 'DIMHOUSE - Thiết Kế & Thi Công Công Trình', 'url' => home_url('/Dimhouse-portfolio'), 'image' => dimhouse_asset_uri('thumbs/page/1_ho_so_nang_luc/[580x400-cr]anh_dai_dien___hosonangluc_1.png__cv.webp')),
+		array('title' => 'Báo Giá Xây Dựng Trọn Gói', 'subtitle' => 'DIMHOUSE - Thiết Kế & Thi Công Công Trình', 'url' => home_url('/quy-trinh-tu-van-xay-dung-moi-1-1'), 'image' => dimhouse_asset_uri('thumbs/page/1_tu_van_chia_se/7_xay_dung_tron_goi/[580x400-cr]anh_dai_dien___xay_dung_tron_goi.png__cv.webp')),
+		array('title' => 'Tư Vấn Báo Giá Thi Công', 'subtitle' => 'DIMHOUSE - Thiết Kế & Thi Công Công Trình', 'url' => home_url('/quy-trinh-tu-van-xay-dung-moi-1'), 'image' => dimhouse_asset_uri('thumbs/page/1_tu_van_chia_se/4_link_anh/[580x400-cr]anhdaidien___baogiathicong.png__cv.webp')),
+	);
+}
+
 function dimhouse_kses_content($content) {
 	return wp_kses_post($content);
 }
@@ -210,6 +321,26 @@ function dimhouse_kses_iframe($content) {
 		'loading' => true,
 		'referrerpolicy' => true,
 	);
+
+	return wp_kses($content, $allowed);
+}
+
+function dimhouse_kses_interactive_html($content) {
+	$allowed = wp_kses_allowed_html('post');
+	$form_tags = array(
+		'form' => array('action' => true, 'method' => true, 'id' => true, 'class' => true, 'style' => true, 'data-*' => true),
+		'input' => array('type' => true, 'name' => true, 'value' => true, 'id' => true, 'class' => true, 'placeholder' => true, 'required' => true, 'checked' => true, 'disabled' => true, 'min' => true, 'max' => true, 'step' => true, 'data-*' => true),
+		'select' => array('name' => true, 'id' => true, 'class' => true, 'required' => true, 'disabled' => true, 'data-*' => true),
+		'option' => array('value' => true, 'selected' => true, 'disabled' => true, 'data-*' => true),
+		'textarea' => array('name' => true, 'id' => true, 'class' => true, 'placeholder' => true, 'required' => true, 'disabled' => true, 'rows' => true, 'cols' => true, 'data-*' => true),
+		'button' => array('type' => true, 'name' => true, 'value' => true, 'id' => true, 'class' => true, 'style' => true, 'data-*' => true),
+		'label' => array('for' => true, 'class' => true, 'style' => true),
+		'iframe' => array('src' => true, 'width' => true, 'height' => true, 'style' => true, 'scrolling' => true, 'frameborder' => true, 'allowfullscreen' => true, 'allow' => true, 'loading' => true, 'referrerpolicy' => true),
+	);
+
+	foreach ($form_tags as $tag => $attrs) {
+		$allowed[$tag] = isset($allowed[$tag]) ? array_merge($allowed[$tag], $attrs) : $attrs;
+	}
 
 	return wp_kses($content, $allowed);
 }
@@ -245,6 +376,135 @@ function dimhouse_render_link($url, $label, $class = '') {
 		esc_url($url),
 		esc_html($label)
 	);
+}
+
+function dimhouse_render_footer_html() {
+	$defaults = dimhouse_home_defaults();
+	$footer_defaults = !empty($defaults['footer']) ? $defaults['footer'] : array();
+	$footer_logo = dimhouse_option('footer_logo', !empty($footer_defaults['footer_logo']) ? $footer_defaults['footer_logo'] : '');
+	$footer_text = dimhouse_option('footer_text', !empty($footer_defaults['footer_text']) ? $footer_defaults['footer_text'] : '');
+	$footer_partners = dimhouse_option_repeater('footer_partners', dimhouse_default_footer_partners());
+	$footer_fanpage_iframe = dimhouse_option('footer_fanpage_iframe', '<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100065424102650&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" width="340" height="311" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>');
+	$footer_map_iframe = dimhouse_option('footer_map_iframe', '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.7037275541857!2d106.7471018153159!3d10.68008916388372!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31753b730c677b63%3A0xfa33e39535626666!2zS2h1IETDom4gQ8awIEFuaCBUdeG6pW4gR3JlZW4gUml2ZXJzaWRl!5e0!3m2!1sen!2sus!4v1649149804440!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>');
+	$footer_email = dimhouse_option('footer_email', 'info@RdMJAeP6qJeR.vn');
+	$brand_title = dimhouse_option('footer_brand_title', 'Đối tác');
+	$contact_title = dimhouse_option('footer_contact_title', 'Thông tin liên hệ');
+	$social_title = dimhouse_option('footer_social_title', 'Kết nối với chúng tôi');
+	$copyright = dimhouse_option('footer_copyright', 'Copyright © 2022. All rights reserved.');
+	$popup_image = dimhouse_option('popup_image', dimhouse_asset_uri('uploads/banner/baner/popup_2025_2.jpg'));
+	$popup_url = dimhouse_option('popup_url', '');
+	$popup_alt = dimhouse_option('popup_alt', 'POPUP');
+
+	$partner_html = '';
+	foreach ($footer_partners as $partner) {
+		$image = !empty($partner['image']) ? $partner['image'] : '';
+		$image_url = dimhouse_image_url($image, 'thumbnail');
+		if (!$image_url) {
+			continue;
+		}
+		$url = !empty($partner['url']) ? $partner['url'] : '#';
+		$alt = !empty($partner['alt']) ? $partner['alt'] : 'BRAND';
+		$partner_html .= '<div class="item"><a target="_blank" href="' . esc_url($url) . '"><img src="' . esc_url($image_url) . '" alt="' . esc_attr($alt) . '" title="' . esc_attr($alt) . '" class="ibanner"></a></div>';
+	}
+
+	$social_html = '';
+	foreach (dimhouse_social_links('header') as $link) {
+		if (empty($link['url'])) {
+			continue;
+		}
+		$social_html .= '<a href="' . esc_url($link['url']) . '" target="_blank" rel="noopener noreferrer">' .
+			dimhouse_image_html(!empty($link['image']) ? $link['image'] : '', 'thumbnail', array('alt' => !empty($link['label']) ? $link['label'] : 'Social')) .
+			'</a>';
+	}
+
+	$popup_image_url = dimhouse_image_url($popup_image, 'full');
+	$popup_html = '';
+	if ($popup_image_url) {
+		$popup_html = '<a id="click_popup" class="fancybox_popup" href="#popup_banner_a"></a><div id="popup_banner"><div class="" id="popup_banner_a"><div class="banner_item" style=""><div class="item"><a href="' . esc_url($popup_url) . '" target="_self"><img src="' . esc_url($popup_image_url) . '" alt="' . esc_attr($popup_alt) . '" style=""></a></div></div></div></div>';
+	}
+
+	return '<footer class="section section-7" data-anchor="section-7">
+		<div class="bg-footer color-footer">
+			<div class="brand_scroll">
+				<div class="container">
+					<div class="brand_scroll-title">' . esc_html($brand_title) . '</div>
+					<div class="brand_scroll-content ">' . $partner_html . '</div>
+				</div>
+			</div>
+			<div class="container main_content">
+				<div class="top">
+					<div class="footer_logo">
+						<div class="content">' . dimhouse_kses_content($footer_text) . '</div>
+						<a href="' . esc_url(home_url('/')) . '" target="_self">' . dimhouse_image_html($footer_logo, 'full', array('alt' => 'Logo footer')) . '</a>
+					</div>
+					<div class="fanpage">' . dimhouse_kses_iframe($footer_fanpage_iframe) . '</div>
+					<div class="contact_map">
+						<div class="footer_title">' . esc_html($contact_title) . '</div>
+						' . dimhouse_kses_iframe($footer_map_iframe) . '
+						<div class="footer_title social_title">' . esc_html($social_title) . '</div>
+						<div class="box_social"><div class="row mx-0">' . $social_html . '</div></div>
+						<div class="email"><i class="fas fa-envelope"></i> Email: ' . esc_html($footer_email) . '</div>
+					</div>
+				</div>
+			</div>
+			<div class="bottom"><div class="copyright">' . dimhouse_kses_content($copyright) . '</div></div>
+			<div class="container"></div>
+			' . $popup_html . '
+		</div>
+	</footer>';
+}
+
+function dimhouse_render_floating_ui_html() {
+	$html = '<div id="ims-scroll_left" class=""></div>
+	<div id="ims-scroll_right" class=""></div>
+	<div id="ims-loading"><div class="nb-spinner"></div></div>
+	<div id="ims-data"></div>
+	<div id="BactoTop" class="bg-color text-color" style="display: none;"><i class="far fa-chevron-up"></i></div>';
+
+	foreach (dimhouse_floating_contact_links() as $index => $link) {
+		$url = !empty($link['url']) ? $link['url'] : '';
+		$image = !empty($link['image']) ? $link['image'] : '';
+		$image_url = dimhouse_image_url($image, 'thumbnail');
+		if (!$url || !$image_url) {
+			continue;
+		}
+
+		$label = !empty($link['label']) ? $link['label'] : 'Contact';
+		$class = trim('hotline sticky ' . (!empty($link['class']) ? sanitize_html_class($link['class']) : ''));
+		$inner = '<div class="phone"><div class="phone-circle"></div><div class="phone-circle-fill"></div><div class="phone-img-circle"><img src="' . esc_url($image_url) . '" alt="' . esc_attr($label) . '"></div></div>';
+		$html .= '<div class="' . esc_attr($class) . '"><div class="ring"><a href="' . esc_url($url) . '" target="_blank" rel="noopener noreferrer">' . $inner . '</a></div></div>';
+	}
+
+	$html .= '<div class="overlay_bo"></div><aside class="sideMenu"><div id="ims-side-menu"><ul class="list_none ">';
+	$side_items = dimhouse_side_menu_items();
+	$side_count = count($side_items);
+	foreach ($side_items as $index => $item) {
+		$label = !empty($item['label']) ? $item['label'] : '';
+		$url = !empty($item['url']) ? $item['url'] : '#';
+		if (!$label) {
+			continue;
+		}
+		$class = trim('menu_li ' . ($index === 0 ? 'first' : '') . ($index === $side_count - 1 ? ' last' : ''));
+		$html .= '<li class="' . esc_attr($class) . '"><a href="' . esc_url($url) . '" target="" class="menu_link css_bo ">' . esc_html($label) . '</a></li>';
+	}
+	$html .= '</ul></div></aside>';
+
+	$html .= '<div class="showMobile bottom_phone"><div class="menu_bottom">';
+	foreach (dimhouse_mobile_menu_items() as $item) {
+		$label = !empty($item['label']) ? $item['label'] : (!empty($item['name']) ? $item['name'] : '');
+		$url = !empty($item['url']) ? $item['url'] : '#';
+		$icon = !empty($item['icon']) ? $item['icon'] : '';
+		$icon_url = dimhouse_image_url($icon, 'thumbnail');
+		if (!$label) {
+			continue;
+		}
+		$html .= '<div class="item"><a href="' . esc_url($url) . '" target="_self"><span class="icon">' .
+			($icon_url ? '<img src="' . esc_url($icon_url) . '" alt="' . esc_attr($label) . '">' : '') .
+			'</span><span class="name">' . esc_html($label) . '</span></a></div>';
+	}
+	$html .= '</div></div>';
+
+	return $html;
 }
 
 function dimhouse_rewrite_clone_asset_urls($html) {
@@ -674,11 +934,13 @@ function dimhouse_render_menu_grid_section_from_index() {
 			$title = !empty($card['title']) ? $card['title'] : '';
 			$url = !empty($card['url']) ? $card['url'] : '#';
 			$image = !empty($card['icon']) ? dimhouse_clone_img_url($card['icon']) : '';
+			$text = !empty($card['text']) ? $card['text'] : '';
 			$class = trim('menu_li ' . ($index === 0 ? 'first' : '') . ($index === $total - 1 ? ' last' : ''));
 			$items[] = '<li class="' . esc_attr($class) . '">
         <a href="' . esc_url($url) . '" target="">
             ' . ($image ? '<img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '">' : '') . '
             <h3 class="menu_title"><p>' . esc_html($title) . '</p></h3>
+            ' . ($text ? '<div class="menu_desc">' . esc_html($text) . '</div>' : '') . '
         </a>
         <span>T<br>a<br>h<br>o<br>m<br>e</span>
     </li>';
@@ -813,6 +1075,60 @@ function dimhouse_apply_clone_acf_overrides($html) {
 			}
 		);
 	}
+	if (!empty($estimate['floor_label'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="choose_floor">[\s\S]*?<div class="form-group col-6">\s*<label>)[\s\S]*?(</label>)#',
+			function ($matches) use ($estimate) {
+				return $matches[1] . esc_html($estimate['floor_label']) . $matches[2];
+			}
+		);
+	}
+	if (!empty($estimate['mezzanine_label'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="choose_floor">[\s\S]*?<div class="form-group col-6">[\s\S]*?</div>\s*<div class="form-group col-6">\s*<label>)[\s\S]*?(</label>)#',
+			function ($matches) use ($estimate) {
+				return $matches[1] . esc_html($estimate['mezzanine_label']) . $matches[2];
+			}
+		);
+	}
+	if (!empty($estimate['preview_image'])) {
+		$preview_url = dimhouse_clone_img_url($estimate['preview_image']);
+		if ($preview_url) {
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(<div class="view_house">\s*<img\s+src=")[^"]*(")#',
+				function ($matches) use ($preview_url) {
+					return $matches[1] . esc_url($preview_url) . $matches[2];
+				}
+			);
+		}
+	}
+	if (!empty($estimate['form_banner_image'])) {
+		$banner_image = dimhouse_clone_img_url($estimate['form_banner_image']);
+		if ($banner_image) {
+			$banner_url = !empty($estimate['form_banner_url']) ? $estimate['form_banner_url'] : '#';
+			$banner_alt = !empty($estimate['form_banner_alt']) ? $estimate['form_banner_alt'] : 'Banner';
+			$banner_html = '<div class="banner_item" style=""><a href="' . esc_url($banner_url) . '" target="_blank"><img class="lazyload" src="' . esc_url(dimhouse_asset_uri('resources/images/spin.svg')) . '" data-src="' . esc_url($banner_image) . '" alt="' . esc_attr($banner_alt) . '"></a></div>';
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(<div class="view_house">[\s\S]*?</div>\s*)<div class="banner_item"[\s\S]*?</div>\s*(</div>\s*<div class="for_result")#',
+				function ($matches) use ($banner_html) {
+					return $matches[1] . $banner_html . $matches[2];
+				}
+			);
+		}
+	}
+	if (!empty($estimate['book_button_label'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="button_book">\s*<button class="book">)[\s\S]*?(</button>)#',
+			function ($matches) use ($estimate) {
+				return $matches[1] . esc_html($estimate['book_button_label']) . $matches[2];
+			}
+		);
+	}
 	if (!empty($estimate['tabs']) && is_array($estimate['tabs'])) {
 		$nav_items = array();
 		$tab_panes = array();
@@ -865,6 +1181,24 @@ function dimhouse_apply_clone_acf_overrides($html) {
 				}
 			);
 		}
+	}
+	if (!empty($estimate['construction_form_html'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#<form action="" method="post" id="construction">[\s\S]*?</form>#',
+			function () use ($estimate) {
+				return dimhouse_kses_interactive_html($estimate['construction_form_html']);
+			}
+		);
+	}
+	if (!empty($estimate['booking_form_html'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#<form action="" method="post" id="form_book"[\s\S]*?</form>#',
+			function () use ($estimate) {
+				return dimhouse_kses_interactive_html($estimate['booking_form_html']);
+			}
+		);
 	}
 
 	$process = dimhouse_home_acf_layout('process');
@@ -949,6 +1283,15 @@ function dimhouse_apply_clone_acf_overrides($html) {
 			);
 		}
 	}
+	if (!empty($process['booking_form_html'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#<form action="" method="post" id="form_book_procedure"[\s\S]*?</form>#',
+			function () use ($process) {
+				return dimhouse_kses_interactive_html($process['booking_form_html']);
+			}
+		);
+	}
 
 	$menu_grid = dimhouse_home_acf_layout('menu_grid');
 	if (!empty($menu_grid['title']) || !empty($menu_grid['text'])) {
@@ -982,7 +1325,9 @@ function dimhouse_apply_clone_acf_overrides($html) {
 			$class = trim('menu_li ' . ($index === 0 ? 'first' : '') . ($index === $count - 1 ? ' last' : ''));
 			$items[] = '<li class="' . esc_attr($class) . '"><a href="' . esc_url($url) . '" target="">' .
 				($image ? '<img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '">' : '') .
-				'<h3 class="menu_title"><p>' . esc_html($title) . '</p></h3></a><span>T<br>a<br>h<br>o<br>m<br>e</span></li>';
+				'<h3 class="menu_title"><p>' . esc_html($title) . '</p></h3>' .
+				(!empty($card['text']) ? '<div class="menu_desc">' . esc_html($card['text']) . '</div>' : '') .
+				'</a><span>T<br>a<br>h<br>o<br>m<br>e</span></li>';
 		}
 		if (!empty($items)) {
 			$html = dimhouse_replace_first_match(
@@ -1038,6 +1383,42 @@ function dimhouse_apply_clone_acf_overrides($html) {
 			);
 		}
 	}
+	if (!empty($about['person_name'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="box_personnel">[\s\S]*?<div class="list_item">[\s\S]*?<div class="title">\s*<span>)[\s\S]*?(</span>)#',
+			function ($matches) use ($about) {
+				return $matches[1] . esc_html($about['person_name']) . $matches[2];
+			}
+		);
+	}
+	if (!empty($about['person_role'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="box_personnel">[\s\S]*?<div class="list_item">[\s\S]*?<div class="title">[\s\S]*?<div>\s*<p>)[\s\S]*?(</p>)#',
+			function ($matches) use ($about) {
+				return $matches[1] . esc_html($about['person_role']) . $matches[2];
+			}
+		);
+	}
+	if (!empty($about['cta_url'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="box_personnel">[\s\S]*?<a class="item btn" href=")[^"]*(")#',
+			function ($matches) use ($about) {
+				return $matches[1] . esc_url($about['cta_url']) . $matches[2];
+			}
+		);
+	}
+	if (!empty($about['cta_label'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="box_personnel">[\s\S]*?<a class="item btn"[\s\S]*?<u>)[\s\S]*?(</u>)#',
+			function ($matches) use ($about) {
+				return $matches[1] . esc_html($about['cta_label']) . $matches[2];
+			}
+		);
+	}
 
 	$channel = dimhouse_home_acf_layout('channel');
 	if (!empty($channel['title'])) {
@@ -1079,6 +1460,45 @@ function dimhouse_apply_clone_acf_overrides($html) {
 				'#(<div class="section section-5"[\s\S]*?<div class="focus_product">[\s\S]*?<div class="row_item">)[\s\S]*?(</div>\s*</div>\s*<div class="page">)#',
 				function ($matches) use ($items) {
 					return $matches[1] . "\n" . implode("\n", $items) . "\n" . $matches[2];
+				}
+			);
+		}
+	}
+	if (!empty($channel['articles_title'])) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="section section-5"[\s\S]*?<div class="focus_page">[\s\S]*?<div class="focus_title">)[\s\S]*?(</div>)#',
+			function ($matches) use ($channel) {
+				return $matches[1] . esc_html($channel['articles_title']) . $matches[2];
+			}
+		);
+	}
+	if (!empty($channel['articles']) && is_array($channel['articles'])) {
+		$article_items = array();
+		foreach ($channel['articles'] as $article) {
+			if (!is_array($article)) {
+				continue;
+			}
+			$title = !empty($article['title']) ? $article['title'] : '';
+			$url = !empty($article['url']) ? $article['url'] : '#';
+			$image = !empty($article['image']) ? dimhouse_clone_img_url($article['image']) : '';
+			$subtitle = !empty($article['subtitle']) ? $article['subtitle'] : '';
+			if (!$title && !$image) {
+				continue;
+			}
+			$article_items[] = '<div class="item"><a href="' . esc_url($url) . '">' .
+				($image ? '<img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '">' : '') .
+				'</a><h3><a href="' . esc_url($url) . '">' . esc_html($title) . '</a></h3>' .
+				($subtitle ? '<span>' . esc_html($subtitle) . '</span>' : '') .
+				'</div>';
+		}
+
+		if (!empty($article_items)) {
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#(<div class="section section-5"[\s\S]*?<div class="focus_page">[\s\S]*?<div class="row_item">)[\s\S]*?(</div>\s*</div>\s*</div>\s*</div>\s*</div>\s*</div>\s*<!-- start section 6 -->)#',
+				function ($matches) use ($article_items) {
+					return $matches[1] . "\n" . implode("\n", $article_items) . "\n" . $matches[2];
 				}
 			);
 		}
@@ -1234,7 +1654,10 @@ function dimhouse_apply_clone_acf_overrides($html) {
 					continue;
 				}
 
-				$icon = !empty($contact_icons[$index]) ? $contact_icons[$index] : end($contact_icons);
+				$icon = !empty($item['icon']) ? dimhouse_clone_img_url($item['icon']) : '';
+				if (!$icon) {
+					$icon = !empty($contact_icons[$index]) ? $contact_icons[$index] : end($contact_icons);
+				}
 				$value_html = $url
 					? '<a href="' . esc_url($url) . '">' . esc_html($value) . '</a>'
 					: esc_html($value);
@@ -1260,6 +1683,14 @@ function dimhouse_apply_clone_acf_overrides($html) {
 		}
 	}
 
+	$html = dimhouse_replace_first_match(
+		$html,
+		'#<footer class="section section-7"[\s\S]*?</footer>#',
+		function () {
+			return dimhouse_render_footer_html();
+		}
+	);
+
 	$popup_image = dimhouse_option('popup_image');
 	$popup_url = dimhouse_option('popup_url');
 	if ($popup_image) {
@@ -1284,7 +1715,25 @@ function dimhouse_apply_clone_acf_overrides($html) {
 		);
 	}
 
-	return $html;
+	$html = dimhouse_replace_first_match(
+		$html,
+		'#<div id="ims-scroll_left"[\s\S]*$#',
+		function () {
+			return dimhouse_render_floating_ui_html();
+		}
+	);
+
+	return dimhouse_remove_construction_location_fields($html);
+}
+
+function dimhouse_remove_construction_location_fields($html) {
+	return dimhouse_replace_first_match(
+		$html,
+		'#(<form action="" method="post" id="construction">[\s\S]*?<input type="text" name="phone"[\s\S]*?</div>)\s*<p class="label_title col-12">[\s\S]*?</p>\s*<div class="form-group col-12 col-md-6"><select name="province"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6"><select name="district"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6"><select name="ward"[\s\S]*?</select></div>#',
+		function ($matches) {
+			return $matches[1];
+		}
+	);
 }
 
 function dimhouse_index_fallback_fullpage() {
@@ -1411,6 +1860,15 @@ function dimhouse_home_defaults() {
 		'estimate' => array(
 			'title' => 'Khách hàng khai toán phí xây nhà  - với 1 phút !',
 			'intro' => '',
+			'floor_label' => 'Lầu (Mái, Sthượng chọn trong bảng)',
+			'mezzanine_label' => 'Có lửng hay không ?',
+			'preview_image' => dimhouse_asset_uri('uploads/estimate/tang_lung/khong_lung/0_lau_n.jpg'),
+			'form_banner_image' => dimhouse_asset_uri('uploads/banner/baner/du_toan_1.jpg'),
+			'form_banner_url' => home_url('/khuyen-mai-1'),
+			'form_banner_alt' => 'Dự toán chi phí',
+			'book_button_label' => 'Đặt lịch tư vấn',
+			'construction_form_html' => '',
+			'booking_form_html' => '',
 			'tabs' => array(
 				array(
 					'key' => 'tab1',
@@ -1442,9 +1900,15 @@ function dimhouse_home_defaults() {
 			'title' => 'Dimhouse Design',
 			'text' => '<p>Dimhouse không ngừng theo đuổi hướng thiết kế đổi mới và cách tân trong thi công nhằm đem lại không gian sinh hoạt thông thoáng, hiện đại, đáp ứng tốt nhất nhu cầu sử dụng của khách hàng, đảm bảo sự tối ưu về mặt kỹ thuật, ngân sách và thân thiện với môi trường. Dimhouse lấy nguyện vọng của khách hàng làm đích đến bên cạnh việc bổ sung, tiếp sức bằng các giải pháp kỹ thuật, mỹ thuật và văn hóa sinh hoạt mở trong thời đại mới.</p><p>Công việc chính của Dimhouse là biến ước mơ về không gian sinh hoạt của bạn trở thành hiện thực.</p>',
 			'image' => dimhouse_asset_uri('thumbs/banner/baner/[113x113-cr]a1_1646668764.jpg'),
+			'person_name' => 'Nguyễn Trung',
+			'person_role' => 'CEO & Founder',
+			'cta_label' => 'Xem hồ sơ năng lực',
+			'cta_url' => home_url('/Dimhouse-portfolio'),
 		),
 		'channel' => array(
 			'title' => 'DIMHOUSE - ChANNEL',
+			'articles_title' => 'Tư vấn chia sẻ',
+			'articles' => dimhouse_default_channel_articles(),
 			'items' => array(
 				array(
 					'title' => 'Quy Trình Thiết Kế',
@@ -1532,7 +1996,7 @@ function dimhouse_home_defaults() {
 		'footer' => array(
 			'footer_logo' => dimhouse_asset_uri('uploads/banner/baner/14_trang_den.png'),
 			'footer_title' => 'ĐĂNG KÍ KINH DOANH',
-			'footer_text' => '<div><span style="font-size: 15px;">N9-13 KDC Anh Tuấn Riverside, Huỳnh Tấn Phát.</span></div><div><span style="color: #ffba00;"><strong><span style="font-size: 15px;">VĂN PHÒNG</span></strong></span></div><div><span style="font-size: 15px;">Sảnh G, Block A4 ( View Sông ) CC ERA Town, Nguyễn Lương Bằng Quận 7. TP HCM</span></div><div><span style="font-size: 15px; color: #ffba00;">Hotline</span></div><div><span style="font-size: 15px;"><strong>0964.158.163</strong></span></div>',
+			'footer_text' => '<div><span style="font-size: 15px;">N9-13 KDC Anh Tuấn Riverside, Huỳnh Tấn Phát.</span></div><div><span style="color: #dda77b;"><strong><span style="font-size: 15px;">VĂN PHÒNG</span></strong></span></div><div><span style="font-size: 15px;">Sảnh G, Block A4 ( View Sông ) CC ERA Town, Nguyễn Lương Bằng Quận 7. TP HCM</span></div><div><span style="font-size: 15px; color: #dda77b;">Hotline</span></div><div><span style="font-size: 15px;"><strong>0964.158.163</strong></span></div>',
 			'footer_columns' => array(
 				array(
 					'title' => 'Fanpage',
@@ -1546,4 +2010,3 @@ function dimhouse_home_defaults() {
 		),
 	);
 }
-
