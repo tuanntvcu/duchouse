@@ -101,10 +101,11 @@ footer.section-7 .fp-tableCell {
 }
 
 footer.section-7 .bg-footer {
-	background: #2f4056;
+	background: #534542;
 }
 
 footer.section-7 .bottom {
+	background: #534542;
 	margin-bottom: 0;
 }
 
@@ -155,6 +156,48 @@ footer.section-7 .bottom {
 
 .faq-answer {
 	margin-top: 12px;
+}
+
+.dimhouse-svg-icon {
+	color: var(--color_main);
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.top_social .box_social a .dimhouse-social-icon {
+	max-height: 29px;
+	width: auto;
+}
+
+footer .box_social a .dimhouse-social-icon {
+	max-height: 26px;
+	width: auto;
+}
+
+.dimhouse-social-icon-facebook {
+	color: var(--color_main);
+}
+
+.contact .container .wrap > div .dimhouse-contact-icon {
+	max-height: 60px;
+	max-width: 100%;
+	width: auto;
+}
+
+@media (max-width: 992px) {
+	footer .box_social a .dimhouse-social-icon {
+		max-height: 22px;
+	}
+
+	.contact .container .wrap > div .dimhouse-contact-icon {
+		max-height: 50px;
+	}
+}
+
+@media (max-width: 600px) {
+	.top_social .box_social a .dimhouse-social-icon {
+		max-width: 20px;
+	}
 }
 
 .villa-designs-section {

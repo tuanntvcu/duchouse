@@ -48,19 +48,19 @@ $items = (is_array($items) && !empty($items)) ? $items : $defaults['items'];
 				</div>
 				<div class="wrap">
 					<div>
-						<div><img src="<?php echo esc_url(dimhouse_asset_uri('uploads/about/2022_04/lh-hotline.png')); ?>" width="80" height="80"></div>
+						<div><?php echo dimhouse_contact_icon_svg('phone', 0); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 						<div class="info"><div class="name">Hotline tư vấn:</div><div>0964 158 163</div></div>
 					</div>
 					<div>
-						<div><img src="<?php echo esc_url(dimhouse_asset_uri('uploads/about/2022_04/lh-fb.png')); ?>" alt="" width="80" height="80"></div>
+						<div><?php echo dimhouse_contact_icon_svg('facebook', 1); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 						<div class="info"><div class="name">Fanpage Facebook:</div><div>facebook.com/Dimhouse Design</div></div>
 					</div>
 					<div>
-						<div><img src="<?php echo esc_url(dimhouse_asset_uri('uploads/about/2022_04/lh-mail.png')); ?>" alt="" width="80" height="80"></div>
+						<div><?php echo dimhouse_contact_icon_svg('email', 2); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 						<div class="info"><div class="name">Email tư vấn:</div><div>info@RdMJAeP6qJeR.vn</div></div>
 					</div>
 					<div>
-						<div><img src="<?php echo esc_url(dimhouse_asset_uri('uploads/about/2022_04/lh-dc.png')); ?>" alt="" width="80" height="80"></div>
+						<div><?php echo dimhouse_contact_icon_svg('business', 3); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 						<div class="info"><div class="name">Đăng Kí Kinh Doanh:</div><div>N9-13 KDC Anh Tuấn Riverside, Huỳnh Tấn Phát.</div><div>Văn Phòng:</div><div><span style="font-size: 15px;">Sảnh G, Block A4 ( View Sông ) CC ERA Town, Nguyễn Lương Bằng Quận 7. TP HCM</span></div><div> </div></div>
 					</div>
 				</div>

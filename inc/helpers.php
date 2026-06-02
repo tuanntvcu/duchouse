@@ -172,24 +172,171 @@ function dimhouse_default_social_links() {
 		array(
 			'label' => 'Instagram',
 			'url' => 'https://instagram.com/dimhouse_design?igshid=YmMyMTA2M2Y=',
-			'image' => dimhouse_asset_uri('uploads/config/2024_04/instagram.png'),
+			'icon' => 'instagram',
 		),
 		array(
 			'label' => 'Facebook',
 			'url' => 'https://www.facebook.com/profile.php?id=100065424102650',
-			'image' => dimhouse_asset_uri('uploads/config/2024_04/fb.png'),
+			'icon' => 'facebook',
 		),
 		array(
 			'label' => 'Tiktok',
 			'url' => 'https://www.tiktok.com/@dimhousedesign?is_from_webapp=1&sender_device=pc',
-			'image' => dimhouse_asset_uri('uploads/config/2024_04/tiktok.png'),
+			'icon' => 'tiktok',
 		),
 		array(
 			'label' => 'Youtube',
 			'url' => 'https://www.youtube.com/channel/UCXPlJElksDJq8aa8POcxoMA',
-			'image' => dimhouse_asset_uri('uploads/config/2024_04/youtube.png'),
+			'icon' => 'youtube',
 		),
 	);
+}
+
+function dimhouse_icon_key($value) {
+	if (is_array($value)) {
+		$value = !empty($value['url']) ? $value['url'] : (!empty($value['filename']) ? $value['filename'] : '');
+	}
+
+	$value = strtolower((string) $value);
+	if (strpos($value, 'instagram') !== false) {
+		return 'instagram';
+	}
+	if (strpos($value, 'facebook') !== false || strpos($value, 'fb') !== false) {
+		return 'facebook';
+	}
+	if (strpos($value, 'tiktok') !== false || strpos($value, 'tik tok') !== false) {
+		return 'tiktok';
+	}
+	if (strpos($value, 'youtube') !== false) {
+		return 'youtube';
+	}
+	if (strpos($value, 'hotline') !== false || strpos($value, 'phone') !== false || strpos($value, 'tel') !== false) {
+		return 'phone';
+	}
+	if (strpos($value, 'mail') !== false || strpos($value, 'email') !== false) {
+		return 'email';
+	}
+	if (strpos($value, 'business') !== false || strpos($value, 'office') !== false || strpos($value, 'company') !== false || strpos($value, 'kinh doanh') !== false || strpos($value, 'address') !== false || strpos($value, 'location') !== false || strpos($value, 'lh-dc') !== false) {
+		return 'business';
+	}
+
+	return '';
+}
+
+function dimhouse_icon_svg($icon, $class = '', $width = 24, $height = 24) {
+	$key = dimhouse_icon_key($icon);
+	$class = trim('dimhouse-svg-icon ' . $class);
+	$attrs = ' class="' . esc_attr($class) . '" width="' . esc_attr((string) $width) . '" height="' . esc_attr((string) $height) . '" viewBox="0 0 24 24" aria-hidden="true" focusable="false"';
+
+	switch ($key) {
+		case 'instagram':
+			$body = '<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.35" fill="currentColor"/>';
+			break;
+		case 'facebook':
+			$attrs = ' class="' . esc_attr($class) . '" width="' . esc_attr((string) $width) . '" height="' . esc_attr((string) $height) . '" viewBox="-337 273 123.5 256" aria-hidden="true" focusable="false"';
+			$body = '<path fill="currentColor" d="M-260.9,327.8c0-10.3,9.2-14,19.5-14c10.3,0,21.3,3.2,21.3,3.2l6.6-39.2c0,0-14-4.8-47.4-4.8c-20.5,0-32.4,7.8-41.1,19.3c-8.2,10.9-8.5,28.4-8.5,39.7v25.7H-337V396h26.5v133h49.6V396h39.3l2.9-38.3h-42.2V327.8z"/>';
+			break;
+		case 'tiktok':
+			$body = '<path fill="currentColor" d="M16.6 2.3c.4 2.8 2 4.5 4.6 4.7v4.1c-1.5.1-2.9-.3-4.5-1.2v6.6c0 8.4-9.2 11-13 5-2.4-3.8-.9-10.4 6.8-10.7v4.3c-.5.1-1 .2-1.5.4-1.4.5-2.2 1.5-2 3.1.4 3 6 3.9 5.5-2V2.3h4.1z"/>';
+			break;
+		case 'youtube':
+			$body = '<path fill="currentColor" d="M22.5 7.2a3 3 0 0 0-2.1-2.1C18.5 4.6 12 4.6 12 4.6s-6.5 0-8.4.5a3 3 0 0 0-2.1 2.1C1 9.1 1 12 1 12s0 2.9.5 4.8a3 3 0 0 0 2.1 2.1c1.9.5 8.4.5 8.4.5s6.5 0 8.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-4.8.5-4.8s0-2.9-.5-4.8zM9.8 15.3V8.7L15.6 12l-5.8 3.3z"/>';
+			break;
+		case 'phone':
+			$body = '<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.2 6.8 10 6.2l1.5 3-1.2 1.2c.8 1.7 2.1 3.1 3.8 3.8l1.2-1.2 3 1.5-.6 1.8c-.2.6-.8 1-1.4 1C9.9 17.3 6.7 14.1 6.7 7.8c0-.6.4-1.2 1-1.4z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>';
+			break;
+		case 'email':
+			$body = '<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6.5 8.5h11v7h-11z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"/><path d="m7 9 5 4 5-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>';
+			break;
+		case 'business':
+			$body = '<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 18V7.5h8V18" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"/><path d="M10.2 10h.1M13.7 10h.1M10.2 12.7h.1M13.7 12.7h.1M10 18v-3h4v3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>';
+			break;
+		default:
+			return '';
+	}
+
+	return '<svg' . $attrs . '>' . $body . '</svg>';
+}
+
+function dimhouse_social_icon_key($link) {
+	$candidates = array(
+		!empty($link['icon']) ? $link['icon'] : '',
+		!empty($link['label']) ? $link['label'] : '',
+		!empty($link['image']) ? $link['image'] : '',
+	);
+
+	foreach ($candidates as $candidate) {
+		$key = dimhouse_icon_key($candidate);
+		if ($key) {
+			return $key;
+		}
+	}
+
+	return '';
+}
+
+function dimhouse_render_social_icon($link) {
+	$key = dimhouse_social_icon_key($link);
+	$sizes = array(
+		'instagram' => array(51, 51),
+		'facebook' => array(26, 50),
+		'tiktok' => array(44, 51),
+		'youtube' => array(46, 54),
+	);
+
+	if ($key && !empty($sizes[$key])) {
+		return dimhouse_icon_svg($key, 'dimhouse-social-icon dimhouse-social-icon-' . $key, $sizes[$key][0], $sizes[$key][1]);
+	}
+
+	return dimhouse_image_html(!empty($link['image']) ? $link['image'] : '', 'thumbnail', array('alt' => !empty($link['label']) ? $link['label'] : 'Social'));
+}
+
+function dimhouse_render_social_links_html($context = 'header') {
+	$social_html = '';
+	foreach (dimhouse_social_links($context) as $link) {
+		if (empty($link['url'])) {
+			continue;
+		}
+
+		$label = !empty($link['label']) ? $link['label'] : 'Social';
+		$social_html .= '<a href="' . esc_url($link['url']) . '" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr($label) . '">' .
+			dimhouse_render_social_icon($link) .
+			'</a>';
+	}
+
+	return $social_html;
+}
+
+function dimhouse_contact_icon_svg($icon, $index = 0) {
+	$fallback_icons = array('phone', 'facebook', 'email', 'business');
+	$key = dimhouse_icon_key($icon);
+	if (!$key) {
+		$key = !empty($fallback_icons[$index]) ? $fallback_icons[$index] : 'business';
+	}
+
+	return dimhouse_icon_svg($key, 'dimhouse-contact-icon dimhouse-contact-icon-' . $key, 80, 80);
+}
+
+function dimhouse_replace_clone_contact_icon_images($html) {
+	$icons = array(
+		'lh-hotline.png' => array('phone', 0),
+		'lh-fb.png' => array('facebook', 1),
+		'lh-mail.png' => array('email', 2),
+		'lh-dc.png' => array('business', 3),
+	);
+
+	foreach ($icons as $filename => $icon) {
+		$updated = preg_replace(
+			'#<img\s+src="[^"]*/uploads/about/2022_04/' . preg_quote($filename, '#') . '"[^>]*>#',
+			dimhouse_contact_icon_svg($icon[0], $icon[1]),
+			$html
+		);
+		if (is_string($updated)) {
+			$html = $updated;
+		}
+	}
+
+	return $html;
 }
 
 function dimhouse_option_repeater($field_name, $default = array()) {
@@ -407,15 +554,7 @@ function dimhouse_render_footer_html() {
 		$partner_html .= '<div class="item"><a target="_blank" href="' . esc_url($url) . '"><img src="' . esc_url($image_url) . '" alt="' . esc_attr($alt) . '" title="' . esc_attr($alt) . '" class="ibanner"></a></div>';
 	}
 
-	$social_html = '';
-	foreach (dimhouse_social_links('header') as $link) {
-		if (empty($link['url'])) {
-			continue;
-		}
-		$social_html .= '<a href="' . esc_url($link['url']) . '" target="_blank" rel="noopener noreferrer">' .
-			dimhouse_image_html(!empty($link['image']) ? $link['image'] : '', 'thumbnail', array('alt' => !empty($link['label']) ? $link['label'] : 'Social')) .
-			'</a>';
-	}
+	$social_html = dimhouse_render_social_links_html('header');
 
 	$popup_image_url = dimhouse_image_url($popup_image, 'full');
 	$popup_html = '';
@@ -961,6 +1100,18 @@ function dimhouse_render_menu_grid_section_from_index() {
 }
 
 function dimhouse_apply_clone_acf_overrides($html) {
+	$top_social_html = dimhouse_render_social_links_html('header');
+	if ($top_social_html) {
+		$html = dimhouse_replace_first_match(
+			$html,
+			'#(<div class="top_social">\s*<div class="box_social">\s*<div class="row mx-0">)[\s\S]*?(</div>\s*</div>\s*</div>)#',
+			function ($matches) use ($top_social_html) {
+				return $matches[1] . "\n" . $top_social_html . "\n" . $matches[2];
+			}
+		);
+	}
+	$html = dimhouse_replace_clone_contact_icon_images($html);
+
 	$hero = dimhouse_home_acf_layout('hero');
 	if (!empty($hero)) {
 		if (!empty($hero['video'])) {
@@ -1635,12 +1786,6 @@ function dimhouse_apply_clone_acf_overrides($html) {
 		}
 
 		if (!empty($contact['items']) && is_array($contact['items'])) {
-			$contact_icons = array(
-				dimhouse_asset_uri('uploads/about/2022_04/lh-hotline.png'),
-				dimhouse_asset_uri('uploads/about/2022_04/lh-fb.png'),
-				dimhouse_asset_uri('uploads/about/2022_04/lh-mail.png'),
-				dimhouse_asset_uri('uploads/about/2022_04/lh-dc.png'),
-			);
 			$items = array();
 			foreach ($contact['items'] as $index => $item) {
 				if (!is_array($item)) {
@@ -1654,16 +1799,13 @@ function dimhouse_apply_clone_acf_overrides($html) {
 					continue;
 				}
 
-				$icon = !empty($item['icon']) ? dimhouse_clone_img_url($item['icon']) : '';
-				if (!$icon) {
-					$icon = !empty($contact_icons[$index]) ? $contact_icons[$index] : end($contact_icons);
-				}
+				$icon = !empty($item['icon']) ? $item['icon'] : $label;
 				$value_html = $url
 					? '<a href="' . esc_url($url) . '">' . esc_html($value) . '</a>'
 					: esc_html($value);
 
 				$items[] = '<div>
-					<div><img src="' . esc_url($icon) . '" alt="" width="80" height="80"></div>
+					<div>' . dimhouse_contact_icon_svg($icon, $index) . '</div>
 					<div class="info">
 						' . ($label ? '<div class="name">' . esc_html($label) . '</div>' : '') . '
 						' . ($value !== '' ? '<div>' . $value_html . '</div>' : '') . '
