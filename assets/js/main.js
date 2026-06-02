@@ -1,6 +1,14 @@
 (function ($) {
 	'use strict';
 
+	var themeConfig = window.dimhouseTheme || {};
+
+	function intConfig(key, fallback) {
+		var settings = themeConfig.sliderSettings || {};
+		var value = parseInt(settings[key], 10);
+		return value > 0 ? value : fallback;
+	}
+
 	function safeCall(callback) {
 		try {
 			callback();
@@ -110,6 +118,11 @@
 			return;
 		}
 
+		var productSlides = intConfig('productSlides', 4);
+		var articleSlides = intConfig('articleSlides', 4);
+		var testimonialSlides = intConfig('testimonialSlides', 3);
+		var partnerSlides = intConfig('partnerSlides', 5);
+
 		function mount(selector, options) {
 			$(selector).each(function () {
 				var $slider = $(this);
@@ -134,12 +147,12 @@
 			autoplay: false,
 			autoplaySpeed: 3500,
 			speed: 500,
-			slidesToShow: 4,
+			slidesToShow: productSlides,
 			swipeToSlide: true,
 			lazyload: 'ondemand',
 			responsive: [
-				{ breakpoint: 1101, settings: { slidesToShow: 4 } },
-				{ breakpoint: 993, settings: { slidesToShow: 3 } },
+				{ breakpoint: 1101, settings: { slidesToShow: Math.min(productSlides, 4) } },
+				{ breakpoint: 993, settings: { slidesToShow: Math.min(productSlides, 3) } },
 				{ breakpoint: 601, settings: { slidesToShow: 2 } },
 				{ breakpoint: 330, settings: { slidesToShow: 1 } }
 			]
@@ -152,12 +165,12 @@
 			autoplay: false,
 			autoplaySpeed: 3500,
 			speed: 500,
-			slidesToShow: 4,
+			slidesToShow: articleSlides,
 			swipeToSlide: true,
 			lazyload: 'ondemand',
 			responsive: [
-				{ breakpoint: 1101, settings: { slidesToShow: 4 } },
-				{ breakpoint: 993, settings: { slidesToShow: 3 } },
+				{ breakpoint: 1101, settings: { slidesToShow: Math.min(articleSlides, 4) } },
+				{ breakpoint: 993, settings: { slidesToShow: Math.min(articleSlides, 3) } },
 				{ breakpoint: 601, settings: { slidesToShow: 2 } },
 				{ breakpoint: 330, settings: { slidesToShow: 1 } }
 			]
@@ -170,12 +183,12 @@
 			autoplay: false,
 			autoplaySpeed: 3500,
 			speed: 500,
-			slidesToShow: 3,
+			slidesToShow: testimonialSlides,
 			swipeToSlide: true,
 			lazyload: 'ondemand',
 			responsive: [
-				{ breakpoint: 1101, settings: { slidesToShow: 2 } },
-				{ breakpoint: 769, settings: { slidesToShow: 2 } },
+				{ breakpoint: 1101, settings: { slidesToShow: Math.min(testimonialSlides, 2) } },
+				{ breakpoint: 769, settings: { slidesToShow: Math.min(testimonialSlides, 2) } },
 				{ breakpoint: 601, settings: { slidesToShow: 1 } },
 				{ breakpoint: 365, settings: { slidesToShow: 1 } }
 			]
@@ -188,10 +201,10 @@
 			autoplay: true,
 			autoplaySpeed: 3500,
 			speed: 500,
-			slidesToShow: 5,
+			slidesToShow: partnerSlides,
 			swipeToSlide: true,
 			responsive: [
-				{ breakpoint: 993, settings: { slidesToShow: 4, slidesToScroll: 3 } },
+				{ breakpoint: 993, settings: { slidesToShow: Math.min(partnerSlides, 4), slidesToScroll: 3 } },
 				{ breakpoint: 501, settings: { slidesToShow: 2, slidesToScroll: 2 } }
 			]
 		});
@@ -304,7 +317,7 @@
 					closeBtn: false,
 					wrapCSS: 'popup_custom'
 				});
-				if (window.location.search.indexOf('nopopup=1') === -1) {
+				if (themeConfig.popupAutoOpen !== false && window.location.search.indexOf('nopopup=1') === -1) {
 					setTimeout(function () {
 						$('#click_popup').trigger('click');
 					}, 300);

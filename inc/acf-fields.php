@@ -21,6 +21,13 @@ function dimhouse_register_acf_fields() {
 			array('key' => 'field_dimhouse_header_phone_link', 'label' => 'Header Phone Link', 'name' => 'header_phone_link', 'type' => 'url'),
 			array('key' => 'field_dimhouse_header_cta_label', 'label' => 'Header CTA Label', 'name' => 'header_cta_label', 'type' => 'text'),
 			array('key' => 'field_dimhouse_header_cta_url', 'label' => 'Header CTA URL', 'name' => 'header_cta_url', 'type' => 'url'),
+			array('key' => 'field_dimhouse_google_tag_id', 'label' => 'Google Tag ID', 'name' => 'google_tag_id', 'type' => 'text', 'default_value' => ''),
+			array('key' => 'field_dimhouse_google_ads_client', 'label' => 'Google Ads Client', 'name' => 'google_ads_client', 'type' => 'text', 'default_value' => ''),
+			array('key' => 'field_dimhouse_popup_auto_open', 'label' => 'Auto Open Popup', 'name' => 'popup_auto_open', 'type' => 'true_false', 'default_value' => 1, 'ui' => 1),
+			array('key' => 'field_dimhouse_product_slider_slides', 'label' => 'Product/Video Slider Slides', 'name' => 'product_slider_slides', 'type' => 'number', 'default_value' => 4, 'min' => 1, 'max' => 8),
+			array('key' => 'field_dimhouse_article_slider_slides', 'label' => 'Article Slider Slides', 'name' => 'article_slider_slides', 'type' => 'number', 'default_value' => 4, 'min' => 1, 'max' => 8),
+			array('key' => 'field_dimhouse_testimonial_slider_slides', 'label' => 'Testimonial Slider Slides', 'name' => 'testimonial_slider_slides', 'type' => 'number', 'default_value' => 3, 'min' => 1, 'max' => 6),
+			array('key' => 'field_dimhouse_partner_slider_slides', 'label' => 'Partner Slider Slides', 'name' => 'partner_slider_slides', 'type' => 'number', 'default_value' => 5, 'min' => 1, 'max' => 8),
 			array(
 				'key' => 'field_dimhouse_header_social_links',
 				'label' => 'Header Social Links',
@@ -413,6 +420,8 @@ function dimhouse_register_acf_fields() {
 						'label' => 'Contact Section',
 						'sub_fields' => array(
 							array('key' => 'field_dimhouse_contact_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text'),
+							array('key' => 'field_dimhouse_contact_title_url', 'label' => 'Title URL', 'name' => 'title_url', 'type' => 'url'),
+							array('key' => 'field_dimhouse_contact_title_logo', 'label' => 'Title Logo', 'name' => 'title_logo', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium'),
 							array('key' => 'field_dimhouse_contact_text', 'label' => 'Text', 'name' => 'text', 'type' => 'wysiwyg', 'tabs' => 'all', 'toolbar' => 'basic'),
 							array('key' => 'field_dimhouse_contact_shortcode', 'label' => 'Form Shortcode', 'name' => 'shortcode', 'type' => 'text'),
 							array(

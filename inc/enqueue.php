@@ -16,13 +16,20 @@ function dimhouse_enqueue_assets() {
 	wp_enqueue_style('dimhouse-style', get_stylesheet_uri(), array(), $style_version);
 	wp_enqueue_style('dimhouse-clone', dimhouse_asset_uri('clone.css'), array('dimhouse-style'), $theme_version);
 
-	wp_enqueue_script('dimhouse-gtag', 'https://www.googletagmanager.com/gtag/js?id=G-WJ9YSMGMRS', array(), null, array('strategy' => 'async', 'in_footer' => false));
-	wp_add_inline_script(
-		'dimhouse-gtag',
-		'window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag("js", new Date()); gtag("config", "G-WJ9YSMGMRS");'
-	);
-	wp_enqueue_script('dimhouse-adsbygoogle', 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4953948093449867', array(), null, array('strategy' => 'async', 'in_footer' => false));
-	wp_script_add_data('dimhouse-adsbygoogle', 'crossorigin', 'anonymous');
+	$google_tag_id = trim((string) dimhouse_option('google_tag_id', ''));
+	if ($google_tag_id !== '') {
+		wp_enqueue_script('dimhouse-gtag', 'https://www.googletagmanager.com/gtag/js?id=' . rawurlencode($google_tag_id), array(), null, array('strategy' => 'async', 'in_footer' => false));
+		wp_add_inline_script(
+			'dimhouse-gtag',
+			'window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag("js", new Date()); gtag("config", ' . wp_json_encode($google_tag_id) . ');'
+		);
+	}
+
+	$google_ads_client = trim((string) dimhouse_option('google_ads_client', ''));
+	if ($google_ads_client !== '') {
+		wp_enqueue_script('dimhouse-adsbygoogle', 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' . rawurlencode($google_ads_client), array(), null, array('strategy' => 'async', 'in_footer' => false));
+		wp_script_add_data('dimhouse-adsbygoogle', 'crossorigin', 'anonymous');
+	}
 
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('dimhouse-legacy-bundle', dimhouse_asset_uri('resources/minify/minify.jquery.min.js'), array('jquery'), $theme_version, true);
@@ -50,11 +57,20 @@ function dimhouse_enqueue_assets() {
 		wp_add_inline_script('dimhouse-main', $clone_footer_scripts, 'before');
 	}
 
+	$slider_settings = array(
+		'productSlides' => max(1, absint(dimhouse_option('product_slider_slides', 4))),
+		'articleSlides' => max(1, absint(dimhouse_option('article_slider_slides', 4))),
+		'testimonialSlides' => max(1, absint(dimhouse_option('testimonial_slider_slides', 3))),
+		'partnerSlides' => max(1, absint(dimhouse_option('partner_slider_slides', 5))),
+	);
+
 	wp_localize_script('dimhouse-main', 'dimhouseTheme', array(
 		'homeUrl' => home_url('/'),
 		'ajaxUrl' => admin_url('admin-ajax.php'),
 		'assetBase' => trailingslashit(get_stylesheet_directory_uri()),
 		'lang' => 'vi',
+		'popupAutoOpen' => (bool) dimhouse_option('popup_auto_open', 1),
+		'sliderSettings' => $slider_settings,
 	));
 }
 add_action('wp_enqueue_scripts', 'dimhouse_enqueue_assets');

@@ -953,6 +953,11 @@ function dimhouse_index_footer_inline_scripts() {
 		if ($script === '') {
 			continue;
 		}
+
+		if (dimhouse_should_skip_clone_inline_script($script)) {
+			continue;
+		}
+
 		$scripts[] = $script;
 	}
 
@@ -961,6 +966,30 @@ function dimhouse_index_footer_inline_scripts() {
 	}
 
 	return dimhouse_rewrite_clone_asset_urls(implode("\n;\n", $scripts));
+}
+
+function dimhouse_should_skip_clone_inline_script($script) {
+	$managed_selectors = array(
+		'.focus_product .row_item',
+		'.list_item_product .row_item',
+		'.focus_page .row_item',
+		'.box_comment .list_item_project',
+		'.brand_scroll-content',
+		'.dg-wrapper',
+		'.section-service .row',
+	);
+
+	foreach ($managed_selectors as $selector) {
+		if (strpos($script, $selector) !== false && strpos($script, '.slick(') !== false) {
+			return true;
+		}
+	}
+
+	if (strpos($script, '#click_popup') !== false && strpos($script, '#popup_banner_a button.close') !== false) {
+		return true;
+	}
+
+	return false;
 }
 
 function dimhouse_sub_field_or_layout($field_name, $layout_name = '') {
@@ -1081,7 +1110,7 @@ function dimhouse_render_menu_grid_section_from_index() {
             <h3 class="menu_title"><p>' . esc_html($title) . '</p></h3>
             ' . ($text ? '<div class="menu_desc">' . esc_html($text) . '</div>' : '') . '
         </a>
-        <span>T<br>a<br>h<br>o<br>m<br>e</span>
+        <span>D<br>i<br>m<br>h<br>o<br>u<br>s<br>e</span>
     </li>';
 		}
 
@@ -1478,7 +1507,7 @@ function dimhouse_apply_clone_acf_overrides($html) {
 				($image ? '<img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '">' : '') .
 				'<h3 class="menu_title"><p>' . esc_html($title) . '</p></h3>' .
 				(!empty($card['text']) ? '<div class="menu_desc">' . esc_html($card['text']) . '</div>' : '') .
-				'</a><span>T<br>a<br>h<br>o<br>m<br>e</span></li>';
+				'</a><span>D<br>i<br>m<br>h<br>o<br>u<br>s<br>e</span></li>';
 		}
 		if (!empty($items)) {
 			$html = dimhouse_replace_first_match(
@@ -1757,6 +1786,25 @@ function dimhouse_apply_clone_acf_overrides($html) {
 
 	$contact = dimhouse_home_acf_layout('contact');
 	if (!empty($contact)) {
+		if (!empty($contact['title']) || !empty($contact['title_url']) || !empty($contact['title_logo'])) {
+			$title = !empty($contact['title']) ? $contact['title'] : 'LIEN HE VOI CHUNG TOI';
+			$title_url = !empty($contact['title_url']) ? $contact['title_url'] : home_url('/lien-he-voi-chung-toi');
+			$title_logo = !empty($contact['title_logo']) ? dimhouse_clone_img_url($contact['title_logo']) : dimhouse_asset_uri('thumbs/about/[550x307-cr]14_trang_den.png__cv.webp');
+			$title_html = '<div class="title_contact"><a href="' . esc_url($title_url) . '">';
+			if ($title_logo) {
+				$title_html .= '<img src="' . esc_url($title_logo) . '" alt="' . esc_attr($title) . '">';
+			}
+			$title_html .= '<h3>' . esc_html($title) . '</h3></a></div>';
+
+			$html = dimhouse_replace_first_match(
+				$html,
+				'#<div class="contact">([\s\S]*?)<div class="title_contact">[\s\S]*?</div>\s*(<div class="wrap">)#',
+				function ($matches) use ($title_html) {
+					return '<div class="contact">' . $matches[1] . $title_html . $matches[2];
+				}
+			);
+		}
+
 		if (!empty($contact['title'])) {
 			$html = dimhouse_replace_first_match(
 				$html,
