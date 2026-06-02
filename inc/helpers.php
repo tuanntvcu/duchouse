@@ -390,7 +390,7 @@ function dimhouse_render_footer_html() {
 	$brand_title = dimhouse_option('footer_brand_title', 'Đối tác');
 	$contact_title = dimhouse_option('footer_contact_title', 'Thông tin liên hệ');
 	$social_title = dimhouse_option('footer_social_title', 'Kết nối với chúng tôi');
-	$copyright = dimhouse_option('footer_copyright', 'Copyright © 2022. All rights reserved.');
+	$copyright = dimhouse_option('footer_copyright', 'Copyright © 2026. All rights reserved.');
 	$popup_image = dimhouse_option('popup_image', dimhouse_asset_uri('uploads/banner/baner/popup_2025_2.jpg'));
 	$popup_url = dimhouse_option('popup_url', '');
 	$popup_alt = dimhouse_option('popup_alt', 'POPUP');

@@ -6,12 +6,14 @@ if (!defined('ABSPATH')) {
 
 function dimhouse_enqueue_assets() {
 	$theme_version = wp_get_theme()->get('Version');
+	$style_path = get_stylesheet_directory() . '/style.css';
+	$style_version = file_exists($style_path) ? filemtime($style_path) : $theme_version;
 	$main_script_path = get_theme_file_path('/assets/js/main.js');
 	$main_script_version = file_exists($main_script_path) ? filemtime($main_script_path) : $theme_version;
 
 	wp_enqueue_style('dimhouse-fonts', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap', array(), null);
 	wp_enqueue_style('dimhouse-material-icons', 'https://fonts.googleapis.com/icon?family=Material+Icons', array(), null);
-	wp_enqueue_style('dimhouse-style', get_stylesheet_uri(), array(), $theme_version);
+	wp_enqueue_style('dimhouse-style', get_stylesheet_uri(), array(), $style_version);
 	wp_enqueue_style('dimhouse-clone', dimhouse_asset_uri('clone.css'), array('dimhouse-style'), $theme_version);
 
 	wp_enqueue_script('dimhouse-gtag', 'https://www.googletagmanager.com/gtag/js?id=G-WJ9YSMGMRS', array(), null, array('strategy' => 'async', 'in_footer' => false));
