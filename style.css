@@ -288,6 +288,8 @@ footer .box_social a .dimhouse-social-icon {
 .contact .container .wrap > div .dimhouse-contact-icon {
 	max-height: 60px;
 	max-width: 100%;
+	margin: 0 auto;
+	display: block;
 	width: auto;
 }
 
@@ -304,6 +306,14 @@ footer .box_social a .dimhouse-social-icon {
 @media (max-width: 600px) {
 	.top_social .box_social a .dimhouse-social-icon {
 		max-width: 20px;
+	}
+
+	.contact .container .wrap > div > div {
+		width: 100%;
+	}
+
+	.contact .container .wrap > div > div .info {
+		line-height: 1.4;
 	}
 }
 
@@ -583,6 +593,83 @@ footer .box_social a .dimhouse-social-icon {
 	pointer-events: none;
 }
 
+#dimhouse-hidden-facebook-hotline {
+	display: none !important;
+}
+
+.dimhouse-floating-facebook-contact-v2 {
+	bottom: 240px;
+	height: 85px;
+	margin: 0 !important;
+	pointer-events: auto;
+	position: fixed;
+	right: 0;
+	width: 85px;
+	z-index: 10100;
+}
+
+.dimhouse-floating-facebook-link-v2 {
+	align-items: center;
+	display: flex;
+	height: 85px;
+	justify-content: center;
+	position: relative;
+	width: 85px;
+}
+
+.dimhouse-facebook-phone-v2 {
+	align-items: center;
+	display: flex;
+	height: 65px;
+	justify-content: center;
+	position: relative;
+	width: 65px;
+}
+
+.dimhouse-facebook-circle-v2,
+.dimhouse-facebook-circle-fill-v2,
+.dimhouse-facebook-img-circle-v2 {
+	border-radius: 100%;
+	position: absolute;
+}
+
+.dimhouse-facebook-circle-v2 {
+	animation: phonering-circle-anim 1.2s infinite ease-in-out;
+	background-color: transparent;
+	border: 2px solid rgba(255, 186, 0, 0.4);
+	height: 130%;
+	opacity: 0.1;
+	width: 130%;
+}
+
+.dimhouse-facebook-circle-fill-v2 {
+	animation: phonering-circle-fill-anim 2.3s infinite ease-in-out;
+	background-color: var(--color_main);
+	border: 2px solid transparent;
+	height: 110%;
+	opacity: 0.1;
+	width: 110%;
+}
+
+.dimhouse-facebook-img-circle-v2 {
+	align-items: center;
+	animation: phonering-circle-img-anim 1s infinite ease-in-out;
+	background: var(--color_main);
+	border: 2px solid transparent;
+	display: inline-flex;
+	height: 70%;
+	justify-content: center;
+	opacity: 1;
+	width: 70%;
+}
+
+.dimhouse-facebook-img-circle-v2 img {
+	display: block;
+	filter: var(--convert_color_main2);
+	max-width: 100%;
+	pointer-events: none;
+}
+
 .sideMenu:not(.open),
 .overlay_bo:not(.open) {
 	pointer-events: none;
@@ -606,6 +693,23 @@ footer .box_social a .dimhouse-social-icon {
 
 	.hotline.sticky.facebook {
 		bottom: 183px;
+	}
+
+	.dimhouse-floating-facebook-contact-v2 {
+		bottom: 183px;
+		height: 59px;
+		right: 3px;
+		width: 59px;
+	}
+
+	.dimhouse-floating-facebook-link-v2 {
+		height: 59px;
+		width: 59px;
+	}
+
+	.dimhouse-facebook-phone-v2 {
+		height: 45px;
+		width: 45px;
 	}
 
 	.hotline.sticky .ring,

@@ -171,7 +171,7 @@ function dimhouse_default_social_links() {
 	return array(
 		array(
 			'label' => 'Instagram',
-			'url' => 'https://instagram.com/dimhouse_design?igshid=YmMyMTA2M2Y=',
+			'url' => 'https://www.instagram.com/_dim.decor',
 			'icon' => 'instagram',
 		),
 		array(
@@ -181,7 +181,7 @@ function dimhouse_default_social_links() {
 		),
 		array(
 			'label' => 'Tiktok',
-			'url' => 'https://www.tiktok.com/@dimhousedesign?is_from_webapp=1&sender_device=pc',
+			'url' => 'https://www.tiktok.com/@ducdimhouse',
 			'icon' => 'tiktok',
 		),
 		array(
@@ -430,7 +430,7 @@ function dimhouse_default_floating_contact_links() {
 		),
 		array(
 			'label' => 'Facebook',
-			'url' => 'https://www.facebook.com/Dimhouse-Design-108306808017773',
+			'url' => 'https://www.facebook.com/DimHouse.DimDecor',
 			'image' => dimhouse_asset_uri('resources/images/ifacebook1.png'),
 			'class' => 'facebook',
 		),
@@ -607,7 +607,7 @@ function dimhouse_render_footer_html() {
 }
 
 function dimhouse_render_floating_ui_html() {
-	$hardcoded_facebook_url = 'https://www.facebook.com/Dimhouse-Design-108306808017773';
+	$hardcoded_facebook_url = 'https://www.facebook.com/DimHouse.DimDecor';
 	$html = '<div id="ims-scroll_left" class=""></div>
 	<div id="ims-scroll_right" class=""></div>
 	<div id="ims-loading"><div class="nb-spinner"></div></div>
@@ -635,6 +635,13 @@ function dimhouse_render_floating_ui_html() {
 		}
 
 		$inner = '<div class="phone"><div class="phone-circle"></div><div class="phone-circle-fill"></div><div class="phone-img-circle"><img src="' . esc_url($image_url) . '" alt="' . esc_attr($label) . '"></div></div>';
+		if ($is_facebook_link) {
+			$new_facebook_inner = '<span class="dimhouse-facebook-phone-v2"><span class="dimhouse-facebook-circle-v2"></span><span class="dimhouse-facebook-circle-fill-v2"></span><span class="dimhouse-facebook-img-circle-v2"><img src="' . esc_url($image_url) . '" alt="' . esc_attr($label) . '"></span></span>';
+			$html .= '<div id="dimhouse-hidden-facebook-hotline" class="' . esc_attr($class) . '" style="display: none !important;" aria-hidden="true"><div class="ring"><a href="' . esc_url($url) . '" target="_blank" rel="noopener noreferrer"' . $onclick . '>' . $inner . '</a></div></div>';
+			$html .= '<div id="dimhouse-facebook-contact-v2" class="dimhouse-floating-facebook-contact-v2"><a id="dimhouse-facebook-contact-link-v2" class="dimhouse-floating-facebook-link-v2" href="' . esc_url($hardcoded_facebook_url) . '" target="_blank" rel="noopener noreferrer"' . $onclick . '>' . $new_facebook_inner . '</a></div>';
+			continue;
+		}
+
 		$html .= '<div class="' . esc_attr($class) . '"><div class="ring"><a href="' . esc_url($url) . '" target="_blank" rel="noopener noreferrer"' . $onclick . '>' . $inner . '</a></div></div>';
 	}
 
@@ -1939,6 +1946,7 @@ function dimhouse_apply_clone_acf_overrides($html) {
 	);
 
 	$html = dimhouse_remove_construction_location_fields($html);
+	$html = dimhouse_remove_popup_booking_location_fields($html);
 	return dimhouse_remove_procedure_location_fields($html);
 }
 
@@ -1968,6 +1976,24 @@ function dimhouse_remove_procedure_location_fields($html) {
 			return $matches[1];
 		}
 	);
+}
+
+function dimhouse_remove_popup_booking_location_fields($html) {
+	$html = dimhouse_replace_first_match(
+		$html,
+		'#(<form action="" method="post" id="form_book"[\s\S]*?<input type="text" name="email"[\s\S]*?</div>)\s*<p class="label_title col-12">[\s\S]*?</p>\s*<div class="form-group col-12 col-md-6"><select name="provinces"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6"><select name="districts"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6"><select name="wards"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6">\s*<input type="text" name="address"[\s\S]*?</div>#',
+		function ($matches) {
+			return $matches[1];
+		}
+	);
+
+	$without_location_controls = preg_replace(
+		'#\s*<p class="label_title col-12">[^<]*(?:Địa điểm|Äá»‹a Ä‘iá»ƒm)[^<]*</p>\s*<div class="form-group col-12 col-md-6"><select name="provinces"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6"><select name="districts"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6"><select name="wards"[\s\S]*?</select></div>(?:\s*<div class="form-group col-12 col-md-6">\s*<input type="text" name="address"[\s\S]*?</div>)?#',
+		'',
+		$html
+	);
+
+	return $without_location_controls !== null ? $without_location_controls : $html;
 }
 
 function dimhouse_index_fallback_fullpage() {
@@ -2238,7 +2264,7 @@ function dimhouse_home_defaults() {
 				),
 				array(
 					'title' => 'Thông tin liên hệ',
-					'content' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.7037275541857!2d106.7471018153159!3d10.68008916388372!2m3!1f0!2f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31753b730c677b63%3A0xfa33e39535626666!2zS2h1IETDom4gQ8awIEFuaCBUdeG6pW4gR3JlZW4gUml2ZXJzaWRl!5e0!3m2!1sen!2sus!4v1649149804440!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="footer_title social_title">Kết nối với chúng tôi</div><div class="box_social"><div class="row mx-0"><a href="https://instagram.com/dimhouse_design?igshid=YmMyMTA2M2Y=" target="_blank"><img src="uploads/config/2024_04/instagram.png" alt="Instagram"></a><a href="https://www.facebook.com/DimHouse.DimDecor" target="_blank"><img src="uploads/config/2024_04/fb.png" alt="Facebook"></a><a href="https://www.tiktok.com/@dimhousedesign?is_from_webapp=1&sender_device=pc" target="_blank"><img src="uploads/config/2024_04/tiktok.png" alt="Tiktok"></a><a href="https://www.youtube.com/@DimHouse-l9e" target="_blank"><img src="uploads/config/2024_04/youtube.png" alt="Youtube"></a></div></div><div class="email"><i class="fas fa-envelope"></i> Email: ducquangninh2811@gmail.com</div>',
+					'content' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.7037275541857!2d106.7471018153159!3d10.68008916388372!2m3!1f0!2f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31753b730c677b63%3A0xfa33e39535626666!2zS2h1IETDom4gQ8awIEFuaCBUdeG6pW4gR3JlZW4gUml2ZXJzaWRl!5e0!3m2!1sen!2sus!4v1649149804440!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="footer_title social_title">Kết nối với chúng tôi</div><div class="box_social"><div class="row mx-0"><a href="https://www.instagram.com/_dim.decor" target="_blank"><img src="uploads/config/2024_04/instagram.png" alt="Instagram"></a><a href="https://www.facebook.com/DimHouse.DimDecor" target="_blank"><img src="uploads/config/2024_04/fb.png" alt="Facebook"></a><a href="https://www.tiktok.com/@ducdimhouse" target="_blank"><img src="uploads/config/2024_04/tiktok.png" alt="Tiktok"></a><a href="https://www.youtube.com/@DimHouse-l9e" target="_blank"><img src="uploads/config/2024_04/youtube.png" alt="Youtube"></a></div></div><div class="email"><i class="fas fa-envelope"></i> Email: ducquangninh2811@gmail.com</div>',
 				),
 			),
 		),

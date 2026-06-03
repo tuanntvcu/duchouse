@@ -14,7 +14,7 @@ function dimhouse_legacy_ajax() {
 	if ($module !== 'global') {
 		dimhouse_legacy_json(array(
 			'ok' => 0,
-			'mess' => dimhouse_estimate_label('form_required_message', 'Request khong hop le.'),
+			'mess' => dimhouse_estimate_label('form_required_message', 'Yêu cầu không hợp lệ.'),
 		));
 	}
 
@@ -32,7 +32,7 @@ function dimhouse_legacy_ajax() {
 
 	dimhouse_legacy_json(array(
 		'ok' => 0,
-		'mess' => dimhouse_estimate_label('form_required_message', 'Chuc nang chua duoc ho tro.'),
+		'mess' => dimhouse_estimate_label('form_required_message', 'Chức năng chưa được hỗ trợ.'),
 	));
 }
 
@@ -155,13 +155,22 @@ function dimhouse_ajax_construction() {
 		if (empty($values[$required])) {
 			return array(
 				'ok' => 0,
-				'mess' => dimhouse_estimate_label('form_required_message', 'Vui long nhap day du thong tin bat buoc.'),
+				'mess' => dimhouse_estimate_label('form_required_message', 'Vui lòng nhập đầy đủ thông tin bắt buộc.'),
 			);
 		}
 	}
 
 	$estimate = dimhouse_calculate_construction($values);
 	$config = $estimate['config'];
+	$submission_values = dimhouse_construction_submission_values($values, $estimate);
+	$submission_id = dimhouse_save_consultation_submission($submission_values, 'construction');
+
+	if (!$submission_id) {
+		return array(
+			'ok' => 0,
+			'mess' => dimhouse_estimate_label('form_required_message', 'Không lưu được thông tin. Vui lòng thử lại.'),
+		);
+	}
 
 	return array(
 		'ok' => 1,
@@ -173,7 +182,34 @@ function dimhouse_ajax_construction() {
 		'tab2_price' => dimhouse_format_vnd($estimate['crude_total']),
 		'tab3_price' => dimhouse_format_vnd($estimate['completion']['high']),
 		'summary' => $estimate,
+		'submission_id' => $submission_id,
 	);
+}
+
+function dimhouse_construction_submission_values($values, $estimate) {
+	$submission_values = $values;
+	$location_parts = array_filter(array(
+		isset($values['address']) ? $values['address'] : '',
+		isset($values['ward']) ? $values['ward'] : '',
+		isset($values['district']) ? $values['district'] : '',
+		isset($values['province']) ? $values['province'] : '',
+	));
+
+	$submission_values['area'] = dimhouse_format_unit($estimate['construction_area']) . ' m2';
+	$submission_values['price'] = dimhouse_format_vnd($estimate['crude_total']);
+	$submission_values['short'] = 'Khái toán phí xây nhà';
+	$submission_values['content'] = implode(', ', $location_parts);
+	$submission_values['_estimate'] = array(
+		'design_area' => dimhouse_format_unit($estimate['design_area']) . ' m2',
+		'construction_area' => dimhouse_format_unit($estimate['construction_area']) . ' m2',
+		'completion_area' => dimhouse_format_unit($estimate['completion_area']) . ' m2',
+		'crude_unit' => dimhouse_format_unit($estimate['crude_unit']) . ' VND/m2',
+		'design_price' => dimhouse_format_vnd($estimate['design']['landscape']),
+		'crude_price' => dimhouse_format_vnd($estimate['crude_total']),
+		'completion_price' => dimhouse_format_vnd($estimate['completion']['high']),
+	);
+
+	return $submission_values;
 }
 
 function dimhouse_calculate_construction($values) {
@@ -361,14 +397,14 @@ function dimhouse_ajax_load_pic_review() {
 	if ($floor < 0 || $floor > 5) {
 		return array(
 			'ok' => 0,
-			'mess' => dimhouse_estimate_label('invalid_floor_message', 'So lau khong hop le.'),
+			'mess' => dimhouse_estimate_label('invalid_floor_message', 'Số lầu không hợp lệ.'),
 		);
 	}
 
 	if ($mezzanine < 0 || $mezzanine > 1) {
 		return array(
 			'ok' => 0,
-			'mess' => dimhouse_estimate_label('invalid_mezzanine_message', 'So lung khong hop le.'),
+			'mess' => dimhouse_estimate_label('invalid_mezzanine_message', 'Số lửng không hợp lệ.'),
 			'mezzanine' => 0,
 		);
 	}
@@ -377,7 +413,7 @@ function dimhouse_ajax_load_pic_review() {
 		return array(
 			'ok' => 0,
 			'html' => '',
-			'mess' => dimhouse_estimate_label('invalid_mezzanine_zero_floor_message', 'So lung khong vuot qua 0.'),
+			'mess' => dimhouse_estimate_label('invalid_mezzanine_zero_floor_message', 'Số lửng không vượt quá 0.'),
 			'mezzanine' => 0,
 		);
 	}
@@ -408,7 +444,7 @@ function dimhouse_ajax_load_pic_review() {
 		return array(
 			'ok' => 0,
 			'html' => '',
-			'mess' => dimhouse_estimate_label('missing_preview_image_message', 'Khong tim thay anh xem truoc.'),
+			'mess' => dimhouse_estimate_label('missing_preview_image_message', 'Không tìm thấy ảnh xem trước.'),
 			'mezzanine' => 0,
 		);
 	}
@@ -429,7 +465,7 @@ function dimhouse_ajax_form_book() {
 	if (empty($values['full_name']) || empty($values['phone'])) {
 		return array(
 			'ok' => 0,
-			'mess' => dimhouse_estimate_label('form_required_message', 'Vui long nhap ho ten va so dien thoai.'),
+			'mess' => dimhouse_estimate_label('form_required_message', 'Vui lòng nhập họ tên và số điện thoại.'),
 		);
 	}
 
@@ -437,13 +473,13 @@ function dimhouse_ajax_form_book() {
 	if (!$submission_id) {
 		return array(
 			'ok' => 0,
-			'mess' => dimhouse_estimate_label('form_required_message', 'Khong luu duoc thong tin. Vui long thu lai.'),
+			'mess' => dimhouse_estimate_label('form_required_message', 'Không lưu được thông tin. Vui lòng thử lại.'),
 		);
 	}
 
 	return array(
 		'ok' => 1,
-		'mess' => dimhouse_estimate_label('form_success_message', 'Dat lich thanh cong!'),
+		'mess' => dimhouse_estimate_label('form_success_message', 'Đặt lịch thành công!'),
 		'submission_id' => $submission_id,
 	);
 }
