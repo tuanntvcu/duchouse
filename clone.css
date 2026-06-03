@@ -35469,12 +35469,12 @@
 
         .construction .wrap_top .left {
             width: 288px;
-            max-width: 100%
+            max-width: 100%;
         }
 
         @media (max-width:425px) {
             .construction .wrap_top .left {
-                width: 100%
+                width: 100%;
             }
         }
 
