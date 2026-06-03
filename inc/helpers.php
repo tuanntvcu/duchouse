@@ -2120,7 +2120,7 @@ function dimhouse_home_defaults() {
 		'estimate' => array(
 			'title' => 'Khách hàng khai toán phí xây nhà  - với 1 phút !',
 			'intro' => '',
-			'floor_label' => 'Tầng (Mái, Sthượng chọn trong bảng)',
+			'floor_label' => 'Tầng',
 			'mezzanine_label' => 'Có lửng hay không ?',
 			'preview_image' => dimhouse_asset_uri('uploads/estimate/tang_lung/khong_lung/0_lau_n.jpg'),
 			'form_banner_image' => dimhouse_asset_uri('uploads/banner/baner/du_toan_1.jpg'),

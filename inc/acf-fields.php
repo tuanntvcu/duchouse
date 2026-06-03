@@ -121,6 +121,15 @@ function dimhouse_register_acf_fields() {
 			array('key' => 'field_dimhouse_seo_title', 'label' => 'SEO Title', 'name' => 'seo_title', 'type' => 'text'),
 			array('key' => 'field_dimhouse_seo_description', 'label' => 'SEO Description', 'name' => 'seo_description', 'type' => 'textarea'),
 			array('key' => 'field_dimhouse_og_image', 'label' => 'OG Image', 'name' => 'og_image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium'),
+			array('key' => 'field_dimhouse_business_name', 'label' => 'Business Name', 'name' => 'business_name', 'type' => 'text', 'default_value' => 'Dimhouse'),
+			array('key' => 'field_dimhouse_business_description', 'label' => 'Business Schema Description', 'name' => 'business_description', 'type' => 'textarea'),
+			array('key' => 'field_dimhouse_business_phone', 'label' => 'Business Phone', 'name' => 'business_phone', 'type' => 'text'),
+			array('key' => 'field_dimhouse_business_email', 'label' => 'Business Email', 'name' => 'business_email', 'type' => 'email'),
+			array('key' => 'field_dimhouse_business_price_range', 'label' => 'Business Price Range', 'name' => 'business_price_range', 'type' => 'text', 'default_value' => '$$'),
+			array('key' => 'field_dimhouse_business_street_address', 'label' => 'Business Street Address', 'name' => 'business_street_address', 'type' => 'text', 'default_value' => '10/169 Thái Hà, Đống Đa'),
+			array('key' => 'field_dimhouse_business_locality', 'label' => 'Business City / Locality', 'name' => 'business_locality', 'type' => 'text', 'default_value' => 'Hà Nội'),
+			array('key' => 'field_dimhouse_business_country', 'label' => 'Business Country Code', 'name' => 'business_country', 'type' => 'text', 'default_value' => 'VN'),
+			array('key' => 'field_dimhouse_business_area_served', 'label' => 'Business Area Served', 'name' => 'business_area_served', 'type' => 'text', 'default_value' => 'Việt Nam'),
 			array('key' => 'field_dimhouse_alert_title', 'label' => 'Alert Title', 'name' => 'alert_title', 'type' => 'text'),
 			array('key' => 'field_dimhouse_send_label', 'label' => 'Send Label', 'name' => 'send_label', 'type' => 'text'),
 			array('key' => 'field_dimhouse_form_confirm_message', 'label' => 'Form Confirm Message', 'name' => 'form_confirm_message', 'type' => 'textarea'),
@@ -138,6 +147,25 @@ function dimhouse_register_acf_fields() {
 				),
 			),
 		),
+	));
+
+	acf_add_local_field_group(array(
+		'key' => 'group_dimhouse_page_post_seo',
+		'title' => 'Dimhouse SEO',
+		'fields' => array(
+			array('key' => 'field_dimhouse_post_seo_title', 'label' => 'SEO Title', 'name' => 'seo_title', 'type' => 'text', 'instructions' => 'Nen ngan gon, ro y dinh tim kiem va khac biet voi cac trang khac.'),
+			array('key' => 'field_dimhouse_post_seo_description', 'label' => 'SEO Description', 'name' => 'seo_description', 'type' => 'textarea', 'instructions' => 'Khoang 140-160 ky tu, tom tat noi dung va loi ich chinh cua trang.'),
+			array('key' => 'field_dimhouse_post_og_image', 'label' => 'OG Image', 'name' => 'og_image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium', 'instructions' => 'Anh chia se cho Facebook, Zalo va Twitter/X. Neu bo trong, theme se dung anh dai dien hoac anh mac dinh.'),
+		),
+		'location' => array(
+			array(
+				array('param' => 'post_type', 'operator' => '==', 'value' => 'page'),
+			),
+			array(
+				array('param' => 'post_type', 'operator' => '==', 'value' => 'post'),
+			),
+		),
+		'menu_order' => 5,
 	));
 
 	acf_add_local_field_group(array(
