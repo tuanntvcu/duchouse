@@ -542,7 +542,7 @@ function dimhouse_render_footer_html() {
 	$footer_partners = dimhouse_option_repeater('footer_partners', dimhouse_default_footer_partners());
 	$footer_fanpage_iframe = dimhouse_option('footer_fanpage_iframe', '<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FDimHouse.DimDecor&amp;tabs=timeline&amp;width=340&amp;height=500&amp;small_header=false&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=false&amp;appId" width="340" height="311" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>');
 	$footer_map_iframe = dimhouse_option('footer_map_iframe', '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1565.9326619961673!2d105.8156930051418!3d21.01521256380595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab6349c1445f%3A0x7fdbde275176e812!2zMTY5IFAuIFRow6FpIEjDoCwgxJDhu5FuZyDEkGEsIEjDoCBO4buZaSAxMDAwMDAsIFZpZXRuYW0!5e0!3m2!1sen!2s!4v1780459947279!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>');
-	$footer_email = dimhouse_option('footer_email', 'ducquangninh2811@gmail.com');
+	$footer_email = dimhouse_option('footer_email', 'dimhousevietnam@gmail.com');
 	$brand_title = dimhouse_option('footer_brand_title', 'Đối tác');
 	$contact_title = dimhouse_option('footer_contact_title', 'Thông tin liên hệ');
 	$social_title = dimhouse_option('footer_social_title', 'Kết nối với chúng tôi');
@@ -2243,8 +2243,8 @@ function dimhouse_home_defaults() {
 				),
 				array(
 					'label' => 'Email tư vấn:',
-					'value' => 'ducquangninh2811@gmail.com',
-					'url' => 'mailto:ducquangninh2811@gmail.com',
+					'value' => 'dimhousevietnam@gmail.com',
+					'url' => 'mailto:dimhousevietnam@gmail.com',
 				),
 				array(
 					'label' => 'Đăng Kí Kinh Doanh:',
@@ -2264,7 +2264,7 @@ function dimhouse_home_defaults() {
 				),
 				array(
 					'title' => 'Thông tin liên hệ',
-					'content' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.7037275541857!2d106.7471018153159!3d10.68008916388372!2m3!1f0!2f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31753b730c677b63%3A0xfa33e39535626666!2zS2h1IETDom4gQ8awIEFuaCBUdeG6pW4gR3JlZW4gUml2ZXJzaWRl!5e0!3m2!1sen!2sus!4v1649149804440!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="footer_title social_title">Kết nối với chúng tôi</div><div class="box_social"><div class="row mx-0"><a href="https://www.instagram.com/_dim.decor" target="_blank"><img src="uploads/config/2024_04/instagram.png" alt="Instagram"></a><a href="https://www.facebook.com/DimHouse.DimDecor" target="_blank"><img src="uploads/config/2024_04/fb.png" alt="Facebook"></a><a href="https://www.tiktok.com/@ducdimhouse" target="_blank"><img src="uploads/config/2024_04/tiktok.png" alt="Tiktok"></a><a href="https://www.youtube.com/@DimHouse-l9e" target="_blank"><img src="uploads/config/2024_04/youtube.png" alt="Youtube"></a></div></div><div class="email"><i class="fas fa-envelope"></i> Email: ducquangninh2811@gmail.com</div>',
+					'content' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.7037275541857!2d106.7471018153159!3d10.68008916388372!2m3!1f0!2f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31753b730c677b63%3A0xfa33e39535626666!2zS2h1IETDom4gQ8awIEFuaCBUdeG6pW4gR3JlZW4gUml2ZXJzaWRl!5e0!3m2!1sen!2sus!4v1649149804440!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="footer_title social_title">Kết nối với chúng tôi</div><div class="box_social"><div class="row mx-0"><a href="https://www.instagram.com/_dim.decor" target="_blank"><img src="uploads/config/2024_04/instagram.png" alt="Instagram"></a><a href="https://www.facebook.com/DimHouse.DimDecor" target="_blank"><img src="uploads/config/2024_04/fb.png" alt="Facebook"></a><a href="https://www.tiktok.com/@ducdimhouse" target="_blank"><img src="uploads/config/2024_04/tiktok.png" alt="Tiktok"></a><a href="https://www.youtube.com/@DimHouse-l9e" target="_blank"><img src="uploads/config/2024_04/youtube.png" alt="Youtube"></a></div></div><div class="email"><i class="fas fa-envelope"></i> Email: dimhousevietnam@gmail.com</div>',
 				),
 			),
 		),

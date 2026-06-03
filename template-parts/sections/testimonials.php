@@ -60,7 +60,7 @@ $items = (is_array($items) && !empty($items)) ? $items : $defaults['items'];
 					</div>
 					<div>
 						<div><?php echo dimhouse_contact_icon_svg('email', 2); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
-						<div class="info"><div class="name">Email tư vấn:</div><div>ducquangninh2811@gmail.com</div></div>
+						<div class="info"><div class="name">Email tư vấn:</div><div>dimhousevietnam@gmail.com</div></div>
 					</div>
 					<div>
 						<div><?php echo dimhouse_contact_icon_svg('business', 3); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
