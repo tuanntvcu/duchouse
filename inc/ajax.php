@@ -433,8 +433,17 @@ function dimhouse_ajax_form_book() {
 		);
 	}
 
+	$submission_id = dimhouse_save_consultation_submission($values, 'form_book');
+	if (!$submission_id) {
+		return array(
+			'ok' => 0,
+			'mess' => dimhouse_estimate_label('form_required_message', 'Khong luu duoc thong tin. Vui long thu lai.'),
+		);
+	}
+
 	return array(
 		'ok' => 1,
 		'mess' => dimhouse_estimate_label('form_success_message', 'Dat lich thanh cong!'),
+		'submission_id' => $submission_id,
 	);
 }

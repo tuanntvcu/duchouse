@@ -104,11 +104,48 @@
 		});
 	}
 
+	function initFloatingContactLinks() {
+		var hardcodedFacebookUrl = 'https://www.facebook.com/Dimhouse-Design-108306808017773';
+
+		$('.hotline.sticky .ring > a').each(function () {
+			var link = this;
+			var $link = $(link);
+
+			if ($link.data('dimhouseFloatingContactBound')) {
+				return;
+			}
+
+			$link.data('dimhouseFloatingContactBound', true);
+			if ($link.closest('.hotline.sticky.facebook').length) {
+				link.href = hardcodedFacebookUrl;
+				link.addEventListener('click', function (event) {
+					event.preventDefault();
+					event.stopPropagation();
+					if (typeof event.stopImmediatePropagation === 'function') {
+						event.stopImmediatePropagation();
+					}
+					window.open(hardcodedFacebookUrl, '_blank', 'noopener,noreferrer');
+					return false;
+				}, true);
+			}
+
+			link.addEventListener('click', function (event) {
+				event.stopPropagation();
+				if (typeof event.stopImmediatePropagation === 'function') {
+					event.stopImmediatePropagation();
+				}
+			});
+		});
+	}
+
 	function initFullPage() {
 		if ($.fn.fullpage && $('#fullpage').length && !$('html').hasClass('fp-enabled') && $(window).width() > 1300) {
+			$('#fullpage > footer.section-7').addClass('fp-auto-height');
 			$('#fullpage').fullpage({
 				slidesNavigation: true,
-				controlArrows: true
+				controlArrows: true,
+				fitToSection: false,
+				normalScrollElements: 'footer.section-7'
 			});
 		}
 	}
@@ -344,8 +381,12 @@
 		initTabs();
 		initEstimateRadios();
 		initQuantityControls();
+		initFloatingContactLinks();
 		initFullPage();
 		initSlick();
 		initLazyImages();
+		if ($.fn.fullpage && $.fn.fullpage.reBuild) {
+			$.fn.fullpage.reBuild();
+		}
 	});
 })(jQuery);

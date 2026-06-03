@@ -389,7 +389,7 @@ function dimhouse_register_acf_fields() {
 									array('key' => 'field_dimhouse_testimonial_name', 'label' => 'Name', 'name' => 'name', 'type' => 'text'),
 									array('key' => 'field_dimhouse_testimonial_role', 'label' => 'Role', 'name' => 'role', 'type' => 'text'),
 									array('key' => 'field_dimhouse_testimonial_avatar', 'label' => 'Avatar', 'name' => 'avatar', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail'),
-									array('key' => 'field_dimhouse_testimonial_rating', 'label' => 'Rating', 'name' => 'rating', 'type' => 'number', 'min' => 1, 'max' => 5, 'default_value' => 5),
+									array('key' => 'field_dimhouse_testimonial_rating', 'label' => 'Rating', 'name' => 'rating', 'type' => 'number', 'min' => 1, 'max' => 10, 'default_value' => 10),
 									array('key' => 'field_dimhouse_testimonial_text', 'label' => 'Text', 'name' => 'text', 'type' => 'textarea'),
 								),
 							),

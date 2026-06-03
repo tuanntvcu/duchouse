@@ -21,9 +21,11 @@ $articles = (is_array($articles) && !empty($articles)) ? $articles : dimhouse_de
 						<?php foreach ($items as $item) : ?>
 							<div class="col_item ">
 								<div class="item">
-									<a href="<?php echo esc_url(!empty($item['url']) ? $item['url'] : '#'); ?>" title="<?php echo esc_attr(!empty($item['title']) ? $item['title'] : ''); ?>" data-fancybox="">
-										<?php echo dimhouse_image_html(!empty($item['image']) ? $item['image'] : '', 'full', array('alt' => !empty($item['title']) ? $item['title'] : $title)); ?>
-									</a>
+									<div class="img">
+										<a href="<?php echo esc_url(!empty($item['url']) ? $item['url'] : '#'); ?>" title="<?php echo esc_attr(!empty($item['title']) ? $item['title'] : ''); ?>" data-fancybox="">
+											<?php echo dimhouse_image_html(!empty($item['image']) ? $item['image'] : '', 'full', array('alt' => !empty($item['title']) ? $item['title'] : $title)); ?>
+										</a>
+									</div>
 									<span><i class="fa fa-play"></i></span>
 								</div>
 							</div>

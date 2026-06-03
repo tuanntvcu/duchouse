@@ -13,8 +13,8 @@ function dimhouse_enqueue_assets() {
 
 	wp_enqueue_style('dimhouse-fonts', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap', array(), null);
 	wp_enqueue_style('dimhouse-material-icons', 'https://fonts.googleapis.com/icon?family=Material+Icons', array(), null);
-	wp_enqueue_style('dimhouse-style', get_stylesheet_uri(), array(), $style_version);
-	wp_enqueue_style('dimhouse-clone', dimhouse_asset_uri('clone.css'), array('dimhouse-style'), $theme_version);
+	wp_enqueue_style('dimhouse-clone', dimhouse_asset_uri('clone.css'), array(), $theme_version);
+	wp_enqueue_style('dimhouse-style', get_stylesheet_uri(), array('dimhouse-clone'), $style_version);
 
 	$google_tag_id = trim((string) dimhouse_option('google_tag_id', ''));
 	if ($google_tag_id !== '') {

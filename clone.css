@@ -33323,7 +33323,7 @@
             justify-content: center;
             text-align: center;
             font-family: "SFProDisplay-Thin";
-            font-size: 18px;
+            font-size: 28px;
         }
 
         @media (min-width:992px) {
@@ -33337,7 +33337,7 @@
             text-transform: uppercase;
             position: relative;
             font-weight: normal;
-            font-size: 30px;
+            font-size: 42px;
             padding-bottom: 10px;
             margin-bottom: 30px;
             margin-top: 20px;

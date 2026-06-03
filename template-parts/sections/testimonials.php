@@ -25,9 +25,12 @@ $items = (is_array($items) && !empty($items)) ? $items : $defaults['items'];
 								<div class="col_comment">
 									<div class="comment">
 										<div class="info_item">
-											<?php $testimonial_title = !empty($item['role']) ? trim($item['role']) . ' ' . (!empty($item['name']) ? $item['name'] : '') : (!empty($item['name']) ? $item['name'] : ''); ?>
+											<?php
+											$testimonial_title = !empty($item['role']) ? trim($item['role']) . ' ' . (!empty($item['name']) ? $item['name'] : '') : (!empty($item['name']) ? $item['name'] : '');
+											$rating = dimhouse_testimonial_rating_score(!empty($item['rating']) ? $item['rating'] : '');
+											?>
 											<figure><a title="<?php echo esc_attr($testimonial_title); ?>"><?php echo dimhouse_image_html(!empty($item['avatar']) ? $item['avatar'] : '', 'thumbnail', array('alt' => '')); ?></a></figure>
-											<div class="info_title"><div class="title"><?php echo !empty($item['role']) ? esc_html($item['role']) . ' ' : ''; ?><span><?php echo esc_html(!empty($item['name']) ? $item['name'] : ''); ?></span></div><div class="rate">Đánh giá : <span title="10/10">10/10</span></div></div>
+											<div class="info_title"><div class="title"><?php echo !empty($item['role']) ? esc_html($item['role']) . ' ' : ''; ?><span><?php echo esc_html(!empty($item['name']) ? $item['name'] : ''); ?></span></div><div class="rate">Đánh giá : <span title="<?php echo esc_attr($rating . '/10'); ?>"><?php echo esc_html($rating . '/10'); ?></span></div></div>
 										</div>
 										<div class="short"><p><?php echo dimhouse_kses_content(!empty($item['text']) ? $item['text'] : ''); ?></p></div>
 									</div>
@@ -61,7 +64,7 @@ $items = (is_array($items) && !empty($items)) ? $items : $defaults['items'];
 					</div>
 					<div>
 						<div><?php echo dimhouse_contact_icon_svg('business', 3); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
-						<div class="info"><div class="name">Đăng Kí Kinh Doanh:</div><div>10/169 Thái Hà, Đống Đa, Hà Nội</div><div>Văn Phòng:</div><div><span style="font-size: 15px;">10/169 Thái Hà, Đống Đa, Hà Nội</span></div><div> </div></div>
+						<div class="info"><div class="name">Đăng Kí Kinh Doanh:</div><div>10/169 Thái Hà, Đống Đa, Hà Nội</div><div>Văn Phòng:</div><div><span style="font-size: 15px;">10/169 Thái Hà, Đống Đa, Hà Nội</span></div><div>&nbsp;</div></div>
 					</div>
 				</div>
 			</div>

@@ -176,7 +176,7 @@ function dimhouse_default_social_links() {
 		),
 		array(
 			'label' => 'Facebook',
-			'url' => 'https://www.facebook.com/profile.php?id=100065424102650',
+			'url' => 'https://www.facebook.com/DimHouse.DimDecor',
 			'icon' => 'facebook',
 		),
 		array(
@@ -186,7 +186,7 @@ function dimhouse_default_social_links() {
 		),
 		array(
 			'label' => 'Youtube',
-			'url' => 'https://www.youtube.com/channel/UCXPlJElksDJq8aa8POcxoMA',
+			'url' => 'https://www.youtube.com/@DimHouse-l9e',
 			'icon' => 'youtube',
 		),
 	);
@@ -525,14 +525,23 @@ function dimhouse_render_link($url, $label, $class = '') {
 	);
 }
 
+function dimhouse_testimonial_rating_score($rating) {
+	if ($rating === null || $rating === false || $rating === '') {
+		return 10;
+	}
+
+	return min(10, max(1, (int) $rating));
+}
+
 function dimhouse_render_footer_html() {
 	$defaults = dimhouse_home_defaults();
 	$footer_defaults = !empty($defaults['footer']) ? $defaults['footer'] : array();
 	$footer_logo = dimhouse_option('footer_logo', !empty($footer_defaults['footer_logo']) ? $footer_defaults['footer_logo'] : '');
+	$footer_title = dimhouse_option('footer_title', !empty($footer_defaults['footer_title']) ? $footer_defaults['footer_title'] : '');
 	$footer_text = dimhouse_option('footer_text', !empty($footer_defaults['footer_text']) ? $footer_defaults['footer_text'] : '');
 	$footer_partners = dimhouse_option_repeater('footer_partners', dimhouse_default_footer_partners());
-	$footer_fanpage_iframe = dimhouse_option('footer_fanpage_iframe', '<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100065424102650&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" width="340" height="311" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>');
-	$footer_map_iframe = dimhouse_option('footer_map_iframe', '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.7037275541857!2d106.7471018153159!3d10.68008916388372!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31753b730c677b63%3A0xfa33e39535626666!2zS2h1IETDom4gQ8awIEFuaCBUdeG6pW4gR3JlZW4gUml2ZXJzaWRl!5e0!3m2!1sen!2sus!4v1649149804440!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>');
+	$footer_fanpage_iframe = dimhouse_option('footer_fanpage_iframe', '<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FDimHouse.DimDecor&amp;tabs=timeline&amp;width=340&amp;height=500&amp;small_header=false&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=false&amp;appId" width="340" height="311" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>');
+	$footer_map_iframe = dimhouse_option('footer_map_iframe', '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1565.9326619961673!2d105.8156930051418!3d21.01521256380595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab6349c1445f%3A0x7fdbde275176e812!2zMTY5IFAuIFRow6FpIEjDoCwgxJDhu5FuZyDEkGEsIEjDoCBO4buZaSAxMDAwMDAsIFZpZXRuYW0!5e0!3m2!1sen!2s!4v1780459947279!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>');
 	$footer_email = dimhouse_option('footer_email', 'ducquangninh2811@gmail.com');
 	$brand_title = dimhouse_option('footer_brand_title', 'Đối tác');
 	$contact_title = dimhouse_option('footer_contact_title', 'Thông tin liên hệ');
@@ -555,6 +564,9 @@ function dimhouse_render_footer_html() {
 	}
 
 	$social_html = dimhouse_render_social_links_html('header');
+	$footer_title_text = trim(wp_strip_all_tags((string) $footer_title));
+	$footer_text_plain = preg_replace('/\s+/u', ' ', trim(wp_strip_all_tags((string) $footer_text)));
+	$footer_title_html = $footer_title_text && stripos($footer_text_plain, $footer_title_text) === false ? '<div class="footer_title footer_logo-title">' . esc_html($footer_title_text) . '</div>' : '';
 
 	$popup_image_url = dimhouse_image_url($popup_image, 'full');
 	$popup_html = '';
@@ -562,7 +574,7 @@ function dimhouse_render_footer_html() {
 		$popup_html = '<a id="click_popup" class="fancybox_popup" href="#popup_banner_a"></a><div id="popup_banner"><div class="" id="popup_banner_a"><div class="banner_item" style=""><div class="item"><a href="' . esc_url($popup_url) . '" target="_self"><img src="' . esc_url($popup_image_url) . '" alt="' . esc_attr($popup_alt) . '" style=""></a></div></div></div></div>';
 	}
 
-	return '<footer class="section section-7" data-anchor="section-7">
+	return '<footer class="section section-7 fp-auto-height" data-anchor="section-7">
 		<div class="bg-footer color-footer">
 			<div class="brand_scroll">
 				<div class="container">
@@ -573,6 +585,7 @@ function dimhouse_render_footer_html() {
 			<div class="container main_content">
 				<div class="top">
 					<div class="footer_logo">
+						' . $footer_title_html . '
 						<div class="content">' . dimhouse_kses_content($footer_text) . '</div>
 						<a href="' . esc_url(home_url('/')) . '" target="_self">' . dimhouse_image_html($footer_logo, 'full', array('alt' => 'Logo footer')) . '</a>
 					</div>
@@ -594,6 +607,7 @@ function dimhouse_render_footer_html() {
 }
 
 function dimhouse_render_floating_ui_html() {
+	$hardcoded_facebook_url = 'https://www.facebook.com/Dimhouse-Design-108306808017773';
 	$html = '<div id="ims-scroll_left" class=""></div>
 	<div id="ims-scroll_right" class=""></div>
 	<div id="ims-loading"><div class="nb-spinner"></div></div>
@@ -610,8 +624,18 @@ function dimhouse_render_floating_ui_html() {
 
 		$label = !empty($link['label']) ? $link['label'] : 'Contact';
 		$class = trim('hotline sticky ' . (!empty($link['class']) ? sanitize_html_class($link['class']) : ''));
+		$is_facebook_link = strpos(' ' . $class . ' ', ' facebook ') !== false;
+		if ($is_facebook_link) {
+			$url = $hardcoded_facebook_url;
+		}
+
+		$onclick = '';
+		if ($is_facebook_link) {
+			$onclick = ' onclick="' . esc_attr('event.preventDefault(); event.stopPropagation(); if (event.stopImmediatePropagation) { event.stopImmediatePropagation(); } window.open(' . wp_json_encode($hardcoded_facebook_url) . ', "_blank", "noopener,noreferrer"); return false;') . '"';
+		}
+
 		$inner = '<div class="phone"><div class="phone-circle"></div><div class="phone-circle-fill"></div><div class="phone-img-circle"><img src="' . esc_url($image_url) . '" alt="' . esc_attr($label) . '"></div></div>';
-		$html .= '<div class="' . esc_attr($class) . '"><div class="ring"><a href="' . esc_url($url) . '" target="_blank" rel="noopener noreferrer">' . $inner . '</a></div></div>';
+		$html .= '<div class="' . esc_attr($class) . '"><div class="ring"><a href="' . esc_url($url) . '" target="_blank" rel="noopener noreferrer"' . $onclick . '>' . $inner . '</a></div></div>';
 	}
 
 	$html .= '<div class="overlay_bo"></div><aside class="sideMenu"><div id="ims-side-menu"><ul class="list_none ">';
@@ -1081,7 +1105,7 @@ function dimhouse_render_process_section_from_index() {
 		}
 	}
 
-	return $html;
+	return dimhouse_remove_procedure_location_fields($html);
 }
 
 function dimhouse_render_menu_grid_section_from_index() {
@@ -1472,6 +1496,7 @@ function dimhouse_apply_clone_acf_overrides($html) {
 			}
 		);
 	}
+	$html = dimhouse_remove_procedure_location_fields($html);
 
 	$menu_grid = dimhouse_home_acf_layout('menu_grid');
 	if (!empty($menu_grid['title']) || !empty($menu_grid['text'])) {
@@ -1714,7 +1739,7 @@ function dimhouse_apply_clone_acf_overrides($html) {
 			$role = !empty($item['role']) ? $item['role'] : '';
 			$text = !empty($item['text']) ? $item['text'] : '';
 			$avatar = !empty($item['avatar']) ? dimhouse_clone_img_url($item['avatar']) : '';
-			$rating = !empty($item['rating']) ? min(10, max(1, (int) $item['rating'] * 2)) : 10;
+			$rating = dimhouse_testimonial_rating_score(!empty($item['rating']) ? $item['rating'] : '');
 			$testimonial_title = trim($role . ' ' . $name);
 			if (!$testimonial_title && !$text && !$avatar) {
 				continue;
@@ -1913,13 +1938,32 @@ function dimhouse_apply_clone_acf_overrides($html) {
 		}
 	);
 
-	return dimhouse_remove_construction_location_fields($html);
+	$html = dimhouse_remove_construction_location_fields($html);
+	return dimhouse_remove_procedure_location_fields($html);
 }
 
 function dimhouse_remove_construction_location_fields($html) {
-	return dimhouse_replace_first_match(
+	$html = dimhouse_replace_first_match(
 		$html,
 		'#(<form action="" method="post" id="construction">[\s\S]*?<input type="text" name="phone"[\s\S]*?</div>)\s*<p class="label_title col-12">[\s\S]*?</p>\s*<div class="form-group col-12 col-md-6"><select name="province"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6"><select name="district"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6"><select name="ward"[\s\S]*?</select></div>#',
+		function ($matches) {
+			return $matches[1];
+		}
+	);
+
+	$without_address = preg_replace(
+		'#\s*<div class="form-group col-12 col-md-6">\s*<input\s+type="text"\s+name="address"\s+placeholder="Số nhà, tên đường"\s*/?>\s*</div>#',
+		'',
+		$html
+	);
+
+	return $without_address !== null ? $without_address : $html;
+}
+
+function dimhouse_remove_procedure_location_fields($html) {
+	return dimhouse_replace_first_match(
+		$html,
+		'#(<form action="" method="post" id="form_book_procedure">[\s\S]*?<input type="text" name="email"[\s\S]*?</div>)\s*<p class="label_title col-12">[\s\S]*?</p>\s*<div class="form-group col-12 col-md-6"><select name="provinces"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6"><select name="districts"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6"><select name="wards"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6">\s*<input type="text" name="address"[\s\S]*?</div>#',
 		function ($matches) {
 			return $matches[1];
 		}
@@ -2169,7 +2213,7 @@ function dimhouse_home_defaults() {
 				array(
 					'label' => 'Fanpage Facebook:',
 					'value' => 'facebook.com/DimHouse.DimDecor',
-					'url' => 'https://www.facebook.com/profile.php?id=100065424102650',
+					'url' => 'https://www.facebook.com/DimHouse.DimDecor',
 				),
 				array(
 					'label' => 'Email tư vấn:',
@@ -2190,11 +2234,11 @@ function dimhouse_home_defaults() {
 			'footer_columns' => array(
 				array(
 					'title' => 'Fanpage',
-					'content' => '<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100065424102650&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" width="340" height="311" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>',
+					'content' => '<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FDimHouse.DimDecor&amp;tabs=timeline&amp;width=340&amp;height=500&amp;small_header=false&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=false&amp;appId" width="340" height="311" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>',
 				),
 				array(
 					'title' => 'Thông tin liên hệ',
-					'content' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.7037275541857!2d106.7471018153159!3d10.68008916388372!2m3!1f0!2f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31753b730c677b63%3A0xfa33e39535626666!2zS2h1IETDom4gQ8awIEFuaCBUdeG6pW4gR3JlZW4gUml2ZXJzaWRl!5e0!3m2!1sen!2sus!4v1649149804440!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="footer_title social_title">Kết nối với chúng tôi</div><div class="box_social"><div class="row mx-0"><a href="https://instagram.com/dimhouse_design?igshid=YmMyMTA2M2Y=" target="_blank"><img src="uploads/config/2024_04/instagram.png" alt="Instagram"></a><a href="https://www.facebook.com/profile.php?id=100065424102650" target="_blank"><img src="uploads/config/2024_04/fb.png" alt="Facebook"></a><a href="https://www.tiktok.com/@dimhousedesign?is_from_webapp=1&sender_device=pc" target="_blank"><img src="uploads/config/2024_04/tiktok.png" alt="Tiktok"></a><a href="https://www.youtube.com/channel/UCXPlJElksDJq8aa8POcxoMA" target="_blank"><img src="uploads/config/2024_04/youtube.png" alt="Youtube"></a></div></div><div class="email"><i class="fas fa-envelope"></i> Email: ducquangninh2811@gmail.com</div>',
+					'content' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.7037275541857!2d106.7471018153159!3d10.68008916388372!2m3!1f0!2f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31753b730c677b63%3A0xfa33e39535626666!2zS2h1IETDom4gQ8awIEFuaCBUdeG6pW4gR3JlZW4gUml2ZXJzaWRl!5e0!3m2!1sen!2sus!4v1649149804440!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="footer_title social_title">Kết nối với chúng tôi</div><div class="box_social"><div class="row mx-0"><a href="https://instagram.com/dimhouse_design?igshid=YmMyMTA2M2Y=" target="_blank"><img src="uploads/config/2024_04/instagram.png" alt="Instagram"></a><a href="https://www.facebook.com/DimHouse.DimDecor" target="_blank"><img src="uploads/config/2024_04/fb.png" alt="Facebook"></a><a href="https://www.tiktok.com/@dimhousedesign?is_from_webapp=1&sender_device=pc" target="_blank"><img src="uploads/config/2024_04/tiktok.png" alt="Tiktok"></a><a href="https://www.youtube.com/@DimHouse-l9e" target="_blank"><img src="uploads/config/2024_04/youtube.png" alt="Youtube"></a></div></div><div class="email"><i class="fas fa-envelope"></i> Email: ducquangninh2811@gmail.com</div>',
 				),
 			),
 		),
