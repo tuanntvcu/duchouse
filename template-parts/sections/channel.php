@@ -23,7 +23,7 @@ $articles = (is_array($articles) && !empty($articles)) ? $articles : dimhouse_de
 								<div class="item">
 									<div class="img">
 										<a href="<?php echo esc_url(!empty($item['url']) ? $item['url'] : '#'); ?>" title="<?php echo esc_attr(!empty($item['title']) ? $item['title'] : ''); ?>" data-fancybox="">
-											<?php echo dimhouse_image_html(!empty($item['image']) ? $item['image'] : '', 'full', array('alt' => !empty($item['title']) ? $item['title'] : $title)); ?>
+											<?php echo dimhouse_image_html(!empty($item['image']) ? $item['image'] : '', 'full', array('alt' => !empty($item['title']) ? $item['title'] : $title, 'width' => 580, 'height' => 400)); ?>
 										</a>
 									</div>
 									<span><i class="fa fa-play"></i></span>
@@ -48,7 +48,7 @@ $articles = (is_array($articles) && !empty($articles)) ? $articles : dimhouse_de
 							$article_subtitle = !empty($article['subtitle']) ? $article['subtitle'] : '';
 							?>
 							<div class="item">
-								<a href="<?php echo esc_url($article_url); ?>"><?php echo dimhouse_image_html(!empty($article['image']) ? $article['image'] : '', 'full', array('alt' => $article_title)); ?></a>
+								<a href="<?php echo esc_url($article_url); ?>"><?php echo dimhouse_image_html(!empty($article['image']) ? $article['image'] : '', 'full', array('alt' => $article_title, 'width' => 580, 'height' => 400)); ?></a>
 								<h3><a href="<?php echo esc_url($article_url); ?>"><?php echo esc_html($article_title); ?></a></h3>
 								<?php if ($article_subtitle) : ?><span><?php echo esc_html($article_subtitle); ?></span><?php endif; ?>
 							</div>

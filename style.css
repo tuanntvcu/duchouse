@@ -293,6 +293,67 @@ footer .box_social a .dimhouse-social-icon {
 	width: auto;
 }
 
+.section-2 #slide_menu ul li a {
+	display: block;
+	overflow: hidden;
+	aspect-ratio: 476 / 1068;
+	height: auto !important;
+}
+
+.section-2 #slide_menu ul li a img {
+	display: block;
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: cover;
+	object-position: center;
+}
+
+.section-2 #slide_menu ul li .menu_desc {
+	position: absolute;
+	left: 15px;
+	right: 15px;
+	bottom: 24px;
+	z-index: 2;
+	color: #e3e3e3;
+	font-size: 14px;
+	line-height: 1.4;
+	pointer-events: none;
+}
+
+.section-5 .focus_product .list_item_product .row_item .col_item .item > a,
+.section-5 .focus_product .list_item_product .row_item .col_item .item .img > a,
+.section-5 .focus_page .row_item .item > a {
+	display: block;
+	position: relative;
+	overflow: hidden;
+	aspect-ratio: 580 / 400;
+	height: auto !important;
+	padding-top: 0 !important;
+}
+
+.section-5 .focus_product .list_item_product .row_item .col_item .item > a img,
+.section-5 .focus_product .list_item_product .row_item .col_item .item .img > a img,
+.section-5 .focus_page .row_item .item > a img {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	display: block;
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: cover;
+	object-position: center;
+	transform: translate(-50%, -50%);
+}
+
+.section-5 .focus_product .list_item_product .row_item .col_item .item {
+	overflow: hidden;
+}
+
+.section-5 .focus_page .row_item .item h3 a,
+.section-5 .focus_page .row_item .item span {
+	word-break: break-word;
+}
+
 @media (max-width: 992px) {
 	footer .box_social a .dimhouse-social-icon {
 		max-height: 22px;
@@ -318,7 +379,7 @@ footer .box_social a .dimhouse-social-icon {
 }
 
 .villa-designs-section {
-	background: #0b2431;
+	background: var(--color_main2);
 	color: #fff;
 	padding: 64px 0;
 }
@@ -452,10 +513,7 @@ footer .box_social a .dimhouse-social-icon {
 
 @media (max-width: 768px) {
 	.villa-designs-section {
-		background:
-			linear-gradient(rgba(4, 17, 25, 0.9), rgba(4, 17, 25, 0.92)),
-			radial-gradient(circle at 18px 18px, rgba(244, 198, 93, 0.08) 1px, transparent 1.5px),
-			#071a26;
+		background: var(--color_main2);
 		background-size: auto, 36px 36px, auto;
 		padding: 24px 0 18px;
 	}
@@ -476,7 +534,7 @@ footer .box_social a .dimhouse-social-icon {
 	.villa-designs-section h2::after {
 		background: url(images/line.png) center center / 112px auto no-repeat;
 		content: "";
-		display: block;
+		display: none;
 		height: 18px;
 		margin: 5px auto 10px;
 		width: 132px;

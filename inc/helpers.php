@@ -1137,7 +1137,7 @@ function dimhouse_render_menu_grid_section_from_index() {
 			$class = trim('menu_li ' . ($index === 0 ? 'first' : '') . ($index === $total - 1 ? ' last' : ''));
 			$items[] = '<li class="' . esc_attr($class) . '">
         <a href="' . esc_url($url) . '" target="">
-            ' . ($image ? '<img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '">' : '') . '
+            ' . ($image ? '<img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '" width="476" height="1068">' : '') . '
             <h3 class="menu_title"><p>' . esc_html($title) . '</p></h3>
             ' . ($text ? '<div class="menu_desc">' . esc_html($text) . '</div>' : '') . '
         </a>
@@ -1659,7 +1659,7 @@ function dimhouse_apply_clone_acf_overrides($html) {
 			$items[] = '<div class="col_item ">
 				<div class="item">
 					<a href="' . esc_url($url) . '" title="' . esc_attr($title) . '" data-fancybox="">
-						' . ($image ? '<img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '">' : '') . '
+						' . ($image ? '<img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '" width="580" height="400">' : '') . '
 					</a>
 					<span><i class="fa fa-play"></i></span>
 				</div>
@@ -1699,7 +1699,7 @@ function dimhouse_apply_clone_acf_overrides($html) {
 				continue;
 			}
 			$article_items[] = '<div class="item"><a href="' . esc_url($url) . '">' .
-				($image ? '<img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '">' : '') .
+				($image ? '<img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '" width="580" height="400">' : '') .
 				'</a><h3><a href="' . esc_url($url) . '">' . esc_html($title) . '</a></h3>' .
 				($subtitle ? '<span>' . esc_html($subtitle) . '</span>' : '') .
 				'</div>';
