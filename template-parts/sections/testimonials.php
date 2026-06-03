@@ -49,19 +49,19 @@ $items = (is_array($items) && !empty($items)) ? $items : $defaults['items'];
 				<div class="wrap">
 					<div>
 						<div><?php echo dimhouse_contact_icon_svg('phone', 0); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
-						<div class="info"><div class="name">Hotline tư vấn:</div><div>0964 158 163</div></div>
+						<div class="info"><div class="name">Hotline tư vấn:</div><div>0392959713</div></div>
 					</div>
 					<div>
 						<div><?php echo dimhouse_contact_icon_svg('facebook', 1); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
-						<div class="info"><div class="name">Fanpage Facebook:</div><div>facebook.com/Dimhouse Design</div></div>
+						<div class="info"><div class="name">Fanpage Facebook:</div><div>facebook.com/DimHouse.DimDecor</div></div>
 					</div>
 					<div>
 						<div><?php echo dimhouse_contact_icon_svg('email', 2); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
-						<div class="info"><div class="name">Email tư vấn:</div><div>info@RdMJAeP6qJeR.vn</div></div>
+						<div class="info"><div class="name">Email tư vấn:</div><div>ducquangninh2811@gmail.com</div></div>
 					</div>
 					<div>
 						<div><?php echo dimhouse_contact_icon_svg('business', 3); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
-						<div class="info"><div class="name">Đăng Kí Kinh Doanh:</div><div>N9-13 KDC Anh Tuấn Riverside, Huỳnh Tấn Phát.</div><div>Văn Phòng:</div><div><span style="font-size: 15px;">Sảnh G, Block A4 ( View Sông ) CC ERA Town, Nguyễn Lương Bằng Quận 7. TP HCM</span></div><div> </div></div>
+						<div class="info"><div class="name">Đăng Kí Kinh Doanh:</div><div>10/169 Thái Hà, Đống Đa, Hà Nội</div><div>Văn Phòng:</div><div><span style="font-size: 15px;">10/169 Thái Hà, Đống Đa, Hà Nội</span></div><div> </div></div>
 					</div>
 				</div>
 			</div>

@@ -21,7 +21,7 @@ $tabs = (is_array($tabs) && !empty($tabs)) ? $tabs : $defaults['tabs'];
 							<div class="choose_floor">
 								<div class="list_input row">
 									<div class="form-group col-6">
-										<label>Lầu (Mái, Sthượng chọn trong bảng)</label>
+										<label>Tầng (Mái, Sthượng chọn trong bảng)</label>
 										<div class="btn_grps"><span class="btn_minus"></span><input type="number" value="0" min="0" class="floor quantity_text no-spinners"><span class="btn_plus"></span></div>
 									</div>
 									<div class="form-group col-6">
@@ -29,7 +29,7 @@ $tabs = (is_array($tabs) && !empty($tabs)) ? $tabs : $defaults['tabs'];
 										<div class="btn_grps"><span class="btn_minus"></span><input type="number" value="0" min="0" class="mezzanine quantity_text no-spinners"><span class="btn_plus"></span></div>
 									</div>
 								</div>
-								<div class="view_house"><img src="<?php echo esc_url(dimhouse_asset_uri('uploads/estimate/tang_lung/khong_lung/0_lau_n.jpg')); ?>" alt="Ảnh 0 lầu 0 lửng"></div>
+								<div class="view_house"><img src="<?php echo esc_url(dimhouse_asset_uri('uploads/estimate/tang_lung/khong_lung/0_lau_n.jpg')); ?>" alt="Ảnh 0 tầng 0 lửng"></div>
 							</div>
 							<div class="banner_item" style=""><a href="<?php echo esc_url(home_url('/khuyen-mai-1')); ?>" target="_blank"><img class="lazyload" src="<?php echo esc_url(dimhouse_asset_uri('resources/images/spin.svg')); ?>" data-src="<?php echo esc_url(dimhouse_asset_uri('uploads/banner/baner/du_toan_1.jpg')); ?>" alt="Dự toán chi phí"></a></div>
 						</div>

@@ -411,8 +411,8 @@ function dimhouse_mobile_menu_items() {
 }
 
 function dimhouse_default_floating_contact_links() {
-	$phone = dimhouse_option('header_phone', '0964158163');
-	$phone_href = dimhouse_option('header_phone_link', 'tel:0964158163');
+	$phone = dimhouse_option('header_phone', '0392959713');
+	$phone_href = dimhouse_option('header_phone_link', 'tel:0392959713');
 	$phone_digits = preg_replace('/\D+/', '', $phone);
 
 	return array(
@@ -533,7 +533,7 @@ function dimhouse_render_footer_html() {
 	$footer_partners = dimhouse_option_repeater('footer_partners', dimhouse_default_footer_partners());
 	$footer_fanpage_iframe = dimhouse_option('footer_fanpage_iframe', '<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100065424102650&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" width="340" height="311" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>');
 	$footer_map_iframe = dimhouse_option('footer_map_iframe', '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.7037275541857!2d106.7471018153159!3d10.68008916388372!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31753b730c677b63%3A0xfa33e39535626666!2zS2h1IETDom4gQ8awIEFuaCBUdeG6pW4gR3JlZW4gUml2ZXJzaWRl!5e0!3m2!1sen!2sus!4v1649149804440!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>');
-	$footer_email = dimhouse_option('footer_email', 'info@RdMJAeP6qJeR.vn');
+	$footer_email = dimhouse_option('footer_email', 'ducquangninh2811@gmail.com');
 	$brand_title = dimhouse_option('footer_brand_title', 'Đối tác');
 	$contact_title = dimhouse_option('footer_contact_title', 'Thông tin liên hệ');
 	$social_title = dimhouse_option('footer_social_title', 'Kết nối với chúng tôi');
@@ -2050,7 +2050,7 @@ function dimhouse_home_defaults() {
 		'estimate' => array(
 			'title' => 'Khách hàng khai toán phí xây nhà  - với 1 phút !',
 			'intro' => '',
-			'floor_label' => 'Lầu (Mái, Sthượng chọn trong bảng)',
+			'floor_label' => 'Tầng (Mái, Sthượng chọn trong bảng)',
 			'mezzanine_label' => 'Có lửng hay không ?',
 			'preview_image' => dimhouse_asset_uri('uploads/estimate/tang_lung/khong_lung/0_lau_n.jpg'),
 			'form_banner_image' => dimhouse_asset_uri('uploads/banner/baner/du_toan_1.jpg'),
@@ -2090,7 +2090,7 @@ function dimhouse_home_defaults() {
 			'title' => 'Dimhouse Design',
 			'text' => '<p>Dimhouse không ngừng theo đuổi hướng thiết kế đổi mới và cách tân trong thi công nhằm đem lại không gian sinh hoạt thông thoáng, hiện đại, đáp ứng tốt nhất nhu cầu sử dụng của khách hàng, đảm bảo sự tối ưu về mặt kỹ thuật, ngân sách và thân thiện với môi trường. Dimhouse lấy nguyện vọng của khách hàng làm đích đến bên cạnh việc bổ sung, tiếp sức bằng các giải pháp kỹ thuật, mỹ thuật và văn hóa sinh hoạt mở trong thời đại mới.</p><p>Công việc chính của Dimhouse là biến ước mơ về không gian sinh hoạt của bạn trở thành hiện thực.</p>',
 			'image' => dimhouse_asset_uri('thumbs/banner/baner/[113x113-cr]a1_1646668764.jpg'),
-			'person_name' => 'Nguyễn Trung',
+			'person_name' => 'Nguyễn Minh Đức',
 			'person_role' => 'CEO & Founder',
 			'cta_label' => 'Xem hồ sơ năng lực',
 			'cta_url' => home_url('/Dimhouse-portfolio'),
@@ -2163,22 +2163,22 @@ function dimhouse_home_defaults() {
 			'items' => array(
 				array(
 					'label' => 'Hotline tư vấn:',
-					'value' => '0964 158 163',
-					'url' => 'tel:0964158163',
+					'value' => '0392959713',
+					'url' => 'tel:0392959713',
 				),
 				array(
 					'label' => 'Fanpage Facebook:',
-					'value' => 'facebook.com/Dimhouse Design',
+					'value' => 'facebook.com/DimHouse.DimDecor',
 					'url' => 'https://www.facebook.com/profile.php?id=100065424102650',
 				),
 				array(
 					'label' => 'Email tư vấn:',
-					'value' => 'info@RdMJAeP6qJeR.vn',
-					'url' => 'mailto:info@RdMJAeP6qJeR.vn',
+					'value' => 'ducquangninh2811@gmail.com',
+					'url' => 'mailto:ducquangninh2811@gmail.com',
 				),
 				array(
 					'label' => 'Đăng Kí Kinh Doanh:',
-					'value' => 'N9-13 KDC Anh Tuấn Riverside, Huỳnh Tấn Phát.',
+					'value' => '10/169 Thái Hà, Đống Đa, Hà Nội',
 					'url' => '',
 				),
 			),
@@ -2186,7 +2186,7 @@ function dimhouse_home_defaults() {
 		'footer' => array(
 			'footer_logo' => dimhouse_asset_uri('uploads/banner/baner/14_trang_den.png'),
 			'footer_title' => 'ĐĂNG KÍ KINH DOANH',
-			'footer_text' => '<div><span style="font-size: 15px;">N9-13 KDC Anh Tuấn Riverside, Huỳnh Tấn Phát.</span></div><div><span style="color: #dda77b;"><strong><span style="font-size: 15px;">VĂN PHÒNG</span></strong></span></div><div><span style="font-size: 15px;">Sảnh G, Block A4 ( View Sông ) CC ERA Town, Nguyễn Lương Bằng Quận 7. TP HCM</span></div><div><span style="font-size: 15px; color: #dda77b;">Hotline</span></div><div><span style="font-size: 15px;"><strong>0964.158.163</strong></span></div>',
+			'footer_text' => '<div><span style="font-size: 15px;">10/169 Thái Hà, Đống Đa, Hà Nội</span></div><div><span style="color: #dda77b;"><strong><span style="font-size: 15px;">VĂN PHÒNG</span></strong></span></div><div><span style="font-size: 15px;">10/169 Thái Hà, Đống Đa, Hà Nội</span></div><div><span style="font-size: 15px; color: #dda77b;">Hotline</span></div><div><span style="font-size: 15px;"><strong>0392959713</strong></span></div>',
 			'footer_columns' => array(
 				array(
 					'title' => 'Fanpage',
@@ -2194,7 +2194,7 @@ function dimhouse_home_defaults() {
 				),
 				array(
 					'title' => 'Thông tin liên hệ',
-					'content' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.7037275541857!2d106.7471018153159!3d10.68008916388372!2m3!1f0!2f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31753b730c677b63%3A0xfa33e39535626666!2zS2h1IETDom4gQ8awIEFuaCBUdeG6pW4gR3JlZW4gUml2ZXJzaWRl!5e0!3m2!1sen!2sus!4v1649149804440!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="footer_title social_title">Kết nối với chúng tôi</div><div class="box_social"><div class="row mx-0"><a href="https://instagram.com/dimhouse_design?igshid=YmMyMTA2M2Y=" target="_blank"><img src="uploads/config/2024_04/instagram.png" alt="Instagram"></a><a href="https://www.facebook.com/profile.php?id=100065424102650" target="_blank"><img src="uploads/config/2024_04/fb.png" alt="Facebook"></a><a href="https://www.tiktok.com/@dimhousedesign?is_from_webapp=1&sender_device=pc" target="_blank"><img src="uploads/config/2024_04/tiktok.png" alt="Tiktok"></a><a href="https://www.youtube.com/channel/UCXPlJElksDJq8aa8POcxoMA" target="_blank"><img src="uploads/config/2024_04/youtube.png" alt="Youtube"></a></div></div><div class="email"><i class="fas fa-envelope"></i> Email: info@RdMJAeP6qJeR.vn</div>',
+					'content' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.7037275541857!2d106.7471018153159!3d10.68008916388372!2m3!1f0!2f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31753b730c677b63%3A0xfa33e39535626666!2zS2h1IETDom4gQ8awIEFuaCBUdeG6pW4gR3JlZW4gUml2ZXJzaWRl!5e0!3m2!1sen!2sus!4v1649149804440!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="footer_title social_title">Kết nối với chúng tôi</div><div class="box_social"><div class="row mx-0"><a href="https://instagram.com/dimhouse_design?igshid=YmMyMTA2M2Y=" target="_blank"><img src="uploads/config/2024_04/instagram.png" alt="Instagram"></a><a href="https://www.facebook.com/profile.php?id=100065424102650" target="_blank"><img src="uploads/config/2024_04/fb.png" alt="Facebook"></a><a href="https://www.tiktok.com/@dimhousedesign?is_from_webapp=1&sender_device=pc" target="_blank"><img src="uploads/config/2024_04/tiktok.png" alt="Tiktok"></a><a href="https://www.youtube.com/channel/UCXPlJElksDJq8aa8POcxoMA" target="_blank"><img src="uploads/config/2024_04/youtube.png" alt="Youtube"></a></div></div><div class="email"><i class="fas fa-envelope"></i> Email: ducquangninh2811@gmail.com</div>',
 				),
 			),
 		),

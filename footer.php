@@ -4,6 +4,7 @@ if (!defined('ABSPATH')) {
 }
 ?>
 <?php if (empty($GLOBALS['dimhouse_rendered_clone_body'])) : ?>
+	<?php echo dimhouse_render_footer_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	<?php echo dimhouse_render_floating_ui_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 <?php endif; ?>
 <?php wp_footer(); ?>

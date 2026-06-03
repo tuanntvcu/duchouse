@@ -32164,14 +32164,15 @@
         }
 
         footer .footer_logo img {
-            max-width: 100%;
+            max-width: 50%;
             height: auto;
             margin-bottom: 15px;
+            aspect-ratio: 1/1;
         }
 
         @media (max-width:600px) {
             footer .footer_logo img {
-                max-height: 100px;
+                max-height: unset;
             }
         }
 
@@ -33505,7 +33506,9 @@
         }
 
         .brand_scroll {
+            padding-top: 45px;
             padding-bottom: 45px;
+            background-color: #fff;
         }
 
         .brand_scroll .brand_scroll-title {
@@ -34958,7 +34961,10 @@
         .box_personnel .inner .list_item .imgae img {
             border-radius: 50%;
             position: relative;
-            z-index: 1
+            z-index: 1;
+            max-width: 133px;
+            max-height: 133px;
+            object-fit: cover;
         }
 
         .box_personnel .inner .list_item .imgae:after {
