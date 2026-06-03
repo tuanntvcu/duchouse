@@ -501,6 +501,47 @@
 		});
 	}
 
+	function initPagePostHeaderMenu() {
+		var boundKey = 'dimhousePagePostHeaderMenuBound';
+		if ($(document).data(boundKey)) {
+			return;
+		}
+
+		$(document).data(boundKey, true);
+
+		function setMenuOpen(open, toggle) {
+			$('.sideMenu, .overlay_bo').toggleClass('open', open);
+			$('.dimhouse-page-post-menu-toggle').toggleClass('change', open).attr('aria-expanded', open ? 'true' : 'false');
+			if (toggle) {
+				$(toggle).toggleClass('change', open).attr('aria-expanded', open ? 'true' : 'false');
+			}
+		}
+
+		document.addEventListener('click', function (event) {
+			var toggle = event.target.closest ? event.target.closest('.dimhouse-page-post-menu-toggle') : null;
+			if (!toggle) {
+				return;
+			}
+
+			event.preventDefault();
+			event.stopPropagation();
+			if (typeof event.stopImmediatePropagation === 'function') {
+				event.stopImmediatePropagation();
+			}
+
+			setMenuOpen(!$('.sideMenu').hasClass('open'), toggle);
+			return false;
+		}, true);
+
+		$(document).on('click.dimhousePagePostHeader', '.overlay_bo', function () {
+			setMenuOpen(false);
+		});
+
+		$(document).on('click.dimhousePagePostHeader', '.sideMenu.open .menu_li a, .sideMenu.open .nav-item:not(.dropdown) a', function () {
+			setMenuOpen(false);
+		});
+	}
+
 	function initFullPage() {
 		if ($.fn.fullpage && $('#fullpage').length && !$('html').hasClass('fp-enabled') && $(window).width() > 1300) {
 			$('#fullpage > footer.section-7').addClass('fp-auto-height');
@@ -746,6 +787,7 @@
 		initQuantityControls();
 		initManagedFormSubmissions();
 		initFloatingContactLinks();
+		initPagePostHeaderMenu();
 		initFullPage();
 		initSlick();
 		initLazyImages();

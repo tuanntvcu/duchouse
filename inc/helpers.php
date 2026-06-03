@@ -376,6 +376,18 @@ function dimhouse_default_side_menu_items() {
 }
 
 function dimhouse_side_menu_items() {
+	if (function_exists('dimhouse_should_render_page_post_header') && dimhouse_should_render_page_post_header()) {
+		return array_map(
+			function ($item) {
+				return array(
+					'label' => !empty($item['label']) ? $item['label'] : '',
+					'url' => !empty($item['url']) ? $item['url'] : '',
+				);
+			},
+			dimhouse_page_post_header_menu_items()
+		);
+	}
+
 	$items = dimhouse_option_repeater('side_menu_items');
 	if (!empty($items)) {
 		return $items;
@@ -408,6 +420,104 @@ function dimhouse_mobile_menu_items() {
 	}
 
 	return dimhouse_default_mobile_menu_items();
+}
+
+function dimhouse_default_page_post_header_menu_items() {
+	return array(
+		array('label' => 'Thiết Kế Kiến Trúc', 'url' => home_url('/thiet-ke-kien-truc'), 'new_tab' => 0),
+		array('label' => 'Thiết Kế Nội Thất', 'url' => home_url('/du-an-noi-that-2'), 'new_tab' => 0),
+		array('label' => 'Công Trình Thi Công', 'url' => home_url('/du-an-thi-cong-1'), 'new_tab' => 0),
+		array('label' => 'Bộ Sưu Tập', 'url' => home_url('/bo-suu-tap'), 'new_tab' => 0),
+	);
+}
+
+function dimhouse_page_post_header_menu_items() {
+	$items = dimhouse_option_repeater('page_post_header_menu_items');
+	if (!empty($items)) {
+		return $items;
+	}
+
+	return dimhouse_default_page_post_header_menu_items();
+}
+
+function dimhouse_default_page_post_header_logo() {
+	return dimhouse_asset_uri('uploads/banner/baner/logo.jpg');
+}
+
+function dimhouse_page_post_header_enabled() {
+	if (!function_exists('get_field')) {
+		return true;
+	}
+
+	$value = get_field('page_post_header_enabled', 'option');
+	if ($value === null || $value === '') {
+		return true;
+	}
+
+	return (bool) $value;
+}
+
+function dimhouse_should_render_page_post_header() {
+	if (!dimhouse_page_post_header_enabled() || is_front_page() || is_home()) {
+		return false;
+	}
+
+	return is_page() || is_singular('post');
+}
+
+function dimhouse_render_page_post_header_html() {
+	if (!dimhouse_should_render_page_post_header()) {
+		return '';
+	}
+
+	$logo = dimhouse_option('page_post_header_logo');
+	if (!$logo) {
+		$logo = dimhouse_default_page_post_header_logo();
+	}
+
+	$logo_url = dimhouse_option('page_post_header_logo_url', home_url('/'));
+	$logo_html = dimhouse_image_html($logo, 'full', array('alt' => get_bloginfo('name')));
+	if (!$logo_html) {
+		$logo_html = '<span class="dimhouse-page-post-header-logo-text">' . esc_html(get_bloginfo('name')) . '</span>';
+	}
+
+	$items = dimhouse_page_post_header_menu_items();
+	$count = count($items);
+	$menu_html = '';
+	foreach ($items as $index => $item) {
+		$label = !empty($item['label']) ? $item['label'] : '';
+		$url = !empty($item['url']) ? $item['url'] : '#';
+		if (!$label) {
+			continue;
+		}
+
+		$item_class = trim('nav-item ' . ($index === 0 ? 'first' : '') . ($index === $count - 1 ? ' last' : ''));
+		$target = !empty($item['new_tab']) ? '_blank' : '_self';
+		$rel = $target === '_blank' ? ' rel="noopener noreferrer"' : '';
+		$current = $url && $url !== '#' && untrailingslashit($url) === untrailingslashit(get_permalink()) ? ' current' : '';
+
+		$menu_html .= '<li class="' . esc_attr($item_class) . '"><a href="' . esc_url($url) . '" target="' . esc_attr($target) . '" class="nav-link dropdown-toggle' . esc_attr($current) . '"' . $rel . '><span class="text">' . esc_html($label) . '</span></a></li>';
+	}
+
+	return '<header class="bg-color color-header dimhouse-page-post-header" id="main_header">
+		<div class="header-bottom">
+			<div class="container">
+				<div class="top row m-0 flex-nowrap align-items-center">
+					<div class="logo"><a href="' . esc_url($logo_url) . '" target="_self">' . $logo_html . '</a></div>
+					<div id="main_menu"><ul class="nav navbar-nav menu-wrapper ">' . $menu_html . '</ul></div>
+					<div class="right_header">
+						<div class="header-tool">
+							<button class="navbar-toggler dimhouse-page-post-menu-toggle" type="button" data-target="#tth-main-menu" aria-controls="tth-main-menu" aria-expanded="false" aria-label="' . esc_attr__('Toggle navigation', 'dimhouse') . '">
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>';
 }
 
 function dimhouse_default_floating_contact_links() {

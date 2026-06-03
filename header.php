@@ -21,3 +21,4 @@ $favicon = dimhouse_option('favicon');
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<?php echo dimhouse_render_page_post_header_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
