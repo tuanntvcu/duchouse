@@ -543,15 +543,119 @@
 	}
 
 	function initFullPage() {
-		if ($.fn.fullpage && $('#fullpage').length && !$('html').hasClass('fp-enabled') && $(window).width() > 1300) {
+		if ($.fn.fullpage && $('#fullpage').length && $(window).width() > 1300) {
+			if ($('html').hasClass('fp-enabled') && $.fn.fullpage.destroy) {
+				$.fn.fullpage.destroy('all');
+			}
+
+			if ($('html').hasClass('fp-enabled')) {
+				return;
+			}
+
+			var anchors = [];
+			var usedAnchors = {};
+
+			function uniqueAnchor(base) {
+				var anchor = base;
+				var index = 2;
+
+				while (usedAnchors[anchor]) {
+					anchor = base + '-' + index;
+					index += 1;
+				}
+
+				usedAnchors[anchor] = true;
+				return anchor;
+			}
+
+			$('#fullpage > .section').each(function (index) {
+				var className = this.className || '';
+				var match = className.match(/\bsection-(\d+)\b/);
+				var base = match ? 'dimhouse-section-' + match[1] : 'dimhouse-section-' + (index + 1);
+
+				if (className.indexOf('villa-designs-section') !== -1) {
+					base = 'dimhouse-villa-designs';
+				}
+
+				anchors.push(uniqueAnchor(base));
+			});
+
 			$('#fullpage > footer.section-7').addClass('fp-auto-height');
 			$('#fullpage').fullpage({
+				anchors: anchors,
 				slidesNavigation: true,
 				controlArrows: true,
 				fitToSection: false,
-				normalScrollElements: 'footer.section-7'
+				lockAnchors: true,
+				recordHistory: false,
+				animateAnchor: false,
+				afterRender: function () {
+					refreshFullPageScrollables();
+				},
+				afterReBuild: function () {
+					refreshFullPageScrollables();
+				},
+				afterResize: function () {
+					refreshFullPageScrollables();
+				}
 			});
+			bindFullPageScrollables();
 		}
+	}
+
+	function cleanUndefinedHash() {
+		$('a[href*="#undefined"]').each(function () {
+			var href = $(this).attr('href');
+			if (href) {
+				$(this).attr('href', href.replace(/#undefined\b/g, ''));
+			}
+		});
+
+		if (window.location.hash === '#undefined' && window.history && window.history.replaceState) {
+			window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+		}
+	}
+
+	function refreshFullPageScrollables() {
+		$('#fullpage > .section').each(function () {
+			var $section = $(this);
+			var $cell = $section.children('.fp-tableCell').first();
+
+			if (!$cell.length) {
+				return;
+			}
+
+			var cell = $cell.get(0);
+			var section = $section.get(0);
+			var visibleHeight = Math.max(1, $('#fullpage > .section').first().height() || $(window).height());
+			var contentHeight = Math.max(cell.scrollHeight, cell.offsetHeight, section.scrollHeight);
+			var isScrollable = contentHeight > visibleHeight + 2;
+
+			$section.toggleClass('dimhouse-section-scrollable', isScrollable);
+			$cell.toggleClass('dimhouse-fp-scrollable', isScrollable);
+		});
+	}
+
+	function bindFullPageScrollables() {
+		$(document)
+			.off('wheel.dimhouseFullPageScroll')
+			.on('wheel.dimhouseFullPageScroll', '#fullpage .dimhouse-fp-scrollable', function (event) {
+				var cell = this;
+				var original = event.originalEvent || {};
+				var delta = original.deltaY || -original.wheelDelta || original.detail || 0;
+				var maxScroll = cell.scrollHeight - cell.clientHeight;
+
+				if (maxScroll <= 2) {
+					return;
+				}
+
+				var atTop = cell.scrollTop <= 0;
+				var atBottom = cell.scrollTop + cell.clientHeight >= maxScroll - 2;
+
+				if ((delta < 0 && !atTop) || (delta > 0 && !atBottom)) {
+					event.stopPropagation();
+				}
+			});
 	}
 
 	function initSlick() {
@@ -781,6 +885,8 @@
 	initLegacyAjaxBridge();
 
 	$(function () {
+		cleanUndefinedHash();
+		initFullPage();
 		initClonePlugins();
 		initTabs();
 		initEstimateRadios();
@@ -788,11 +894,13 @@
 		initManagedFormSubmissions();
 		initFloatingContactLinks();
 		initPagePostHeaderMenu();
-		initFullPage();
 		initSlick();
 		initLazyImages();
 		if ($.fn.fullpage && $.fn.fullpage.reBuild) {
 			$.fn.fullpage.reBuild();
+			refreshFullPageScrollables();
 		}
+		setTimeout(refreshFullPageScrollables, 500);
+		setTimeout(refreshFullPageScrollables, 1500);
 	});
 })(jQuery);

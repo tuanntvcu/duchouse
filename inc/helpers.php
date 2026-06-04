@@ -684,7 +684,7 @@ function dimhouse_render_footer_html() {
 		$popup_html = '<a id="click_popup" class="fancybox_popup" href="#popup_banner_a"></a><div id="popup_banner"><div class="" id="popup_banner_a"><div class="banner_item" style=""><div class="item"><a href="' . esc_url($popup_url) . '" target="_self"><img src="' . esc_url($popup_image_url) . '" alt="' . esc_attr($popup_alt) . '" style=""></a></div></div></div></div>';
 	}
 
-	return '<footer class="section section-7 fp-auto-height" data-anchor="section-7">
+	return '<footer class="section section-7 fp-auto-height">
 		<div class="bg-footer color-footer">
 			<div class="brand_scroll">
 				<div class="container">

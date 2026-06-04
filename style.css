@@ -207,6 +207,23 @@ footer.section-7 .bottom {
 	margin-bottom: 0;
 }
 
+#fullpage .dimhouse-fp-scrollable {
+	display: block;
+	max-height: 100vh;
+	overflow-x: hidden;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+#fullpage .dimhouse-fp-scrollable::-webkit-scrollbar {
+	width: 8px;
+}
+
+#fullpage .dimhouse-fp-scrollable::-webkit-scrollbar-thumb {
+	background: rgba(48, 63, 84, 0.35);
+	border-radius: 999px;
+}
+
 footer.section-7 .footer_logo .footer_logo-title,
 footer.section-7 .footer_logo .content span[style*="#dda77b"] {
 	color: var(--color_main) !important;
