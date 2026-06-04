@@ -514,7 +514,7 @@ function dimhouse_register_acf_fields() {
 
 	acf_add_local_field_group(array(
 		'key' => 'group_dimhouse_construction_estimate_settings',
-		'title' => 'Cấu hình khai toán chi phí',
+		'title' => 'Cấu hình khái toán chi phí',
 		'fields' => array(
 			array('key' => 'field_dimhouse_estimate_design_tab', 'label' => 'Đơn giá thiết kế', 'name' => '', 'type' => 'tab', 'placement' => 'top'),
 			array('key' => 'field_dimhouse_estimate_design_landscape_rate', 'label' => 'Cảnh quan (VNĐ/m2)', 'name' => 'estimate_design_landscape_rate', 'type' => 'number', 'default_value' => 100000, 'min' => 0, 'step' => 1000),

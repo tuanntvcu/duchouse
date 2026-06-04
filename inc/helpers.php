@@ -2228,7 +2228,7 @@ function dimhouse_home_defaults() {
 			),
 		),
 		'estimate' => array(
-			'title' => 'Khách hàng khai toán phí xây nhà  - với 1 phút !',
+			'title' => 'Khách hàng khái toán phí xây nhà  - với 1 phút !',
 			'intro' => '',
 			'floor_label' => 'Tầng',
 			'mezzanine_label' => 'Có lửng hay không ?',
@@ -2250,7 +2250,7 @@ function dimhouse_home_defaults() {
 				),
 				array(
 					'key' => 'tab2',
-					'label' => 'Khai toán phần thô',
+					'label' => 'Khái toán phần thô',
 					'price_label' => '',
 					'banner' => dimhouse_asset_uri('uploads/banner/baner/goi_xd_tho.jpg'),
 					'url' => home_url('/khai-toan-phan-tho'),
@@ -2258,7 +2258,7 @@ function dimhouse_home_defaults() {
 				),
 				array(
 					'key' => 'tab3',
-					'label' => 'Khai toán hoàn thiện',
+					'label' => 'Khái toán hoàn thiện',
 					'price_label' => '',
 					'banner' => dimhouse_asset_uri('uploads/banner/baner/goi_chia_khoa.jpg'),
 					'url' => home_url('/chia-khoa-trao-tay'),

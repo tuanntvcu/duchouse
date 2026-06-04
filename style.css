@@ -7,6 +7,17 @@ Version: 1.0.0
 Text Domain: dimhouse
 */
 
+:root,
+html,
+body {
+	--color_main: #dda77b;
+	--color_main2: #303f54;
+	--dimhouse-color-main: var(--color_main);
+	--dimhouse-color-dark: var(--color_main2);
+	--convert_color_main: invert(65%) sepia(25%) saturate(611%) hue-rotate(343deg) brightness(93%) contrast(86%);
+	--convert_color_main2: invert(21%) sepia(21%) saturate(1010%) hue-rotate(174deg) brightness(92%) contrast(87%);
+}
+
 .section-0 .eyebrow,
 .section-0 .buttons,
 .hero-banners,
@@ -136,6 +147,19 @@ Text Domain: dimhouse
 	width: 90px;
 }
 
+.slick-prev:before {
+	content: "\2190";
+}
+
+[dir="rtl"] .slick-prev:before,
+.slick-next:before {
+	content: "\2192";
+}
+
+[dir="rtl"] .slick-next:before {
+	content: "\2190";
+}
+
 .focus_page .row_item .item > a img,
 .video .video_item a.view img,
 .list_item_product .row_item .col_item .item .img a img,
@@ -161,31 +185,31 @@ Text Domain: dimhouse
 }
 
 footer.section-7 {
-	background: #534542;
+	background: var(--color_main2);
 	margin-bottom: 0;
 	overflow: visible;
 }
 
 footer.section-7 .fp-tableCell {
-	background: #534542;
+	background: var(--color_main2);
 	height: auto !important;
 	overflow: visible;
 }
 
 footer.section-7 .bg-footer {
-	background: #534542;
+	background: var(--color_main2);
 	min-height: 100%;
 	overflow: visible;
 }
 
 footer.section-7 .bottom {
-	background: #534542;
+	background: var(--color_main2);
 	margin-bottom: 0;
 }
 
 footer.section-7 .footer_logo .footer_logo-title,
 footer.section-7 .footer_logo .content span[style*="#dda77b"] {
-	color: #dda77b !important;
+	color: var(--color_main) !important;
 	display: block;
 	font-size: 15px !important;
 	font-weight: 700;
@@ -236,6 +260,31 @@ footer.section-7 .footer_logo .content span[style*="#dda77b"] {
 .section-faq {
 	background: #fff;
 	padding: 60px 0;
+}
+
+.section_home_about .item .content,
+.construction .wrap_top .form .wrap_content form .form-group input,
+.construction .wrap_top .form .wrap_content form .form-group select,
+.construction .wrap_top .form .wrap_content form .form-group .select2-container .select2-selection--single {
+	color: var(--color_main2);
+}
+
+.box_personnel .inner .list_item .imgae::after,
+.construction .wrap_top .form .wrap_content::-webkit-scrollbar-thumb,
+.col-xl-9 form::-webkit-scrollbar-thumb,
+.col-xl-9 form .form-group .checkbox_roof input:checked ~ label {
+	background: var(--color_main);
+}
+
+.col-xl-9 form .form-group .checkbox input:checked ~ label::after {
+	color: var(--color_main);
+}
+
+.estimate-item-content [style*="color: #a49381"],
+.estimate-item-content [style*="color:#a49381"],
+.estimate-item-content [style*="color: #A49381"],
+.estimate-item-content [style*="color:#A49381"] {
+	color: var(--color_main) !important;
 }
 
 .section-faq h2 {

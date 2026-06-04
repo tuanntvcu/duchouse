@@ -64,7 +64,7 @@ $items = (is_array($items) && !empty($items)) ? $items : $defaults['items'];
 					</div>
 					<div>
 						<div><?php echo dimhouse_contact_icon_svg('business', 3); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
-						<div class="info"><div class="name">Đăng Kí Kinh Doanh:</div><div>10/169 Thái Hà, Đống Đa, Hà Nội</div><div>Văn Phòng:</div><div><span style="font-size: 15px;">10/169 Thái Hà, Đống Đa, Hà Nội</span></div><div>&nbsp;</div></div>
+						<div class="info"><div class="name">Văn Phòng:</div><div><span style="font-size: 15px;">10/169 Thái Hà, Đống Đa, Hà Nội</span></div><div>&nbsp;</div></div>
 					</div>
 				</div>
 			</div>
