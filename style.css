@@ -147,6 +147,10 @@ body {
 	width: 90px;
 }
 
+.box_comment .list_item_project .slick-arrow {
+	display: none !important;
+}
+
 .slick-prev:before {
 	content: "\2190";
 }
@@ -293,6 +297,30 @@ footer.section-7 .footer_logo .content span[style*="#dda77b"] {
 	background: var(--color_main);
 }
 
+.box_personnel .inner .list_item .imgae {
+	height: 133px;
+	line-height: 0;
+	width: 133px;
+}
+
+.box_personnel .inner .list_item .imgae img {
+	aspect-ratio: 1 / 1;
+	display: block;
+	height: 100%;
+	max-height: none;
+	max-width: none;
+	object-fit: cover;
+	width: 100%;
+}
+
+@media (max-width: 600px) {
+	.box_personnel .inner .list_item .imgae {
+		height: clamp(86px, 24vw, 104px);
+		margin-top: 30px;
+		width: clamp(86px, 24vw, 104px);
+	}
+}
+
 .col-xl-9 form .form-group .checkbox input:checked ~ label::after {
 	color: var(--color_main);
 }
@@ -431,6 +459,25 @@ footer .box_social a .dimhouse-social-icon {
 }
 
 @media (max-width: 600px) {
+	.construction .wrap_top .left {
+		width: 100%;
+	}
+
+	.construction .wrap_top .left .choose_floor,
+	.construction .wrap_top .left .view_house,
+	.construction .wrap_top .left .banner_item,
+	.construction .wrap_top .left .banner_item a {
+		width: 100%;
+	}
+
+	.construction .wrap_top .left .view_house img,
+	.construction .wrap_top .left .banner_item img {
+		display: block;
+		height: auto;
+		max-width: none;
+		width: 100% !important;
+	}
+
 	.top_social .box_social a .dimhouse-social-icon {
 		max-width: 20px;
 	}
