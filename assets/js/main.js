@@ -544,6 +544,8 @@
 
 	function initFullPage() {
 		if ($.fn.fullpage && $('#fullpage').length && $(window).width() > 1300) {
+			var $fullpage = $('#fullpage');
+
 			if ($('html').hasClass('fp-enabled') && $.fn.fullpage.destroy) {
 				$.fn.fullpage.destroy('all');
 			}
@@ -551,6 +553,13 @@
 			if ($('html').hasClass('fp-enabled')) {
 				return;
 			}
+
+			$fullpage.removeClass('fullpage-wrapper fp-destroyed fp-notransition').removeAttr('style');
+			$fullpage.children('.section').removeAttr('data-anchor');
+			$('body').removeClass(function (index, className) {
+				var matches = className.match(/\bfp-viewing-\S+/g);
+				return matches ? matches.join(' ') : '';
+			});
 
 			var anchors = [];
 			var usedAnchors = {};
@@ -568,7 +577,7 @@
 				return anchor;
 			}
 
-			$('#fullpage > .section').each(function (index) {
+			$fullpage.children('.section').each(function (index) {
 				var className = this.className || '';
 				var match = className.match(/\bsection-(\d+)\b/);
 				var base = match ? 'dimhouse-section-' + match[1] : 'dimhouse-section-' + (index + 1);
@@ -580,8 +589,8 @@
 				anchors.push(uniqueAnchor(base));
 			});
 
-			$('#fullpage > footer.section-7').addClass('fp-auto-height');
-			$('#fullpage').fullpage({
+			$fullpage.children('footer.section-7').addClass('fp-auto-height');
+			$fullpage.fullpage({
 				anchors: anchors,
 				slidesNavigation: true,
 				controlArrows: true,

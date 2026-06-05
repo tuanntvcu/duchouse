@@ -2131,8 +2131,21 @@ function dimhouse_index_fallback_fullpage() {
 	$fragment = substr($html, $start, ($footer_end + strlen('</footer>')) - $start);
 
 	$fragment = dimhouse_rewrite_clone_asset_urls($fragment);
+	$fragment = dimhouse_prepare_clone_fullpage_fragment($fragment);
 
 	return dimhouse_apply_clone_acf_overrides($fragment);
+}
+
+function dimhouse_prepare_clone_fullpage_fragment($html) {
+	$html = preg_replace('/\sdata-anchor="[^"]*"/i', '', $html);
+
+	return $html !== null ? $html : '';
+}
+
+function dimhouse_prepare_clone_body_fragment($html) {
+	$html = dimhouse_prepare_clone_fullpage_fragment($html);
+
+	return str_replace('data-mod="home"', 'data-mod="page" data-dimhouse-mod="home"', $html);
 }
 
 function dimhouse_index_fallback_body() {
@@ -2154,6 +2167,7 @@ function dimhouse_index_fallback_body() {
 
 	$fragment = substr($html, $start, $end - $start);
 	$fragment = dimhouse_rewrite_clone_asset_urls($fragment);
+	$fragment = dimhouse_prepare_clone_body_fragment($fragment);
 
 	return dimhouse_apply_clone_acf_overrides($fragment);
 }
