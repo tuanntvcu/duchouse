@@ -25,7 +25,7 @@ $tabs = (is_array($tabs) && !empty($tabs)) ? $tabs : $defaults['tabs'];
 										<div class="btn_grps"><span class="btn_minus"></span><input type="number" value="0" min="0" class="floor quantity_text no-spinners"><span class="btn_plus"></span></div>
 									</div>
 									<div class="form-group col-6">
-										<label>Có lửng hay không ?</label>
+										<label>Lửng</label>
 										<div class="btn_grps"><span class="btn_minus"></span><input type="number" value="0" min="0" class="mezzanine quantity_text no-spinners"><span class="btn_plus"></span></div>
 									</div>
 								</div>

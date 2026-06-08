@@ -2245,7 +2245,7 @@ function dimhouse_home_defaults() {
 			'title' => 'Khách hàng khái toán phí xây nhà  - với 1 phút !',
 			'intro' => '',
 			'floor_label' => 'Tầng',
-			'mezzanine_label' => 'Có lửng hay không ?',
+			'mezzanine_label' => 'Lửng',
 			'preview_image' => dimhouse_asset_uri('uploads/estimate/tang_lung/khong_lung/0_lau_n.jpg'),
 			'form_banner_image' => dimhouse_asset_uri('uploads/banner/baner/du_toan_1.jpg'),
 			'form_banner_url' => home_url('/khuyen-mai-1'),
