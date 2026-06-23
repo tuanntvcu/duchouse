@@ -594,6 +594,7 @@
 				anchors: anchors,
 				slidesNavigation: true,
 				controlArrows: true,
+				autoScrolling: false,
 				fitToSection: false,
 				lockAnchors: true,
 				recordHistory: false,
