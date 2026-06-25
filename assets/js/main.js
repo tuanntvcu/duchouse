@@ -175,7 +175,7 @@
 					area: { required: 'Vui lòng nhập diện tích.' },
 					foundation: { required: 'Vui lòng chọn móng.' },
 					foundation_area: { required: 'Vui lòng nhập diện tích móng.' },
-					ground_floor: { required: 'Vui lòng nhập diện tích tầng trệt.' },
+					ground_floor: { required: 'Vui lòng nhập diện tích tầng 1.' },
 					num_bedroom: { required: 'Vui lòng nhập số phòng ngủ.' },
 					num_wc: { required: 'Vui lòng nhập số phòng vệ sinh.' }
 				},

@@ -29,7 +29,7 @@ $tabs = (is_array($tabs) && !empty($tabs)) ? $tabs : $defaults['tabs'];
 										<div class="btn_grps"><span class="btn_minus"></span><input type="number" value="0" min="0" class="mezzanine quantity_text no-spinners"><span class="btn_plus"></span></div>
 									</div>
 								</div>
-								<div class="view_house"><img src="<?php echo esc_url(dimhouse_asset_uri('uploads/estimate/tang_lung/khong_lung/0_lau_n.jpg')); ?>" alt="Ảnh 0 tầng 0 lửng"></div>
+								<div class="view_house"><img src="<?php echo esc_url(dimhouse_asset_uri('uploads/estimate/tang_lung/khong_lung/0_lau_n.jpg')); ?>" alt="Ảnh 1 tầng 0 lửng"></div>
 							</div>
 							<div class="banner_item" style=""><a href="<?php echo esc_url(home_url('/khuyen-mai-1')); ?>" target="_blank"><img class="lazyload" src="<?php echo esc_url(dimhouse_asset_uri('resources/images/spin.svg')); ?>" data-src="<?php echo esc_url(dimhouse_asset_uri('uploads/banner/baner/du_toan_1.jpg')); ?>" alt="Dự toán chi phí"></a></div>
 						</div>
