@@ -192,6 +192,8 @@ function dimhouse_ajax_construction() {
 		);
 	}
 
+	dimhouse_queue_telegram_notification($submission_values, 'construction', $submission_id);
+
 	return array(
 		'ok' => 1,
 		'mess' => '',
@@ -501,6 +503,8 @@ function dimhouse_ajax_form_book() {
 			'mess' => dimhouse_estimate_label('form_required_message', 'Không lưu được thông tin. Vui lòng thử lại.'),
 		);
 	}
+
+	dimhouse_queue_telegram_notification($values, 'form_book', $submission_id);
 
 	return array(
 		'ok' => 1,
