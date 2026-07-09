@@ -168,6 +168,7 @@
 				messages: {
 					full_name: { required: 'Vui lòng nhập họ tên.' },
 					phone: { required: 'Vui lòng nhập số điện thoại.' },
+					province: { required: 'Vui lòng chọn tỉnh/thành phố.' },
 					email: { required: 'Vui lòng nhập email.' },
 					time: { required: 'Vui lòng chọn thời gian tư vấn.' },
 					type: { required: 'Vui lòng chọn loại công trình.' },

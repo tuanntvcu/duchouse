@@ -107,7 +107,7 @@ function dimhouse_estimate_label($field_name, $default) {
 }
 
 function dimhouse_estimate_config() {
-	return array(
+	$config = array(
 		'design_landscape_rate' => dimhouse_estimate_setting('estimate_design_landscape_rate', 100000),
 		'design_interior_rate' => dimhouse_estimate_setting('estimate_design_interior_rate', 150000),
 		'design_architecture_rate' => dimhouse_estimate_setting('estimate_design_architecture_rate', 150000),
@@ -144,14 +144,34 @@ function dimhouse_estimate_config() {
 		'crude_large_unit' => dimhouse_estimate_setting('estimate_crude_large_unit', 3800000),
 		'crude_special_min_area' => dimhouse_estimate_setting('estimate_crude_special_min_area', 300),
 		'crude_special_max_area' => dimhouse_estimate_setting('estimate_crude_special_max_area', 350),
-		'crude_special_unit' => dimhouse_estimate_setting('estimate_crude_special_unit', 39800000),
+		'crude_special_unit' => dimhouse_estimate_setting('estimate_crude_special_unit', 3980000),
 	);
+
+	$neighbor_units = array(
+		$config['crude_tiny_unit'],
+		$config['crude_small_unit'],
+		$config['crude_medium_unit'],
+		$config['crude_large_unit'],
+	);
+	$max_neighbor_unit = max($neighbor_units);
+	$min_neighbor_unit = min($neighbor_units);
+	$corrected_special_unit = $config['crude_special_unit'] / 10;
+
+	if (
+		$config['crude_special_unit'] >= 10000000
+		&& $corrected_special_unit >= ($min_neighbor_unit * 0.8)
+		&& $corrected_special_unit <= ($max_neighbor_unit * 1.2)
+	) {
+		$config['crude_special_unit'] = $corrected_special_unit;
+	}
+
+	return $config;
 }
 
 function dimhouse_ajax_construction() {
 	$values = dimhouse_legacy_post_data();
 
-	foreach (array('full_name', 'phone', 'type', 'foundation', 'foundation_area', 'ground_floor', 'num_bedroom', 'num_wc') as $required) {
+	foreach (array('full_name', 'phone', 'province', 'type', 'foundation', 'foundation_area', 'ground_floor', 'num_bedroom', 'num_wc') as $required) {
 		if (empty($values[$required])) {
 			return array(
 				'ok' => 0,
@@ -175,12 +195,12 @@ function dimhouse_ajax_construction() {
 	return array(
 		'ok' => 1,
 		'mess' => '',
-		'html_design_type' => dimhouse_render_design_options($estimate['design_area'], $config),
+		'html_design_type' => dimhouse_render_design_options($estimate['design_area'], $config, $estimate['province_coeff']),
 		'html_crude' => '',
-		'html_completion' => dimhouse_render_completion_options($estimate['completion_area'], $config),
+		'html_completion' => dimhouse_render_completion_options($estimate['completion_area'], $config, $estimate['province_coeff']),
 		'tab1_price' => dimhouse_format_vnd($estimate['design']['landscape']),
 		'tab2_price' => dimhouse_format_vnd($estimate['crude_total']),
-		'tab3_price' => dimhouse_format_vnd($estimate['completion']['high']),
+		'tab3_price' => dimhouse_format_vnd($estimate['completion']['standard']),
 		'summary' => $estimate,
 		'submission_id' => $submission_id,
 	);
@@ -204,6 +224,7 @@ function dimhouse_construction_submission_values($values, $estimate) {
 		'construction_area' => dimhouse_format_unit($estimate['construction_area']) . ' m2',
 		'completion_area' => dimhouse_format_unit($estimate['completion_area']) . ' m2',
 		'crude_unit' => dimhouse_format_unit($estimate['crude_unit']) . ' VND/m2',
+		'province_coeff' => $estimate['province_coeff'],
 		'design_price' => dimhouse_format_vnd($estimate['design']['landscape']),
 		'crude_price' => dimhouse_format_vnd($estimate['crude_total']),
 		'completion_price' => dimhouse_format_vnd($estimate['completion']['high']),
@@ -214,6 +235,8 @@ function dimhouse_construction_submission_values($values, $estimate) {
 
 function dimhouse_calculate_construction($values) {
 	$config = dimhouse_estimate_config();
+	$province = isset($values['province']) ? $values['province'] : 'Hà Nội';
+	$province_coeff = function_exists('dimhouse_estimate_province_coefficient') ? dimhouse_estimate_province_coefficient($province) : 1.0;
 	$floor_keys = array('first_floor', 'second_floor', 'third_floor', 'fourth_floor', 'fifth_floor');
 	$floor_area = 0.0;
 
@@ -318,22 +341,23 @@ function dimhouse_calculate_construction($values) {
 		'construction_area' => $raw_area,
 		'completion_area' => $completion_area,
 		'crude_unit' => $crude_unit,
-		'crude_total' => $raw_area * $crude_unit,
+		'province_coeff' => $province_coeff,
+		'crude_total' => $raw_area * $crude_unit * $province_coeff,
 		'design' => array(
-			'landscape' => $design_area * $config['design_landscape_rate'],
-			'interior' => $design_area * $config['design_interior_rate'],
-			'architecture' => $design_area * $config['design_architecture_rate'],
-			'architecture_interior' => $design_area * $config['design_architecture_interior_rate'],
+			'landscape' => $design_area * $config['design_landscape_rate'] * $province_coeff,
+			'interior' => $design_area * $config['design_interior_rate'] * $province_coeff,
+			'architecture' => $design_area * $config['design_architecture_rate'] * $province_coeff,
+			'architecture_interior' => $design_area * $config['design_architecture_interior_rate'] * $province_coeff,
 		),
 		'completion' => array(
-			'high' => $completion_area * $config['completion_high_rate'],
-			'good' => $completion_area * $config['completion_good_rate'],
-			'standard' => $completion_area * $config['completion_standard_rate'],
+			'high' => $completion_area * $config['completion_high_rate'] * $province_coeff,
+			'good' => $completion_area * $config['completion_good_rate'] * $province_coeff,
+			'standard' => $completion_area * $config['completion_standard_rate'] * $province_coeff,
 		),
 	);
 }
 
-function dimhouse_render_design_options($area, $config) {
+function dimhouse_render_design_options($area, $config, $province_coeff = 1.0) {
 	$options = array(
 		array('name' => 'design_type', 'label' => 'Cảnh quan', 'rate' => $config['design_landscape_rate'], 'item' => 'design_type-content-9', 'checked' => true),
 		array('name' => 'design_type', 'label' => 'Thiết kế nội thất', 'rate' => $config['design_interior_rate'], 'item' => 'design_type-content-5'),
@@ -341,20 +365,20 @@ function dimhouse_render_design_options($area, $config) {
 		array('name' => 'design_type', 'label' => 'Kiến trúc - nội thất', 'rate' => $config['design_architecture_interior_rate'], 'item' => 'design_type-content-1'),
 	);
 
-	return dimhouse_render_radio_price_list($options, $area);
+	return dimhouse_render_radio_price_list($options, $area, $province_coeff);
 }
 
-function dimhouse_render_completion_options($area, $config) {
+function dimhouse_render_completion_options($area, $config, $province_coeff = 1.0) {
 	$options = array(
-		array('name' => 'estimate_completion', 'label' => 'Gói cao cấp', 'rate' => $config['completion_high_rate'], 'item' => 'completion-content-5', 'stars' => 4, 'checked' => true),
+		array('name' => 'estimate_completion', 'label' => 'Gói trung bình', 'rate' => $config['completion_standard_rate'], 'item' => 'completion-content-1', 'stars' => 2, 'checked' => true),
 		array('name' => 'estimate_completion', 'label' => 'Gói khá', 'rate' => $config['completion_good_rate'], 'item' => 'completion-content-3', 'stars' => 3),
-		array('name' => 'estimate_completion', 'label' => 'Gói trung bình', 'rate' => $config['completion_standard_rate'], 'item' => 'completion-content-1', 'stars' => 2),
+		array('name' => 'estimate_completion', 'label' => 'Gói cao cấp', 'rate' => $config['completion_high_rate'], 'item' => 'completion-content-5', 'stars' => 4),
 	);
 
-	return dimhouse_render_radio_price_list($options, $area);
+	return dimhouse_render_radio_price_list($options, $area, $province_coeff);
 }
 
-function dimhouse_render_radio_price_list($options, $area) {
+function dimhouse_render_radio_price_list($options, $area, $price_coeff = 1.0) {
 	$html = '';
 	$label_fields = array(
 		'design_type-content-9' => array('estimate_design_landscape_label', 'Cảnh quan'),
@@ -370,7 +394,8 @@ function dimhouse_render_radio_price_list($options, $area) {
 		if (!empty($option['item']) && isset($label_fields[$option['item']])) {
 			$option['label'] = dimhouse_estimate_label($label_fields[$option['item']][0], $label_fields[$option['item']][1]);
 		}
-		$total = $area * $option['rate'];
+		$effective_rate = $option['rate'] * $price_coeff;
+		$total = $area * $effective_rate;
 		$html .= '<li>';
 		$html .= '<label class="radio_css"><input name="' . esc_attr($option['name']) . '" type="radio" value="' . esc_attr(dimhouse_format_vnd($total)) . '"' . (!empty($option['checked']) ? ' checked="checked"' : '') . ' data-item="' . esc_attr($option['item']) . '">' . esc_html($option['label']) . '</label>';
 
@@ -381,7 +406,7 @@ function dimhouse_render_radio_price_list($options, $area) {
 			}
 			$html .= '</div>';
 		} else {
-			$html .= '<div class="price"><span class="number">' . esc_html(dimhouse_format_unit($option['rate'])) . '</span> <span class="unit">VNĐ/m<sup>2</sup></span></div>';
+			$html .= '<div class="price"><span class="number">' . esc_html(dimhouse_format_unit($effective_rate)) . '</span> <span class="unit">VNĐ/m<sup>2</sup></span></div>';
 		}
 
 		$html .= '</li>';

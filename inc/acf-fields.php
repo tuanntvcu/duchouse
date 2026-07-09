@@ -9,6 +9,13 @@ function dimhouse_register_acf_fields() {
 		return;
 	}
 
+	$province_choices = array();
+	if (function_exists('dimhouse_vietnam_provinces_2026')) {
+		foreach (dimhouse_vietnam_provinces_2026() as $province) {
+			$province_choices[$province] = $province;
+		}
+	}
+
 	acf_add_local_field_group(array(
 		'key' => 'group_dimhouse_theme_options',
 		'title' => 'Dimhouse Theme Options',
@@ -535,7 +542,22 @@ function dimhouse_register_acf_fields() {
 			array('key' => 'field_dimhouse_estimate_crude_large_unit', 'label' => 'Đơn giá từ sau khoảng đặc biệt (VNĐ/m2)', 'name' => 'estimate_crude_large_unit', 'type' => 'number', 'default_value' => 3800000, 'min' => 0, 'step' => 10000),
 			array('key' => 'field_dimhouse_estimate_crude_special_min_area', 'label' => 'Bắt đầu khoảng đặc biệt', 'name' => 'estimate_crude_special_min_area', 'type' => 'number', 'default_value' => 300, 'min' => 0, 'step' => 1),
 			array('key' => 'field_dimhouse_estimate_crude_special_max_area', 'label' => 'Kết thúc khoảng đặc biệt', 'name' => 'estimate_crude_special_max_area', 'type' => 'number', 'default_value' => 350, 'min' => 0, 'step' => 1),
-			array('key' => 'field_dimhouse_estimate_crude_special_unit', 'label' => 'Đơn giá khoảng đặc biệt (VNĐ/m2)', 'name' => 'estimate_crude_special_unit', 'type' => 'number', 'default_value' => 39800000, 'min' => 0, 'step' => 10000),
+			array('key' => 'field_dimhouse_estimate_crude_special_unit', 'label' => 'Đơn giá khoảng đặc biệt (VNĐ/m2)', 'name' => 'estimate_crude_special_unit', 'type' => 'number', 'default_value' => 3980000, 'min' => 0, 'step' => 10000),
+
+			array('key' => 'field_dimhouse_estimate_province_coefficients_tab', 'label' => 'Hệ số tỉnh/thành', 'name' => '', 'type' => 'tab', 'placement' => 'top'),
+			array(
+				'key' => 'field_dimhouse_estimate_province_coefficients',
+				'label' => 'Hệ số giá theo tỉnh/thành',
+				'name' => 'estimate_province_coefficients',
+				'type' => 'repeater',
+				'layout' => 'table',
+				'button_label' => 'Thêm tỉnh/thành',
+				'instructions' => 'Danh sách 34 tỉnh/thành theo đơn vị hành chính cấp tỉnh hiện hành. Mặc định Hà Nội = 1, các tỉnh/thành khác = 1.2.',
+				'sub_fields' => array(
+					array('key' => 'field_dimhouse_estimate_province_coefficients_province', 'label' => 'Tỉnh/Thành phố', 'name' => 'province', 'type' => 'select', 'choices' => $province_choices, 'ui' => 1, 'return_format' => 'value'),
+					array('key' => 'field_dimhouse_estimate_province_coefficients_coefficient', 'label' => 'Hệ số', 'name' => 'coefficient', 'type' => 'number', 'default_value' => 1.2, 'min' => 0, 'step' => 0.01),
+				),
+			),
 
 			array('key' => 'field_dimhouse_estimate_foundation_tab', 'label' => 'Hệ số móng và hầm', 'name' => '', 'type' => 'tab', 'placement' => 'top'),
 			array('key' => 'field_dimhouse_estimate_foundation_pile_design_coeff', 'label' => 'Móng cọc - hệ số thiết kế/hoàn thiện', 'name' => 'estimate_foundation_pile_design_coeff', 'type' => 'number', 'default_value' => 0, 'step' => 0.1),
@@ -614,3 +636,40 @@ function dimhouse_register_acf_fields() {
 	}
 }
 add_action('acf/init', 'dimhouse_register_acf_fields');
+
+function dimhouse_load_default_province_coefficients($value) {
+	if (!function_exists('dimhouse_default_province_coefficients')) {
+		return $value;
+	}
+
+	if (is_array($value) && !empty($value) && function_exists('dimhouse_vietnam_provinces_2026') && count($value) >= count(dimhouse_vietnam_provinces_2026())) {
+		$known_provinces = array();
+		foreach ($value as $row) {
+			if (!is_array($row)) {
+				continue;
+			}
+
+			$province = isset($row['province']) ? $row['province'] : (isset($row['field_dimhouse_estimate_province_coefficients_province']) ? $row['field_dimhouse_estimate_province_coefficients_province'] : '');
+			if ($province !== '') {
+				$known_provinces[$province] = true;
+			}
+		}
+
+		if (count($known_provinces) > 1) {
+			return $value;
+		}
+	} elseif (!empty($value)) {
+		return $value;
+	}
+
+	$rows = array();
+	foreach (dimhouse_default_province_coefficients() as $row) {
+		$rows[] = array(
+			'field_dimhouse_estimate_province_coefficients_province' => $row['province'],
+			'field_dimhouse_estimate_province_coefficients_coefficient' => $row['coefficient'],
+		);
+	}
+
+	return $rows;
+}
+add_filter('acf/load_value/name=estimate_province_coefficients', 'dimhouse_load_default_province_coefficients');

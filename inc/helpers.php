@@ -344,6 +344,132 @@ function dimhouse_option_repeater($field_name, $default = array()) {
 	return is_array($value) && !empty($value) ? $value : $default;
 }
 
+function dimhouse_vietnam_provinces_2026() {
+	return array(
+		'Hà Nội',
+		'Huế',
+		'Lai Châu',
+		'Điện Biên',
+		'Sơn La',
+		'Lạng Sơn',
+		'Quảng Ninh',
+		'Thanh Hóa',
+		'Nghệ An',
+		'Hà Tĩnh',
+		'Cao Bằng',
+		'Tuyên Quang',
+		'Lào Cai',
+		'Thái Nguyên',
+		'Phú Thọ',
+		'Bắc Ninh',
+		'Hưng Yên',
+		'Hải Phòng',
+		'Ninh Bình',
+		'Quảng Trị',
+		'Đà Nẵng',
+		'Quảng Ngãi',
+		'Gia Lai',
+		'Khánh Hòa',
+		'Lâm Đồng',
+		'Đắk Lắk',
+		'Hồ Chí Minh',
+		'Đồng Nai',
+		'Tây Ninh',
+		'Cần Thơ',
+		'Vĩnh Long',
+		'Đồng Tháp',
+		'Cà Mau',
+		'An Giang',
+	);
+}
+
+function dimhouse_default_province_coefficients() {
+	$rows = array();
+	foreach (dimhouse_vietnam_provinces_2026() as $province) {
+		$rows[] = array(
+			'province' => $province,
+			'coefficient' => $province === 'Hà Nội' ? 1 : 1.2,
+		);
+	}
+
+	return $rows;
+}
+
+function dimhouse_normalize_province_name($province) {
+	$province = trim((string) $province);
+	$province = preg_replace('/^(Tỉnh|Thành phố)\s+/u', '', $province);
+
+	return $province ? $province : 'Hà Nội';
+}
+
+function dimhouse_estimate_province_coefficients() {
+	$coefficients = array();
+	foreach (dimhouse_default_province_coefficients() as $row) {
+		$coefficients[dimhouse_normalize_province_name($row['province'])] = (float) $row['coefficient'];
+	}
+
+	$rows = dimhouse_option('estimate_province_coefficients', array());
+	if (!is_array($rows)) {
+		return $coefficients;
+	}
+
+	$known_provinces = array();
+	foreach ($rows as $row) {
+		if (!is_array($row)) {
+			continue;
+		}
+
+		$province_value = isset($row['province']) ? $row['province'] : (isset($row['field_dimhouse_estimate_province_coefficients_province']) ? $row['field_dimhouse_estimate_province_coefficients_province'] : '');
+		if ($province_value !== '') {
+			$known_provinces[dimhouse_normalize_province_name($province_value)] = true;
+		}
+	}
+
+	if (count($rows) >= count(dimhouse_vietnam_provinces_2026()) && count($known_provinces) <= 1) {
+		return $coefficients;
+	}
+
+	foreach ($rows as $row) {
+		if (!is_array($row)) {
+			continue;
+		}
+
+		$province_value = isset($row['province']) ? $row['province'] : (isset($row['field_dimhouse_estimate_province_coefficients_province']) ? $row['field_dimhouse_estimate_province_coefficients_province'] : '');
+		$coefficient_value = isset($row['coefficient']) ? $row['coefficient'] : (isset($row['field_dimhouse_estimate_province_coefficients_coefficient']) ? $row['field_dimhouse_estimate_province_coefficients_coefficient'] : '');
+
+		if ($province_value === '' || $coefficient_value === '' || !is_numeric($coefficient_value)) {
+			continue;
+		}
+
+		$province = dimhouse_normalize_province_name($province_value);
+		$coefficients[$province] = max(0, (float) $coefficient_value);
+	}
+
+	return $coefficients;
+}
+
+function dimhouse_estimate_province_coefficient($province) {
+	$province = dimhouse_normalize_province_name($province);
+	$coefficients = dimhouse_estimate_province_coefficients();
+
+	return isset($coefficients[$province]) ? (float) $coefficients[$province] : 1.2;
+}
+
+function dimhouse_render_estimate_province_select($selected = 'Hà Nội') {
+	$selected = dimhouse_normalize_province_name($selected);
+	$html = '<p class="label_title col-12 dimhouse-province-label">Tỉnh/Thành phố</p>';
+	$html .= '<div class="form-group col-12 col-md-6 dimhouse-province-field"><div class="select">';
+	$html .= '<select name="province" id="province" required="">';
+
+	foreach (dimhouse_vietnam_provinces_2026() as $province) {
+		$html .= '<option value="' . esc_attr($province) . '"' . selected($selected, $province, false) . '>' . esc_html($province) . '</option>';
+	}
+
+	$html .= '</select></div></div>';
+
+	return $html;
+}
+
 function dimhouse_default_footer_partners() {
 	return array(
 		array('image' => dimhouse_asset_uri('uploads/banner/baner/khuyen-mai-juno.png'), 'url' => '#', 'alt' => 'BRAND'),
@@ -2055,9 +2181,33 @@ function dimhouse_apply_clone_acf_overrides($html) {
 		}
 	);
 
-	$html = dimhouse_remove_construction_location_fields($html);
+	$html = dimhouse_ensure_construction_province_field($html);
 	$html = dimhouse_remove_popup_booking_location_fields($html);
 	return dimhouse_remove_procedure_location_fields($html);
+}
+
+function dimhouse_ensure_construction_province_field($html) {
+	$province_field = dimhouse_render_estimate_province_select('Hà Nội');
+
+	$html = dimhouse_replace_first_match(
+		$html,
+		'#(<form action="" method="post" id="construction">[\s\S]*?<input type="text" name="phone"[\s\S]*?</div>)\s*<p class="label_title col-12">[\s\S]*?</p>\s*<div class="form-group col-12 col-md-6"><select name="province"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6"><select name="district"[\s\S]*?</select></div>\s*<div class="form-group col-12 col-md-6"><select name="ward"[\s\S]*?</select></div>(?:\s*<div class="form-group col-12 col-md-6">\s*<input\s+type="text"\s+name="address"[\s\S]*?</div>)?#',
+		function ($matches) use ($province_field) {
+			return $matches[1] . "\n" . $province_field . "\n";
+		}
+	);
+
+	if (preg_match('#<form action="" method="post" id="construction">[\s\S]*?name="province"[\s\S]*?</form>#', $html)) {
+		return $html;
+	}
+
+	return dimhouse_replace_first_match(
+		$html,
+		'#(<form action="" method="post" id="construction">[\s\S]*?<input type="text" name="phone"[\s\S]*?</div>)#',
+		function ($matches) use ($province_field) {
+			return $matches[1] . "\n" . $province_field . "\n";
+		}
+	);
 }
 
 function dimhouse_remove_construction_location_fields($html) {
